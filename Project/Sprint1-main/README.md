@@ -1,4 +1,4 @@
-# Sprint0.5F24
+# Sprint1.0F24
 
 Evan Stagl
 Gustavo Ivanowski

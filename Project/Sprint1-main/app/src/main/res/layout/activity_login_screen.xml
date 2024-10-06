@@ -4,7 +4,7 @@
     <data>
         <variable
             name="loginViewModel"
-            type="com.example.sprintproject.viewmodel.LoginViewModel"/>
+            type="com.example.sprintproject.viewmodel.LoginRegisterViewModel"/>
     </data>
 
     <RelativeLayout

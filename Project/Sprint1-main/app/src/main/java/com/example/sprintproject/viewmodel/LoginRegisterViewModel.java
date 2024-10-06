@@ -9,23 +9,27 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.sprintproject.database.AuthService;
 
-public class LoginViewModel extends ViewModel {
+public class LoginRegisterViewModel extends ViewModel {
     private static final String TAG = "LoginViewModel";
     private MutableLiveData<String> errorMsg;
     private boolean emailValid;
     private boolean passwordValid;
+    private AuthService authService;
 
-    public LoginViewModel() {
+    public LoginRegisterViewModel() {
         this.errorMsg = new MutableLiveData<>();
         this.errorMsg.setValue("");
         this.emailValid = false;
         this.passwordValid = false;
+        this.authService = AuthService.getInstance();
     }
 
     public boolean login(String email, String password, Activity activity) {
-        AuthService authService = AuthService.getInstance();
-
         return authService.logInUser(email, password, activity);
+    }
+
+    public boolean create(String email, String password, Activity activity) {
+        return authService.createUser(email, password, activity);
     }
 
     public void setEmailValid(boolean emailValid) {

@@ -36,6 +36,7 @@ public class WelcomeScreen extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 welcomeViewModel.onQuitClicked();
+
                 finish();
             }
         });

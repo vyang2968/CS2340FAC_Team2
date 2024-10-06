@@ -2981,6 +2981,7 @@ drawable design_ic_visibility
 drawable design_ic_visibility_off
 drawable design_password_eye
 drawable design_snackbar_background
+drawable edit_text_background
 drawable ic_arrow_back_black_24
 drawable ic_clear_black_24
 drawable ic_clock_black_24dp
@@ -3156,6 +3157,7 @@ id auto
 id autoComplete
 id autoCompleteToEnd
 id autoCompleteToStart
+id back_button
 id barrier
 id baseline
 id beginOnFirstDraw
@@ -3307,6 +3309,7 @@ id line3
 id linear
 id listMode
 id list_item
+id login_button
 id login_screen_text
 id m3_side_sheet
 id marquee
@@ -3412,6 +3415,7 @@ id parent
 id parentPanel
 id parentRelative
 id parent_matrix
+id password_textbox
 id password_toggle
 id path
 id pathRelative
@@ -3427,6 +3431,7 @@ id quit_button
 id radio
 id ratio
 id rectangles
+id register_button
 id report_drawn
 id reverseSawtooth
 id right
@@ -3549,7 +3554,7 @@ id uniform
 id unlabeled
 id up
 id useLogo
-id username_input
+id username_textbox
 id vertical_only
 id view_offset_helper
 id view_transition
@@ -3684,6 +3689,7 @@ layout abc_search_dropdown_item_icons_2line
 layout abc_search_view
 layout abc_select_dialog_material
 layout abc_tooltip
+layout activity_create_account_screen
 layout activity_login_screen
 layout activity_welcome_screen
 layout custom_dialog

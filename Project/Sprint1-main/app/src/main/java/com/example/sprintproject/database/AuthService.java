@@ -32,8 +32,8 @@ public class AuthService {
         return instance;
     }
 
-    public void createUser(String email, String password, Activity activity) {
-        auth.createUserWithEmailAndPassword(email, password)
+    public boolean createUser(String email, String password, Activity activity) {
+        return auth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(activity, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -44,22 +44,23 @@ public class AuthService {
                             Log.d(TAG, "createUser:failed", task.getException());
                         }
                     }
-                });
+                }).isSuccessful();
     }
 
-    public void signInUser(String email, String password, Activity activity) {
-        auth.signInWithEmailAndPassword(email, password)
+    public boolean logInUser(String email, String password, Activity activity) {
+        return auth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(activity, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            Log.d(TAG, "createUser:success");
+                            Log.d(TAG, "login:success");
                             setUser(auth.getCurrentUser());
                         } else {
-                            Log.d(TAG, "createUser:failed", task.getException());
+                            Log.d(TAG, "login:failed", task.getException());
                         }
                     }
-                });    }
+                }).isSuccessful();
+    }
 
     public void logOutUser() {
         auth.signOut();

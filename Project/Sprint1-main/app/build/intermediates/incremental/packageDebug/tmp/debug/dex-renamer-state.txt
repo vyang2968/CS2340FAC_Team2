@@ -1,0 +1,16 @@
+#Sat Oct 05 23:16:11 EDT 2024
+base.0=/Users/gustavoivanowski/Documents/GT S1/CS 2340/CS2340FAC_Team2/Project/Sprint1-main/app/build/intermediates/dex/debug/mergeExtDexDebug/classes.dex
+base.1=/Users/gustavoivanowski/Documents/GT S1/CS 2340/CS2340FAC_Team2/Project/Sprint1-main/app/build/intermediates/dex/debug/mergeProjectDexDebug/0/classes.dex
+base.2=/Users/gustavoivanowski/Documents/GT S1/CS 2340/CS2340FAC_Team2/Project/Sprint1-main/app/build/intermediates/dex/debug/mergeProjectDexDebug/11/classes.dex
+base.3=/Users/gustavoivanowski/Documents/GT S1/CS 2340/CS2340FAC_Team2/Project/Sprint1-main/app/build/intermediates/dex/debug/mergeProjectDexDebug/13/classes.dex
+base.4=/Users/gustavoivanowski/Documents/GT S1/CS 2340/CS2340FAC_Team2/Project/Sprint1-main/app/build/intermediates/dex/debug/mergeProjectDexDebug/5/classes.dex
+path.0=classes.dex
+path.1=0/classes.dex
+path.2=11/classes.dex
+path.3=13/classes.dex
+path.4=5/classes.dex
+renamed.0=classes.dex
+renamed.1=classes2.dex
+renamed.2=classes3.dex
+renamed.3=classes4.dex
+renamed.4=classes5.dex

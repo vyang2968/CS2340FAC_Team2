@@ -60,6 +60,10 @@
         "source": "/Users/gustavoivanowski/.gradle/daemon/8.2/com.example.sprintproject.app-main-33:/mipmap-hdpi/ic_launcher.webp"
     },
     {
+        "merged": "com.example.sprintproject.app-merged_res-31:/layout_activity_create_account_screen.xml.flat",
+        "source": "com.example.sprintproject.app-main-33:/layout/activity_create_account_screen.xml"
+    },
+    {
         "merged": "/Users/gustavoivanowski/.gradle/daemon/8.2/com.example.sprintproject.app-merged_res-31:/mipmap-anydpi-v26_ic_launcher.xml.flat",
         "source": "/Users/gustavoivanowski/.gradle/daemon/8.2/com.example.sprintproject.app-main-33:/mipmap-anydpi-v26/ic_launcher.xml"
     },
@@ -74,5 +78,9 @@
     {
         "merged": "/Users/gustavoivanowski/.gradle/daemon/8.2/com.example.sprintproject.app-merged_res-31:/drawable_ic_launcher_background.xml.flat",
         "source": "/Users/gustavoivanowski/.gradle/daemon/8.2/com.example.sprintproject.app-main-33:/drawable/ic_launcher_background.xml"
+    },
+    {
+        "merged": "com.example.sprintproject.app-merged_res-31:/drawable_edit_text_background.xml.flat",
+        "source": "com.example.sprintproject.app-main-33:/drawable/edit_text_background.xml"
     }
 ]

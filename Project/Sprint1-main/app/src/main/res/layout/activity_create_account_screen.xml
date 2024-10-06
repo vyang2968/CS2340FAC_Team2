@@ -18,7 +18,7 @@
             android:id="@+id/login_screen_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Log In"
+            android:text="Create Account"
             android:textSize="35sp"
             android:textStyle="bold"
             android:layout_margin="10dp"
@@ -59,15 +59,15 @@
                 android:background="#FFFFFF"/>
         </LinearLayout>
         <Button
-            android:id="@+id/login_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Login"/>
-        <Button
             android:id="@+id/register_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Register"
+            android:text="Register"/>
+        <Button
+            android:id="@+id/login_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Login"
             />
 
 

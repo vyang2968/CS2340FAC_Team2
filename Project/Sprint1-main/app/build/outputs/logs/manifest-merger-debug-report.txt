@@ -1,9 +1,9 @@
 -- Merging decision tree log ---
 manifest
-ADDED from /Users/vyang/Documents/programming/school/CS2340/CS2340FAC_Team2/Project/Sprint1-main/app/src/main/AndroidManifest.xml:2:1-27:12
-INJECTED from /Users/vyang/Documents/programming/school/CS2340/CS2340FAC_Team2/Project/Sprint1-main/app/src/main/AndroidManifest.xml:2:1-27:12
-INJECTED from /Users/vyang/Documents/programming/school/CS2340/CS2340FAC_Team2/Project/Sprint1-main/app/src/main/AndroidManifest.xml:2:1-27:12
-INJECTED from /Users/vyang/Documents/programming/school/CS2340/CS2340FAC_Team2/Project/Sprint1-main/app/src/main/AndroidManifest.xml:2:1-27:12
+ADDED from /Users/vyang/Documents/programming/school/CS2340/CS2340FAC_Team2/Project/Sprint1-main/app/src/main/AndroidManifest.xml:2:1-29:12
+INJECTED from /Users/vyang/Documents/programming/school/CS2340/CS2340FAC_Team2/Project/Sprint1-main/app/src/main/AndroidManifest.xml:2:1-29:12
+INJECTED from /Users/vyang/Documents/programming/school/CS2340/CS2340FAC_Team2/Project/Sprint1-main/app/src/main/AndroidManifest.xml:2:1-29:12
+INJECTED from /Users/vyang/Documents/programming/school/CS2340/CS2340FAC_Team2/Project/Sprint1-main/app/src/main/AndroidManifest.xml:2:1-29:12
 MERGED from [androidx.databinding:databinding-adapters:8.5.2] /Users/vyang/.gradle/caches/transforms-4/b2110aba0b95d5cb0851999614fa7b59/transformed/databinding-adapters-8.5.2/AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.databinding:databinding-runtime:8.5.2] /Users/vyang/.gradle/caches/transforms-4/f4d56a6c8797c3689daad758e5026bae/transformed/databinding-runtime-8.5.2/AndroidManifest.xml:2:1-7:12
 MERGED from [com.google.android.material:material:1.12.0] /Users/vyang/.gradle/caches/transforms-4/3bcd6dfd09fb290d3443a425b548ce8a/transformed/material-1.12.0/AndroidManifest.xml:17:1-24:12
@@ -80,8 +80,8 @@ MERGED from [com.google.android.libraries.identity.googleid:googleid:1.1.0] /Use
 	xmlns:android
 		ADDED from /Users/vyang/Documents/programming/school/CS2340/CS2340FAC_Team2/Project/Sprint1-main/app/src/main/AndroidManifest.xml:2:11-69
 application
-ADDED from /Users/vyang/Documents/programming/school/CS2340/CS2340FAC_Team2/Project/Sprint1-main/app/src/main/AndroidManifest.xml:5:5-25:19
-INJECTED from /Users/vyang/Documents/programming/school/CS2340/CS2340FAC_Team2/Project/Sprint1-main/app/src/main/AndroidManifest.xml:5:5-25:19
+ADDED from /Users/vyang/Documents/programming/school/CS2340/CS2340FAC_Team2/Project/Sprint1-main/app/src/main/AndroidManifest.xml:5:5-27:19
+INJECTED from /Users/vyang/Documents/programming/school/CS2340/CS2340FAC_Team2/Project/Sprint1-main/app/src/main/AndroidManifest.xml:5:5-27:19
 MERGED from [com.google.android.material:material:1.12.0] /Users/vyang/.gradle/caches/transforms-4/3bcd6dfd09fb290d3443a425b548ce8a/transformed/material-1.12.0/AndroidManifest.xml:22:5-20
 MERGED from [com.google.android.material:material:1.12.0] /Users/vyang/.gradle/caches/transforms-4/3bcd6dfd09fb290d3443a425b548ce8a/transformed/material-1.12.0/AndroidManifest.xml:22:5-20
 MERGED from [androidx.constraintlayout:constraintlayout:2.1.4] /Users/vyang/.gradle/caches/transforms-4/20e1f4fdb39cd30c29f0010b7528742c/transformed/constraintlayout-2.1.4/AndroidManifest.xml:9:5-20
@@ -166,6 +166,10 @@ activity#com.example.sprintproject.view.LoginScreen
 ADDED from /Users/vyang/Documents/programming/school/CS2340/CS2340FAC_Team2/Project/Sprint1-main/app/src/main/AndroidManifest.xml:24:9-63
 	android:name
 		ADDED from /Users/vyang/Documents/programming/school/CS2340/CS2340FAC_Team2/Project/Sprint1-main/app/src/main/AndroidManifest.xml:24:19-51
+activity#com.example.sprintproject.view.RegisterScreen
+ADDED from /Users/vyang/Documents/programming/school/CS2340/CS2340FAC_Team2/Project/Sprint1-main/app/src/main/AndroidManifest.xml:25:9-66
+	android:name
+		ADDED from /Users/vyang/Documents/programming/school/CS2340/CS2340FAC_Team2/Project/Sprint1-main/app/src/main/AndroidManifest.xml:25:19-54
 uses-sdk
 INJECTED from /Users/vyang/Documents/programming/school/CS2340/CS2340FAC_Team2/Project/Sprint1-main/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from /Users/vyang/Documents/programming/school/CS2340/CS2340FAC_Team2/Project/Sprint1-main/app/src/main/AndroidManifest.xml

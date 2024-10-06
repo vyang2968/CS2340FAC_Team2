@@ -2,8 +2,6 @@ package com.example.sprintproject.view;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
-import androidx.databinding.ViewDataBinding;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
@@ -20,7 +18,7 @@ import com.example.sprintproject.BR;
 import com.example.sprintproject.R;
 import com.example.sprintproject.database.AuthService;
 import com.example.sprintproject.databinding.ActivityLoginScreenBinding;
-import com.example.sprintproject.viewmodel.LoginViewModel;
+import com.example.sprintproject.viewmodel.LoginRegisterViewModel;
 
 
 public class LoginScreen extends AppCompatActivity {
@@ -56,16 +54,18 @@ public class LoginScreen extends AppCompatActivity {
 
         loginErrorText = findViewById(R.id.error_text);
 
-        LoginViewModel loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
-        binding.setVariable(BR.loginViewModel, loginViewModel);
+        LoginRegisterViewModel loginRegisterViewModel = new ViewModelProvider(this).get(LoginRegisterViewModel.class);
+        binding.setVariable(BR.loginViewModel, loginRegisterViewModel);
         binding.setLifecycleOwner(this);
 
         backButton.setOnClickListener(view -> {
+            Log.i(TAG, "backButton:clicked");
             Intent intent = new Intent(LoginScreen.this, WelcomeScreen.class);
             startActivity(intent);
         });
 
         registerButton.setOnClickListener(view -> {
+            Log.i(TAG, "registerButton:clicked");
             Intent intent = new Intent(LoginScreen.this, RegisterScreen.class);
             startActivity(intent);
         });
@@ -94,16 +94,16 @@ public class LoginScreen extends AppCompatActivity {
                 passwordInput.setError(null);
             }
 
-            loginViewModel.setEmailValid(emailInput.getError() == null);
-            loginViewModel.setPasswordValid(passwordInput.getError() == null);
+            loginRegisterViewModel.setEmailValid(emailInput.getError() == null);
+            loginRegisterViewModel.setPasswordValid(passwordInput.getError() == null);
 
             if (!AuthService.getInstance().isUserLoggedIn()) {
-                if (loginViewModel.canBeSubmitted()) {
+                if (loginRegisterViewModel.canBeSubmitted()) {
                     loginErrorText.setVisibility(View.GONE);
 
-                    loginViewModel.login(email, password, this);
+                    loginRegisterViewModel.login(email, password, this);
                 } else {
-                    loginViewModel.setErrorMsg("Please fix fields before submitting");
+                    loginRegisterViewModel.setErrorMsg("Please fix fields before submitting");
                     loginErrorText.setVisibility(View.VISIBLE);
                 }
             }
@@ -116,7 +116,7 @@ public class LoginScreen extends AppCompatActivity {
 //                startActivity(intent);
             } else {
                 Log.i(TAG, "login:unsuccessful");
-                loginViewModel.setErrorMsg("Username or password is incorrect");
+                loginRegisterViewModel.setErrorMsg("Username or password is incorrect");
                 loginErrorText.setVisibility(View.VISIBLE);
             }
         });

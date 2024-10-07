@@ -13,7 +13,7 @@
         android:theme="@style/Theme.SprintProject"
         tools:targetApi="31">
         <activity
-            android:name=".view.WelcomeScreen"
+            android:name=".view.SplashScreen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,8 +21,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".view.WelcomeScreen"></activity>
         <activity android:name=".view.LoginScreen"></activity>
         <activity android:name=".view.RegisterScreen"></activity>
+        <activity android:name=".view.AccommodationScreen"></activity>
+        <activity android:name=".view.DestinationScreen"></activity>
+        <activity android:name=".view.DiningEstablishmentScreen"></activity>
+        <activity android:name=".view.LogisticsScreen"></activity>
+        <activity android:name=".view.TransportationScreen"></activity>
+        <activity android:name=".view.TravelCommunity"></activity>
 
     </application>
 

@@ -114,11 +114,11 @@ public class LoginScreen extends AppCompatActivity {
                 // TODO: replace Home.class with actual home page
 //                Intent intent = new Intent(LoginScreen.this, Home.class);
 //                startActivity(intent);
-            } else {
+            } /* else {
                 Log.i(TAG, "login:unsuccessful");
                 loginRegisterViewModel.setErrorMsg("Username or password is incorrect");
                 loginErrorText.setVisibility(View.VISIBLE);
-            }
+            } */
         });
     }
 }

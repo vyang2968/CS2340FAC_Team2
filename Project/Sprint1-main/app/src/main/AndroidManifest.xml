@@ -21,6 +21,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".view.WelcomeScreen"></activity>
         <activity android:name=".view.LoginScreen"></activity>
         <activity android:name=".view.RegisterScreen"></activity>
 

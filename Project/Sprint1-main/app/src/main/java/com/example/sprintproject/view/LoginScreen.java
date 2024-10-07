@@ -113,8 +113,8 @@ public class LoginScreen extends AppCompatActivity {
                 Log.i(TAG, "login:successful");
                 loginErrorText.setVisibility(View.GONE);
                 // todo: replace Home.class with actual home page
-                /* Intent intent = new Intent(LoginScreen.this, Home.class);
-                startActivity(intent); */
+                Intent intent = new Intent(LoginScreen.this, LogisticsScreen.class);
+                startActivity(intent);
             } /* else {
                 Log.i(TAG, "login:unsuccessful");
                 loginRegisterViewModel.setErrorMsg("Username or password is incorrect");

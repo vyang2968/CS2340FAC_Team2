@@ -2,13 +2,13 @@ package com.example.sprintproject.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import com.example.android_assignment_fa_2024.R;
+import com.example.sprintproject.R;
 
-public class Accommodation extends AppCompatActivity {
+public class TransportationScreen extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_accomodation);
+        setContentView(R.layout.activity_transportation);
     }
 }

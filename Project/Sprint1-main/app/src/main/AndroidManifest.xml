@@ -23,6 +23,12 @@
         </activity>
         <activity android:name=".view.LoginScreen"></activity>
         <activity android:name=".view.RegisterScreen"></activity>
+        <activity android:name=".view.AccommodationScreen"></activity>
+        <activity android:name=".view.DestinationScreen"></activity>
+        <activity android:name=".view.DiningEstablishmentScreen"></activity>
+        <activity android:name=".view.LogisticsScreen"></activity>
+        <activity android:name=".view.TransportationScreen"></activity>
+        <activity android:name=".view.TravelCommunity"></activity>
 
     </application>
 

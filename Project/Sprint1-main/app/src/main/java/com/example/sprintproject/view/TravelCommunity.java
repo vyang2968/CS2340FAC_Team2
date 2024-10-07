@@ -2,7 +2,7 @@ package com.example.sprintproject.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import com.example.android_assignment_fa_2024.R;
+import com.example.sprintproject.R;
 
 public class TravelCommunity extends AppCompatActivity {
 

@@ -1,10 +1,12 @@
 package com.example.sprintproject.view;
 
 import androidx.appcompat.app.AppCompatActivity;
-import android.os.Bundle;
-import com.example.android_assignment_fa_2024.R;
 
-public class Destination extends AppCompatActivity {
+import android.os.Bundle;
+
+import com.example.sprintproject.R;
+
+public class DestinationScreen extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

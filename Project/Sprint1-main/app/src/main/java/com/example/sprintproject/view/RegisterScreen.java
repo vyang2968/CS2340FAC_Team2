@@ -27,14 +27,14 @@ import com.example.sprintproject.viewmodel.LoginRegisterViewModel;
 public class RegisterScreen extends AppCompatActivity {
     private static final String TAG = "RegisterActivity";
 
-    EditText emailInput;
-    EditText passwordInput;
+    private EditText emailInput;
+    private EditText passwordInput;
 
-    Button backButton;
-    Button registerButton;
-    Button loginButton;
+    private Button backButton;
+    private Button registerButton;
+    private Button loginButton;
 
-    TextView loginErrorText;
+    private TextView loginErrorText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,10 +42,10 @@ public class RegisterScreen extends AppCompatActivity {
         setContentView(R.layout.activity_create_account_screen);
         EdgeToEdge.enable(this);
 
-        // TODO: remove in production
         AuthService.getInstance().logOutUser();
 
-        ActivityCreateAccountScreenBinding binding = ActivityCreateAccountScreenBinding.inflate(getLayoutInflater());
+        ActivityCreateAccountScreenBinding binding =
+                ActivityCreateAccountScreenBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         emailInput = findViewById(R.id.email_textbox);
@@ -57,7 +57,8 @@ public class RegisterScreen extends AppCompatActivity {
 
         loginErrorText = findViewById(R.id.error_text);
 
-        LoginRegisterViewModel loginRegisterViewModel = new ViewModelProvider(this).get(LoginRegisterViewModel.class);
+        LoginRegisterViewModel loginRegisterViewModel =
+                new ViewModelProvider(this).get(LoginRegisterViewModel.class);
         binding.setVariable(BR.loginViewModel, loginRegisterViewModel);
         binding.setLifecycleOwner(this);
 
@@ -117,9 +118,8 @@ public class RegisterScreen extends AppCompatActivity {
             if (AuthService.getInstance().isUserLoggedIn()) {
                 Log.i(TAG, "create:successful");
                 loginErrorText.setVisibility(View.GONE);
-                // TODO: replace Home.class with actual home page
-//                Intent intent = new Intent(RegisterScreen.this, Home.class);
-//                startActivity(intent);
+                //  Intent intent = new Intent(RegisterScreen.this, Home.class);
+                // startActivity(intent);
             }
         });
     }

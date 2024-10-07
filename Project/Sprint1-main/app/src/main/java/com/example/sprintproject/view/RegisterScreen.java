@@ -118,8 +118,8 @@ public class RegisterScreen extends AppCompatActivity {
             if (AuthService.getInstance().isUserLoggedIn()) {
                 Log.i(TAG, "create:successful");
                 loginErrorText.setVisibility(View.GONE);
-                //  Intent intent = new Intent(RegisterScreen.this, Home.class);
-                // startActivity(intent);
+                Intent intent = new Intent(RegisterScreen.this, LogisticsScreen.class);
+                startActivity(intent);
             }
         });
     }

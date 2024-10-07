@@ -1,9 +1,9 @@
 -- Merging decision tree log ---
 manifest
-ADDED from C:\Users\etsta\Documents\CS2340FAC_Team2\Project\Sprint1-main\app\src\main\AndroidManifest.xml:2:1-35:12
-INJECTED from C:\Users\etsta\Documents\CS2340FAC_Team2\Project\Sprint1-main\app\src\main\AndroidManifest.xml:2:1-35:12
-INJECTED from C:\Users\etsta\Documents\CS2340FAC_Team2\Project\Sprint1-main\app\src\main\AndroidManifest.xml:2:1-35:12
-INJECTED from C:\Users\etsta\Documents\CS2340FAC_Team2\Project\Sprint1-main\app\src\main\AndroidManifest.xml:2:1-35:12
+ADDED from C:\Users\etsta\Documents\CS2340FAC_Team2\Project\Sprint1-main\app\src\main\AndroidManifest.xml:2:1-36:12
+INJECTED from C:\Users\etsta\Documents\CS2340FAC_Team2\Project\Sprint1-main\app\src\main\AndroidManifest.xml:2:1-36:12
+INJECTED from C:\Users\etsta\Documents\CS2340FAC_Team2\Project\Sprint1-main\app\src\main\AndroidManifest.xml:2:1-36:12
+INJECTED from C:\Users\etsta\Documents\CS2340FAC_Team2\Project\Sprint1-main\app\src\main\AndroidManifest.xml:2:1-36:12
 MERGED from [androidx.databinding:databinding-adapters:8.5.2] C:\Users\etsta\.gradle\caches\transforms-4\b2110aba0b95d5cb0851999614fa7b59\transformed\databinding-adapters-8.5.2\AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.databinding:databinding-runtime:8.5.2] C:\Users\etsta\.gradle\caches\transforms-4\f4d56a6c8797c3689daad758e5026bae\transformed\databinding-runtime-8.5.2\AndroidManifest.xml:2:1-7:12
 MERGED from [com.google.android.material:material:1.12.0] C:\Users\etsta\.gradle\caches\transforms-4\3bcd6dfd09fb290d3443a425b548ce8a\transformed\material-1.12.0\AndroidManifest.xml:17:1-24:12
@@ -80,8 +80,8 @@ MERGED from [com.google.android.libraries.identity.googleid:googleid:1.1.0] C:\U
 	xmlns:android
 		ADDED from C:\Users\etsta\Documents\CS2340FAC_Team2\Project\Sprint1-main\app\src\main\AndroidManifest.xml:2:11-69
 application
-ADDED from C:\Users\etsta\Documents\CS2340FAC_Team2\Project\Sprint1-main\app\src\main\AndroidManifest.xml:5:5-33:19
-INJECTED from C:\Users\etsta\Documents\CS2340FAC_Team2\Project\Sprint1-main\app\src\main\AndroidManifest.xml:5:5-33:19
+ADDED from C:\Users\etsta\Documents\CS2340FAC_Team2\Project\Sprint1-main\app\src\main\AndroidManifest.xml:5:5-34:19
+INJECTED from C:\Users\etsta\Documents\CS2340FAC_Team2\Project\Sprint1-main\app\src\main\AndroidManifest.xml:5:5-34:19
 MERGED from [com.google.android.material:material:1.12.0] C:\Users\etsta\.gradle\caches\transforms-4\3bcd6dfd09fb290d3443a425b548ce8a\transformed\material-1.12.0\AndroidManifest.xml:22:5-20
 MERGED from [com.google.android.material:material:1.12.0] C:\Users\etsta\.gradle\caches\transforms-4\3bcd6dfd09fb290d3443a425b548ce8a\transformed\material-1.12.0\AndroidManifest.xml:22:5-20
 MERGED from [androidx.constraintlayout:constraintlayout:2.1.4] C:\Users\etsta\.gradle\caches\transforms-4\20e1f4fdb39cd30c29f0010b7528742c\transformed\constraintlayout-2.1.4\AndroidManifest.xml:9:5-20
@@ -146,12 +146,12 @@ MERGED from [androidx.startup:startup-runtime:1.1.1] C:\Users\etsta\.gradle\cach
 		ADDED from C:\Users\etsta\Documents\CS2340FAC_Team2\Project\Sprint1-main\app\src\main\AndroidManifest.xml:13:9-51
 	android:dataExtractionRules
 		ADDED from C:\Users\etsta\Documents\CS2340FAC_Team2\Project\Sprint1-main\app\src\main\AndroidManifest.xml:7:9-65
-activity#com.example.sprintproject.view.WelcomeScreen
+activity#com.example.sprintproject.view.SplashScreen
 ADDED from C:\Users\etsta\Documents\CS2340FAC_Team2\Project\Sprint1-main\app\src\main\AndroidManifest.xml:15:9-23:20
 	android:exported
 		ADDED from C:\Users\etsta\Documents\CS2340FAC_Team2\Project\Sprint1-main\app\src\main\AndroidManifest.xml:17:13-36
 	android:name
-		ADDED from C:\Users\etsta\Documents\CS2340FAC_Team2\Project\Sprint1-main\app\src\main\AndroidManifest.xml:16:13-47
+		ADDED from C:\Users\etsta\Documents\CS2340FAC_Team2\Project\Sprint1-main\app\src\main\AndroidManifest.xml:16:13-46
 intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
 ADDED from C:\Users\etsta\Documents\CS2340FAC_Team2\Project\Sprint1-main\app\src\main\AndroidManifest.xml:18:13-22:29
 action#android.intent.action.MAIN
@@ -162,38 +162,42 @@ category#android.intent.category.LAUNCHER
 ADDED from C:\Users\etsta\Documents\CS2340FAC_Team2\Project\Sprint1-main\app\src\main\AndroidManifest.xml:21:17-77
 	android:name
 		ADDED from C:\Users\etsta\Documents\CS2340FAC_Team2\Project\Sprint1-main\app\src\main\AndroidManifest.xml:21:27-74
+activity#com.example.sprintproject.view.WelcomeScreen
+ADDED from C:\Users\etsta\Documents\CS2340FAC_Team2\Project\Sprint1-main\app\src\main\AndroidManifest.xml:24:9-65
+	android:name
+		ADDED from C:\Users\etsta\Documents\CS2340FAC_Team2\Project\Sprint1-main\app\src\main\AndroidManifest.xml:24:19-53
 activity#com.example.sprintproject.view.LoginScreen
-ADDED from C:\Users\etsta\Documents\CS2340FAC_Team2\Project\Sprint1-main\app\src\main\AndroidManifest.xml:24:9-63
+ADDED from C:\Users\etsta\Documents\CS2340FAC_Team2\Project\Sprint1-main\app\src\main\AndroidManifest.xml:25:9-63
 	android:name
-		ADDED from C:\Users\etsta\Documents\CS2340FAC_Team2\Project\Sprint1-main\app\src\main\AndroidManifest.xml:24:19-51
+		ADDED from C:\Users\etsta\Documents\CS2340FAC_Team2\Project\Sprint1-main\app\src\main\AndroidManifest.xml:25:19-51
 activity#com.example.sprintproject.view.RegisterScreen
-ADDED from C:\Users\etsta\Documents\CS2340FAC_Team2\Project\Sprint1-main\app\src\main\AndroidManifest.xml:25:9-66
+ADDED from C:\Users\etsta\Documents\CS2340FAC_Team2\Project\Sprint1-main\app\src\main\AndroidManifest.xml:26:9-66
 	android:name
-		ADDED from C:\Users\etsta\Documents\CS2340FAC_Team2\Project\Sprint1-main\app\src\main\AndroidManifest.xml:25:19-54
+		ADDED from C:\Users\etsta\Documents\CS2340FAC_Team2\Project\Sprint1-main\app\src\main\AndroidManifest.xml:26:19-54
 activity#com.example.sprintproject.view.AccommodationScreen
-ADDED from C:\Users\etsta\Documents\CS2340FAC_Team2\Project\Sprint1-main\app\src\main\AndroidManifest.xml:26:9-71
+ADDED from C:\Users\etsta\Documents\CS2340FAC_Team2\Project\Sprint1-main\app\src\main\AndroidManifest.xml:27:9-71
 	android:name
-		ADDED from C:\Users\etsta\Documents\CS2340FAC_Team2\Project\Sprint1-main\app\src\main\AndroidManifest.xml:26:19-59
+		ADDED from C:\Users\etsta\Documents\CS2340FAC_Team2\Project\Sprint1-main\app\src\main\AndroidManifest.xml:27:19-59
 activity#com.example.sprintproject.view.DestinationScreen
-ADDED from C:\Users\etsta\Documents\CS2340FAC_Team2\Project\Sprint1-main\app\src\main\AndroidManifest.xml:27:9-69
+ADDED from C:\Users\etsta\Documents\CS2340FAC_Team2\Project\Sprint1-main\app\src\main\AndroidManifest.xml:28:9-69
 	android:name
-		ADDED from C:\Users\etsta\Documents\CS2340FAC_Team2\Project\Sprint1-main\app\src\main\AndroidManifest.xml:27:19-57
+		ADDED from C:\Users\etsta\Documents\CS2340FAC_Team2\Project\Sprint1-main\app\src\main\AndroidManifest.xml:28:19-57
 activity#com.example.sprintproject.view.DiningEstablishmentScreen
-ADDED from C:\Users\etsta\Documents\CS2340FAC_Team2\Project\Sprint1-main\app\src\main\AndroidManifest.xml:28:9-77
+ADDED from C:\Users\etsta\Documents\CS2340FAC_Team2\Project\Sprint1-main\app\src\main\AndroidManifest.xml:29:9-77
 	android:name
-		ADDED from C:\Users\etsta\Documents\CS2340FAC_Team2\Project\Sprint1-main\app\src\main\AndroidManifest.xml:28:19-65
+		ADDED from C:\Users\etsta\Documents\CS2340FAC_Team2\Project\Sprint1-main\app\src\main\AndroidManifest.xml:29:19-65
 activity#com.example.sprintproject.view.LogisticsScreen
-ADDED from C:\Users\etsta\Documents\CS2340FAC_Team2\Project\Sprint1-main\app\src\main\AndroidManifest.xml:29:9-67
+ADDED from C:\Users\etsta\Documents\CS2340FAC_Team2\Project\Sprint1-main\app\src\main\AndroidManifest.xml:30:9-67
 	android:name
-		ADDED from C:\Users\etsta\Documents\CS2340FAC_Team2\Project\Sprint1-main\app\src\main\AndroidManifest.xml:29:19-55
+		ADDED from C:\Users\etsta\Documents\CS2340FAC_Team2\Project\Sprint1-main\app\src\main\AndroidManifest.xml:30:19-55
 activity#com.example.sprintproject.view.TransportationScreen
-ADDED from C:\Users\etsta\Documents\CS2340FAC_Team2\Project\Sprint1-main\app\src\main\AndroidManifest.xml:30:9-72
+ADDED from C:\Users\etsta\Documents\CS2340FAC_Team2\Project\Sprint1-main\app\src\main\AndroidManifest.xml:31:9-72
 	android:name
-		ADDED from C:\Users\etsta\Documents\CS2340FAC_Team2\Project\Sprint1-main\app\src\main\AndroidManifest.xml:30:19-60
+		ADDED from C:\Users\etsta\Documents\CS2340FAC_Team2\Project\Sprint1-main\app\src\main\AndroidManifest.xml:31:19-60
 activity#com.example.sprintproject.view.TravelCommunity
-ADDED from C:\Users\etsta\Documents\CS2340FAC_Team2\Project\Sprint1-main\app\src\main\AndroidManifest.xml:31:9-67
+ADDED from C:\Users\etsta\Documents\CS2340FAC_Team2\Project\Sprint1-main\app\src\main\AndroidManifest.xml:32:9-67
 	android:name
-		ADDED from C:\Users\etsta\Documents\CS2340FAC_Team2\Project\Sprint1-main\app\src\main\AndroidManifest.xml:31:19-55
+		ADDED from C:\Users\etsta\Documents\CS2340FAC_Team2\Project\Sprint1-main\app\src\main\AndroidManifest.xml:32:19-55
 uses-sdk
 INJECTED from C:\Users\etsta\Documents\CS2340FAC_Team2\Project\Sprint1-main\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from C:\Users\etsta\Documents\CS2340FAC_Team2\Project\Sprint1-main\app\src\main\AndroidManifest.xml

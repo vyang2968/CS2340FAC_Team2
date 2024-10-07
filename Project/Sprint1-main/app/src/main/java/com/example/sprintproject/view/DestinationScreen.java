@@ -6,11 +6,13 @@ import android.os.Bundle;
 
 import com.example.sprintproject.R;
 
-public class DestinationScreen extends AppCompatActivity {
+public class DestinationScreen extends NavBarScreen {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_destination);
+
+        setupNavBar();
     }
 }

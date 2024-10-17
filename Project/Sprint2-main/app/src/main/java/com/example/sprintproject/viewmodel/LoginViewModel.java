@@ -54,25 +54,6 @@ public class LoginViewModel extends ViewModel {
         }
     }
 
-    public void register(String email, String password) {
-        if (canBeSubmitted()) {
-            authService.registerUser(email, password, new DataCallback<FirebaseUser>() {
-                @Override
-                public void onSuccess(FirebaseUser result) {
-                    Log.i(TAG, "register:success");
-                    authSuccess.setValue(true);
-                }
-
-                @Override
-                public void onError(Exception e) {
-                    Log.i(TAG, "register:failed");
-                    authSuccess.setValue(false);
-                    errorMsg.setValue("Registration failed. Please try again");
-                }
-            });
-        }
-    }
-
     public boolean validateEmail(EditText emailInput) {
         String email = emailInput.getText().toString().trim();
         if (email.isEmpty()) {

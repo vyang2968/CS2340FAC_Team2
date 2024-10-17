@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 
@@ -63,21 +64,35 @@ public class RegisterScreen extends AppCompatActivity {
         registerViewModel.getAuthSuccess().observe(this, authSuccess -> {
             if (authSuccess) {
                 errorText.setVisibility(View.GONE);
-                startActivity(new Intent(RegisterScreen.this, LogisticsScreen.class));
+                registerViewModel.createUser();
+            } else {
+                errorText.setVisibility(View.VISIBLE);
+            }
+        });
+
+        registerViewModel.getCreateSuccess().observe(this, createSuccess -> {
+            if (createSuccess) {
+                errorText.setVisibility(View.GONE);
+            } else {
+                errorText.setVisibility(View.VISIBLE);
+            }
+        });
+
+        registerViewModel.getProceed().observe(this, authSuccess -> {
+            if (authSuccess) {
+                errorText.setVisibility(View.GONE);
+                startActivity(new Intent(this, LogisticsScreen.class));
                 finish();
             } else {
                 errorText.setVisibility(View.VISIBLE);
             }
         });
 
-        registerViewModel.getErrorMsg().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(String error) {
-                if (!error.isEmpty()) {
-                    errorText.setVisibility(View.VISIBLE);
-                } else {
-                    errorText.setVisibility(View.GONE);
-                }
+        registerViewModel.getErrorMsg().observe(this, error -> {
+            if (!error.isEmpty()) {
+                errorText.setVisibility(View.VISIBLE);
+            } else {
+                errorText.setVisibility(View.GONE);
             }
         });
 

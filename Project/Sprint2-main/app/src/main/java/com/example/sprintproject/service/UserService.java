@@ -3,6 +3,7 @@ package com.example.sprintproject.service;
 import com.example.sprintproject.model.User;
 import com.example.sprintproject.repository.UserRepositoryImpl;
 import com.example.sprintproject.utils.DataCallback;
+import com.google.android.gms.tasks.Task;
 
 public class UserService {
     private UserRepositoryImpl userRepository;
@@ -19,14 +20,14 @@ public class UserService {
         return instance;
     }
 
-    public boolean addUser(User user) {
+    public Task<Void> addUser(User user) {
         if (user == null) {
             throw new IllegalArgumentException("user cannot be null");
         } else if (user.getId().isEmpty()) {
             throw new IllegalArgumentException("user id cannot be empty");
         }
 
-        return userRepository.addUser(user).isSuccessful();
+        return userRepository.addUser(user);
     }
 
     public void getUser(String id, DataCallback<User> callback) {

@@ -19,6 +19,8 @@ public class WelcomeScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome_screen);
 
+        AuthService.getInstance().logOutUser();
+
         welcomeViewModel = new ViewModelProvider(this).get(WelcomeViewModel.class);
         TextView welcomeTextSmall = findViewById(R.id.welcome_text_small);
         Button startButton = findViewById(R.id.start_button);

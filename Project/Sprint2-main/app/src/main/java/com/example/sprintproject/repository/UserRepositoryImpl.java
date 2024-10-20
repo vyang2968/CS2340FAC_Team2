@@ -30,19 +30,19 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public void getUserbyId(String id, DataCallback<User> callback) {
+    public void getUserById(String id, DataCallback<User> callback) {
         Log.d(TAG, "getting from users database...");
         usersRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Log.d(TAG, "getUserbyId:sucess");
+                Log.d(TAG, "getUserById:success");
                 User user = snapshot.getValue(User.class);
                 callback.onSuccess(user);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Log.d(TAG, "getUserbyId:failed");
+                Log.d(TAG, "getUserById:failed");
                 callback.onError(error.toException());
             }
         });

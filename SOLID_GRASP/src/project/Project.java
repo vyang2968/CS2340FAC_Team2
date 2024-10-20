@@ -1,18 +1,12 @@
 package project;
-import java.util.List;
 import tasks.Task;
 import teammembers.TeamMember;
+import java.util.List;
 
-public abstract class Project {
-
-    abstract List<Task> getTasks();
-    abstract void addTask(Task task);
-    abstract void removeTask(Task task);
-    
-    void addMember(TeamMember member) {
-        member.joinProject(this);
-    }
-    void removeMember(TeamMember member) {
-        member.leaveProject(this);
-    }
+public interface Project {
+    List<Task> getTasks();
+    void addTask(Task task);
+    void removeTask(Task task);
+    void addMember(TeamMember member);
+    void removeMember(TeamMember member);
 }

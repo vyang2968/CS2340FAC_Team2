@@ -1,6 +1,7 @@
 package teammembers;
 
 import java.util.List;
+import java.util.ArrayList;
 import project.Project;
 
 public abstract class TeamMember {
@@ -11,6 +12,7 @@ public abstract class TeamMember {
     protected TeamMember(String name, String email) {
         this.name = name;
         this.email = email;
+        this.projects = new ArrayList<>();
     }
 
     public String getName() {

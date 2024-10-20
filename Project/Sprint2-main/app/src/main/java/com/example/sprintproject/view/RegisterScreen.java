@@ -64,6 +64,7 @@ public class RegisterScreen extends AppCompatActivity {
         registerViewModel.getAuthSuccess().observe(this, authSuccess -> {
             if (authSuccess) {
                 errorText.setVisibility(View.GONE);
+                Log.i(TAG, "creating user...");
                 registerViewModel.createUser();
             } else {
                 errorText.setVisibility(View.VISIBLE);
@@ -73,14 +74,17 @@ public class RegisterScreen extends AppCompatActivity {
         registerViewModel.getCreateSuccess().observe(this, createSuccess -> {
             if (createSuccess) {
                 errorText.setVisibility(View.GONE);
+                Log.i(TAG, "approving to proceed...");
+                registerViewModel.approveProceed();
             } else {
                 errorText.setVisibility(View.VISIBLE);
             }
         });
 
-        registerViewModel.getProceed().observe(this, authSuccess -> {
-            if (authSuccess) {
+        registerViewModel.getProceed().observe(this, success -> {
+            if (success) {
                 errorText.setVisibility(View.GONE);
+                Log.i(TAG, "switching to next view...");
                 startActivity(new Intent(this, LogisticsScreen.class));
                 finish();
             } else {
@@ -90,6 +94,7 @@ public class RegisterScreen extends AppCompatActivity {
 
         registerViewModel.getErrorMsg().observe(this, error -> {
             if (!error.isEmpty()) {
+                Log.i(TAG, "showing error...");
                 errorText.setVisibility(View.VISIBLE);
             } else {
                 errorText.setVisibility(View.GONE);
@@ -97,6 +102,7 @@ public class RegisterScreen extends AppCompatActivity {
         });
 
         if (AuthService.getInstance().isUserLoggedIn()) {
+            Log.i(TAG, "user already logged in, switiching view");
             startActivity(new Intent(RegisterScreen.this, LogisticsScreen.class));
         }
 

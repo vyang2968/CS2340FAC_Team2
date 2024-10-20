@@ -8,6 +8,7 @@ import com.google.android.gms.tasks.Task;
 public class UserService {
     private UserRepositoryImpl userRepository;
     private static UserService instance;
+    private User user;
 
     private UserService() {
         this.userRepository = new UserRepositoryImpl();
@@ -30,14 +31,33 @@ public class UserService {
         return userRepository.addUser(user);
     }
 
-    public void getUser(String id, DataCallback<User> callback) {
+    public User getUser(String id) {
         if (id == null) {
             throw new IllegalArgumentException("id cannot be null");
         } else if (id.isEmpty()) {
             throw new IllegalArgumentException("id cannot be empty");
         }
 
-        userRepository.getUserbyId(id, callback);
+        userRepository.getUserById(id, new DataCallback<User>() {
+            @Override
+            public void onSuccess(User result) {
+
+            }
+
+            @Override
+            public void onError(Exception e) {
+
+            }
+        });
+        return null;
+    }
+
+    public void setCurrentUser(User user) {
+        this.user = user;
+    }
+
+    public User getCurrentUser() {
+        return user;
     }
 
     public boolean updateUser(User user) {

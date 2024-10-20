@@ -60,6 +60,7 @@ public class LoginScreen extends AppCompatActivity {
         loginViewModel.getAuthSuccess().observe(this, authSuccess -> {
             if (authSuccess) {
                 errorText.setVisibility(View.GONE);
+                Log.i(TAG, "switching view...");
                 startActivity(new Intent(LoginScreen.this, LogisticsScreen.class));
                 finish();
             } else {
@@ -67,18 +68,17 @@ public class LoginScreen extends AppCompatActivity {
             }
         });
 
-        loginViewModel.getErrorMsg().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(String error) {
-                if (!error.isEmpty()) {
-                    errorText.setVisibility(View.VISIBLE);
-                } else {
-                    errorText.setVisibility(View.GONE);
-                }
+        loginViewModel.getErrorMsg().observe(this, error -> {
+            if (!error.isEmpty()) {
+                Log.i(TAG, "showing error...");
+                errorText.setVisibility(View.VISIBLE);
+            } else {
+                errorText.setVisibility(View.GONE);
             }
         });
 
         if (AuthService.getInstance().isUserLoggedIn()) {
+            Log.i(TAG, "user already logged in, switching view...");
             startActivity(new Intent(LoginScreen.this, LogisticsScreen.class));
         }
 

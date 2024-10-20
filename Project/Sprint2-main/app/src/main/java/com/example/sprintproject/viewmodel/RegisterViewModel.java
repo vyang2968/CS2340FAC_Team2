@@ -69,16 +69,21 @@ public class RegisterViewModel extends ViewModel {
 
             user.setId(currUser.getUid());
             user.setEmail(currUser.getEmail());
-            userService.addUser(user).addOnCompleteListener(new OnCompleteListener<Void>() {
-                @Override
-                public void onComplete(@NonNull Task<Void> task) {
-                    if (task.isSuccessful()) {
-                        createSuccess.setValue(true);
-                    } else {
-                        createSuccess.setValue(false);
-                    }
+            userService.addUser(user).addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    Log.i(TAG, "createUser:success");
+                    createSuccess.setValue(true);
+                } else {
+                    Log.i(TAG, "createUser:fail");
+                    createSuccess.setValue(false);
                 }
             });
+        }
+    }
+
+    public void approveProceed() {
+        if (authSuccess.getValue() && createSuccess.getValue()) {
+            proceed.setValue(true);
         }
     }
 

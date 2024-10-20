@@ -7,7 +7,7 @@ import com.google.android.gms.tasks.Task;
 
 public interface UserRepository {
     Task<Void> addUser(User user);
-    void getUserbyId(String id, DataCallback<User> callback);
+    void getUserById(String id, DataCallback<User> callback);
     Task<Void> updateUser(User user);
     Task<Void> deleteUser(String id);
 }

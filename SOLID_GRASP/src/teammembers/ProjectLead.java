@@ -8,7 +8,7 @@ public class ProjectLead extends TeamMember {
     }
 
     @Override
-    public void setDescription() {
-        this.description = "Oversees project and ensures its completion";
+    public void completeTask() {
+        System.out.println("Task has been approved to be complete.");
     }
 }

@@ -17,5 +17,5 @@ public abstract class TeamMember {
         return email;
     }
 
-    public abstract void setDescription();
+    public abstract void completeTask();
 }

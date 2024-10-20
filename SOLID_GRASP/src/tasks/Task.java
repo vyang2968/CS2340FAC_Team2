@@ -7,5 +7,5 @@ public interface Task {
     String getDescription();
     Date getDueDate();
     String getStatus();
-    int getPriority();
+    Priority getPriority();
 }

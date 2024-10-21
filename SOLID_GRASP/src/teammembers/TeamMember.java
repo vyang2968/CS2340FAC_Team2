@@ -1,18 +1,12 @@
 package teammembers;
 
-import java.util.List;
-import java.util.ArrayList;
-import project.Project;
-
 public abstract class TeamMember {
     private String name;
     private String email;
-    private List<Project> projects;
 
     protected TeamMember(String name, String email) {
         this.name = name;
         this.email = email;
-        this.projects = new ArrayList<>();
     }
 
     public String getName() {
@@ -21,14 +15,6 @@ public abstract class TeamMember {
 
     public String getEmail() {
         return email;
-    }
-
-    public void joinProject(Project project) {
-        projects.add(project);
-    }
-
-    public void leaveProject(Project project) {
-        projects.remove(project);
     }
 
     public abstract void completeTask();

@@ -8,4 +8,8 @@ public interface Task {
     Date getDueDate();
     String getStatus();
     Priority getPriority();
+    void setStatus(String status);
+    void setDueDate(Date dueDate);
+
+    void completeTask();
 }

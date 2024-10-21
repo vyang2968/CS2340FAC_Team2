@@ -5,24 +5,22 @@ import java.util.List;
 import java.util.ArrayList;
 import tasks.Task;
 import teammembers.TeamMember;
-import teammembers.ProjectMemberManager;
 
-public class SoftwareProject implements Project {
+public class SoftwareProject implements Project{
 
     private String name;
     private Date startDate;
     private Date endDate;
     private String description;
     private List<Task> tasks;
-    private ProjectMemberManager projectMemberManager;
+
 
     public SoftwareProject(String name, Date startDate, Date endDate) {
         this.name = name;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.description = "A project focused on the development, testing, and deployment of a software product.";
+        this.description = "A project focused on the development, testing, and deployement of a software product.";
         this.tasks = new ArrayList<>();
-        this.projectMemberManager = new ProjectMemberManager();
     }
 
     @Override
@@ -39,12 +37,13 @@ public class SoftwareProject implements Project {
     }
     @Override
     public void addMember(TeamMember member) {
-        projectMemberManager.joinProject(member, this);
+        member.joinProject(this);
     }
     @Override
     public void removeMember(TeamMember member) {
-        projectMemberManager.leaveProject(member, this);
+        member.leaveProject(this);
     }
+
     public String getName() {
         return name;
     }
@@ -67,3 +66,4 @@ public class SoftwareProject implements Project {
         return description;
     }
 }
+

@@ -86,7 +86,7 @@ public class LoginViewModel extends ViewModel {
     }
 
     public boolean canBeSubmitted() {
-        Log.i(TAG, "canBeSubmitted:" + String.valueOf(emailValid && passwordValid));
+        Log.i(TAG, "canBeSubmitted:" + (emailValid && passwordValid));
         return emailValid && passwordValid;
     }
 

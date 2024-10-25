@@ -29,16 +29,16 @@ public class DestinationScreen extends NavBarScreen {
         setContentView(R.layout.activity_destination);
         EdgeToEdge.enable(this);
 
-        ActivityDestinationScreen binding =
-                ActivityDestinationScreen.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+//        ActivityDestinationScreen binding =
+//                ActivityDestinationScreen.inflate(getLayoutInflater());
+//        setContentView(binding.getRoot());
 
         setupNavBar();
 
         DestinationViewModel destinationViewModel =
                 new ViewModelProvider(this).get(DestinationViewModel.class);
-        binding.setVariable(BR.destViewModel, destinationViewModel);
-        binding.setLifecycleOwner(this);
+//        binding.setVariable(BR.destViewModel, destinationViewModel);
+//        binding.setLifecycleOwner(this);
 
         ToggleButton logOpenButton = findViewById(0);
         ToggleButton calculateOpenButton = findViewById(0);

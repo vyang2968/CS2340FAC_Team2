@@ -1,9 +1,14 @@
 package com.example.sprintproject.service;
 
+import android.util.Log;
+
 import com.example.sprintproject.model.Destination;
 import com.example.sprintproject.repository.DestinationRepositoryImpl;
 import com.example.sprintproject.utils.DataCallback;
 import com.google.android.gms.tasks.Task;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class DestinationService {
     private DestinationRepositoryImpl destinationRepository;
@@ -50,5 +55,20 @@ public class DestinationService {
         return null;
     }
 
+    public List<Destination> getFirstKDestinations(int k) {
+        List<Destination> destinations = new ArrayList<>();
+        destinationRepository.getFirstKDestinations(k, new DataCallback<List<Destination>>() {
+            @Override
+            public void onSuccess(List<Destination> result) {
+                destinations.addAll(result);
+            }
 
+            @Override
+            public void onError(Exception e) {
+
+            }
+        });
+
+        return destinations;
+    }
 }

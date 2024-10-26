@@ -7,5 +7,9 @@ public interface Task {
     String getDescription();
     Date getDueDate();
     String getStatus();
-    int getPriority();
+    Priority getPriority();
+    void setStatus(String status);
+    void setDueDate(Date dueDate);
+
+    void completeTask();
 }

@@ -1,6 +1,7 @@
 package com.example.sprintproject.model;
 
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 public class Destination {
     private String id;
@@ -39,6 +40,12 @@ public class Destination {
 
     public void setStartDate(Date startDate) {
         this.startDate = startDate;
+    }
+
+    public int getDurationInDays() {
+        long milliseconds = endDate.getTime() - startDate.getTime();
+
+        return (int)TimeUnit.DAYS.convert(milliseconds, TimeUnit.MILLISECONDS);
     }
 
     public String getDestination() {

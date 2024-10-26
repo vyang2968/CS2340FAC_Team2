@@ -17,7 +17,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseUser;
 
-public class RegisterViewModel extends ViewModel {
+public class RegisterViewModel extends AuthViewModel {
     private static final String TAG = "RegisterViewModel";
     private MutableLiveData<Boolean> authSuccess;
     private MutableLiveData<Boolean> createSuccess;
@@ -49,12 +49,12 @@ public class RegisterViewModel extends ViewModel {
             authService.registerUser(email, password, new DataCallback<FirebaseUser>() {
                 @Override
                 public void onSuccess(FirebaseUser result) {
-                    Log.i(TAG, "register:success");
+                    logInfo("register:success");
                     authSuccess.setValue(true);
                 }
                 @Override
                 public void onError(Exception e) {
-                    Log.i(TAG, "register:failed");
+                    logInfo("register:failed");
                     authSuccess.setValue(false);
                     errorMsg.setValue("Registration failed. Please try again");
                 }
@@ -71,10 +71,10 @@ public class RegisterViewModel extends ViewModel {
             user.setEmail(currUser.getEmail());
             userService.addUser(user).addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
-                    Log.i(TAG, "createUser:success");
+                    logInfo("createUser:success");
                     createSuccess.setValue(true);
                 } else {
-                    Log.i(TAG, "createUser:fail");
+                    logInfo("createUser:fail");
                     createSuccess.setValue(false);
                 }
             });
@@ -85,22 +85,6 @@ public class RegisterViewModel extends ViewModel {
         if (authSuccess.getValue() && createSuccess.getValue()) {
             proceed.setValue(true);
         }
-    }
-
-    public boolean validateEmail(EditText emailInput) {
-        String email = emailInput.getText().toString().trim();
-        if (email.isEmpty()) {
-            emailInput.setError("Field cannot be empty");
-        } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            emailInput.setError("Field needs to be a valid email");
-        } else {
-            emailInput.setError(null);
-        }
-
-        emailValid = emailInput.getError() == null;
-        Log.i(TAG, "emailValid:" + emailValid);
-
-        return emailValid;
     }
 
     public boolean validatePassword(EditText passwordInput) {
@@ -115,7 +99,7 @@ public class RegisterViewModel extends ViewModel {
         }
 
         passwordValid = passwordInput.getError() == null;
-        Log.i(TAG, "passwordValid:" + passwordValid);
+        logInfo("passwordValid:" + passwordValid);
 
         return passwordValid;
     }
@@ -137,7 +121,7 @@ public class RegisterViewModel extends ViewModel {
     }
 
     public boolean canBeSubmitted() {
-        Log.i(TAG, "canBeSubmitted:" + String.valueOf(emailValid && passwordValid && passwordsMatch));
+        logInfo("canBeSubmitted:" + String.valueOf(emailValid && passwordValid && passwordsMatch));
         return emailValid && passwordValid && passwordsMatch;
     }
     
@@ -157,4 +141,8 @@ public class RegisterViewModel extends ViewModel {
         return errorMsg;
     }
 
+    @Override
+    public String getTag() {
+        return TAG;
+    }
 }

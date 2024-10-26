@@ -42,6 +42,12 @@ public class DestinationViewModel extends ViewModel {
         this.userService = UserService.getInstance();
         this.destinationService = DestinationService.getInstance();
         this.currUser = userService.getCurrentUser();
+        this.destination = new Destination();
+
+        this.logErrorMsg = new MutableLiveData<>();
+        this.calcErrorMsg = new MutableLiveData<>();
+        this.submitted = new MutableLiveData<>();
+
         this.locationValid = false;
         this.destStartDateValid = false;
         this.destEndDateValid = false;
@@ -158,6 +164,10 @@ public class DestinationViewModel extends ViewModel {
         }
 
         durationValid = durationInput.getError() == null;
+
+        if (durationValid) {
+            currUser.setDuration((int) duration);
+        }
     }
 
     public boolean updateUser() {

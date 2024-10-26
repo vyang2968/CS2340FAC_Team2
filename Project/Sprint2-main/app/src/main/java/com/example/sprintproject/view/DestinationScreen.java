@@ -2,6 +2,8 @@ package com.example.sprintproject.view;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AlertDialog;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -60,30 +62,27 @@ public class DestinationScreen extends NavBarScreen {
         EditText durationInput = findViewById(0);
         TextView calcErrorDisplay = findViewById(0);
 
-        // result area components
-        LinearLayout resultArea = findViewById(0);
-        Button resetButton = findViewById(0);
-
-        // populate destinations
+        // TODO: populate destinations
         LinearLayout destArea = findViewById(0);
         List<Destination> destinations = destinationViewModel.getDestinations();
 
         // submitted observer
-        destinationViewModel.getSubmitted().observe(this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean bool) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(DestinationScreen.this);
-                builder.setMessage("Successfully submitted!");
-                builder.create();
+        destinationViewModel.getSubmitted().observe(this, bool -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(DestinationScreen.this);
+            builder.setMessage("Successfully submitted!");
+            builder.create();
 
-                if (bool) {
-                    builder.show();
-                }
+            if (bool) {
+                builder.show();
             }
         });
 
         // logOpenButton clicked
         logOpenButton.setOnClickListener(view -> {
+            if (calculateOpenButton.isChecked()) {
+                calcArea.setVisibility(View.GONE);
+            }
+
             if (logOpenButton.isChecked()) {
                 logArea.setVisibility(View.VISIBLE);
 
@@ -111,6 +110,10 @@ public class DestinationScreen extends NavBarScreen {
         });
 
         calculateOpenButton.setOnClickListener(view -> {
+            if (logOpenButton.isChecked()) {
+                logArea.setVisibility(View.GONE);
+            }
+
             if (calculateOpenButton.isChecked()) {
                 calcArea.setVisibility(View.VISIBLE);
 
@@ -124,6 +127,8 @@ public class DestinationScreen extends NavBarScreen {
                     boolean success = destinationViewModel.updateUser();
                     if (success) {
                         calcErrorDisplay.setVisibility(View.GONE);
+
+                        calcArea.setVisibility(View.GONE);
                     } else {
                         calcErrorDisplay.setVisibility(View.VISIBLE);
                     }

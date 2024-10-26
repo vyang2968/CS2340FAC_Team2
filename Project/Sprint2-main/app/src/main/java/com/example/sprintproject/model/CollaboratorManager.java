@@ -5,7 +5,7 @@ import java.util.List;
 
 public class CollaboratorManager {
     private User creator;
-    private List<User> collaborators;
+    private final List<User> collaborators;
 
     public CollaboratorManager() {
         this.collaborators = new ArrayList<>();
@@ -18,6 +18,10 @@ public class CollaboratorManager {
 
     public void removeCollaborator(User user) {
         collaborators.remove(user);
+    }
+
+    public boolean hasCollaborator(User user) {
+        return collaborators.contains(user);
     }
 
     public User getCreator() {

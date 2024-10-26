@@ -3,15 +3,13 @@ package com.example.sprintproject.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CollaborationManager {
+public class CollaboratorManager {
+    private User creator;
     private List<User> collaborators;
 
-    public CollaborationManager(List<User> collaborators) {
-        this.collaborators = collaborators;
-    }
-
-    public CollaborationManager() {
+    public CollaboratorManager() {
         this.collaborators = new ArrayList<>();
+        this.creator = new User();
     }
 
     public void addCollaborator(User user) {
@@ -20,5 +18,13 @@ public class CollaborationManager {
 
     public void removeCollaborator(User user) {
         collaborators.remove(user);
+    }
+
+    public User getCreator() {
+        return creator;
+    }
+
+    public void setCreator(User creator) {
+        this.creator = creator;
     }
 }

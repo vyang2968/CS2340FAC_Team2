@@ -7,14 +7,14 @@ public class Destination {
     private String destination;
     private Date startDate;
     private Date endDate;
-    private CollaborationManager collaborationManager;
+    private CollaboratorManager collaboratorManager;
 
     public Destination() {
         this.id = "";
         this.destination = "";
         this.startDate = new Date();
         this.endDate = new Date();
-        this.collaborationManager = new CollaborationManager();
+        this.collaboratorManager = new CollaboratorManager();
     }
 
     public String getId() {
@@ -49,7 +49,7 @@ public class Destination {
         this.destination = destination;
     }
 
-    public CollaborationManager getCollaborationManager() {
-        return collaborationManager;
+    public CollaboratorManager getCollaboratorManager() {
+        return collaboratorManager;
     }
 }

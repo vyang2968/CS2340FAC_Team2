@@ -8,15 +8,18 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.GridLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.example.sprintproject.BR;
 import com.example.sprintproject.R;
+import com.example.sprintproject.databinding.ActivityDestinationBinding;
 import com.example.sprintproject.model.Destination;
 import com.example.sprintproject.viewmodel.DestinationViewModel;
 
@@ -24,6 +27,7 @@ import java.util.Date;
 import java.util.List;
 
 public class DestinationScreen extends NavBarScreen {
+    public final String TAG = "DestinationScreen";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,19 +35,19 @@ public class DestinationScreen extends NavBarScreen {
         setContentView(R.layout.activity_destination);
         EdgeToEdge.enable(this);
 
-//        ActivityDestinationScreen binding =
-//                ActivityDestinationScreen.inflate(getLayoutInflater());
-//        setContentView(binding.getRoot());
+        ActivityDestinationBinding binding =
+                ActivityDestinationBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         setupNavBar();
 
         DestinationViewModel destinationViewModel =
                 new ViewModelProvider(this).get(DestinationViewModel.class);
-//        binding.setVariable(BR.destViewModel, destinationViewModel);
-//        binding.setLifecycleOwner(this);
+        binding.setVariable(BR.destViewModel, destinationViewModel);
+        binding.setLifecycleOwner(this);
 
-        ToggleButton logOpenButton = findViewById(0);
-        ToggleButton calculateOpenButton = findViewById(0);
+        ToggleButton logOpenButton = findViewById(R.id.logOpenButton);
+        ToggleButton calculateOpenButton = findViewById(R.id.calculateOpenButton);
 
         // log area components
         LinearLayout logArea = findViewById(0);
@@ -55,16 +59,36 @@ public class DestinationScreen extends NavBarScreen {
         TextView logErrorDisplay = findViewById(0);
 
         // calculate area components
-        LinearLayout calcArea = findViewById(0);
-        Button calculateButton = findViewById(0);
-        EditText userStartDateInput = findViewById(0);
-        EditText userEndDateInput = findViewById(0);
-        EditText durationInput = findViewById(0);
-        TextView calcErrorDisplay = findViewById(0);
+        LinearLayout calcArea = findViewById(R.id.calcArea);
+        Button calculateButton = findViewById(R.id.calculateButton);
+        EditText userStartDateInput = findViewById(R.id.userStartDateInput);
+        EditText userEndDateInput = findViewById(R.id.userEndDateInput);
+        EditText durationInput = findViewById(R.id.durationInput);
+        TextView calcErrorDisplay = findViewById(R.id.calcError);
 
         // TODO: populate destinations
-        LinearLayout destArea = findViewById(0);
+        LinearLayout destArea = findViewById(R.id.destinationsArea);
         List<Destination> destinations = destinationViewModel.getDestinations();
+//        for (int i = 0; i < 5; i++) {
+//            Destination curr = destinations.get(i);
+//            String destination = (curr.getDestination() != null) ? curr.getDestination() : "Destination";
+//            int day = (curr.getDurationInDays() != -1) ? curr.getDurationInDays() : 0;
+//            String dayString = String.format("%d days planned", day);
+//
+//            GridLayout grid = new GridLayout(this);
+//            grid.setRowCount(1);
+//            grid.setColumnCount(2);
+//
+//            TextView dest = new TextView(this);
+//            TextView days = new TextView(this);
+//            dest.setText(destination);
+//            days.setText(dayString);
+//
+//            grid.addView(dest);
+//            grid.addView(days);
+//
+//            destArea.addView(grid);
+//        }
 
         // submitted observer
         destinationViewModel.getSubmitted().observe(this, bool -> {
@@ -109,6 +133,17 @@ public class DestinationScreen extends NavBarScreen {
             }
         });
 
+        // updateUser success observer
+        destinationViewModel.getUpdateUserSuccess().observe(this, bool -> {
+            if (bool) {
+                calcErrorDisplay.setVisibility(View.GONE);
+
+                calcArea.setVisibility(View.GONE);
+            } else {
+                calcErrorDisplay.setVisibility(View.VISIBLE);
+            }
+        });
+
         calculateOpenButton.setOnClickListener(view -> {
             if (logOpenButton.isChecked()) {
                 logArea.setVisibility(View.GONE);
@@ -118,20 +153,15 @@ public class DestinationScreen extends NavBarScreen {
                 calcArea.setVisibility(View.VISIBLE);
 
                 calculateButton.setOnClickListener(view1 -> {
+                    Log.i(TAG, "calcButton clicked");
+
                     Date start = destinationViewModel.setUserStartDate(userStartDateInput);
                     Date end = destinationViewModel.setUserEndDate(userEndDateInput);
                     long duration = destinationViewModel.dateDifference(start, end);
 
                     destinationViewModel.setDuration(durationInput, duration);
 
-                    boolean success = destinationViewModel.updateUser();
-                    if (success) {
-                        calcErrorDisplay.setVisibility(View.GONE);
-
-                        calcArea.setVisibility(View.GONE);
-                    } else {
-                        calcErrorDisplay.setVisibility(View.VISIBLE);
-                    }
+                    destinationViewModel.updateUser();
                 });
             } else {
                 calcArea.setVisibility(View.GONE);

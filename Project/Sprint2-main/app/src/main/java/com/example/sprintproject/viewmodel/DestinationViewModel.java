@@ -3,6 +3,7 @@ package com.example.sprintproject.viewmodel;
 import android.util.Log;
 import android.widget.EditText;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -11,11 +12,16 @@ import com.example.sprintproject.model.Destination;
 import com.example.sprintproject.model.User;
 import com.example.sprintproject.service.DestinationService;
 import com.example.sprintproject.service.UserService;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 
 import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 public class DestinationViewModel extends ViewModel {
@@ -29,6 +35,7 @@ public class DestinationViewModel extends ViewModel {
     private MutableLiveData<String> calcErrorMsg;
 
     private MutableLiveData<Boolean> submitted;
+    private MutableLiveData<Boolean> updateUserSuccess;
 
     private boolean locationValid;
     private boolean destStartDateValid;
@@ -47,6 +54,7 @@ public class DestinationViewModel extends ViewModel {
         this.logErrorMsg = new MutableLiveData<>();
         this.calcErrorMsg = new MutableLiveData<>();
         this.submitted = new MutableLiveData<>();
+        this.updateUserSuccess = new MutableLiveData<>();
 
         this.locationValid = false;
         this.destStartDateValid = false;
@@ -100,8 +108,10 @@ public class DestinationViewModel extends ViewModel {
     }
 
     private Date parseDate(EditText input) {
+        Log.i(TAG, "parsing " + input.getText().toString());
         try {
-            Date date = DateFormat.getDateInstance().parse(input.getText().toString());
+            SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
+            Date date = format.parse(input.getText().toString());
             Log.i(TAG, "parseDate:success");
             return date;
         } catch (ParseException error) {
@@ -113,6 +123,7 @@ public class DestinationViewModel extends ViewModel {
 
     public boolean addDestination() {
         if (locationValid && destStartDateValid && destEndDateValid) {
+            Log.i(TAG, "adding destination...");
             logErrorMsg.setValue(null);
             destination.getCollaboratorManager().setCreator(currUser);
             destinationService.addDestination(destination);
@@ -160,22 +171,35 @@ public class DestinationViewModel extends ViewModel {
                 durationInput.setError(msg);
             }
         } else {
+            Log.i(TAG, "filled in duration");
             durationInput.setText(String.valueOf(duration));
         }
 
         durationValid = durationInput.getError() == null;
 
         if (durationValid) {
+            Log.i(TAG, "setDuration:success");
             currUser.setDuration((int) duration);
         }
     }
 
-    public boolean updateUser() {
-        if (durationValid && userStartDateValid && userEndDateValid) {
-            return userService.updateUser(currUser);
+    public void updateUser() {
+        if (durationValid && destStartDateValid && destEndDateValid) {
+            Log.i(TAG, "updating user");
+            userService.updateUser(currUser).addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    updateUserSuccess.setValue(true);
+                    submitted.setValue(true);
+                } else {
+                    updateUserSuccess.setValue(false);
+                    submitted.setValue(false);
+                }
+            });
         } else {
+            Log.i(TAG, String.format("field errors present. duration: %b, start: %b, end: %b", durationValid, destStartDateValid, destEndDateValid));
             calcErrorMsg.setValue("Please fix required fields before submitting");
-            return false;
+            updateUserSuccess.setValue(false);
+            submitted.setValue(false);
         }
     }
 
@@ -191,6 +215,10 @@ public class DestinationViewModel extends ViewModel {
 
         long diff = x - y;
         return TimeUnit.MILLISECONDS.toDays(diff);
+    }
+
+    public LiveData<Boolean> getUpdateUserSuccess() {
+        return updateUserSuccess;
     }
 
     public void setSubmitted(boolean val) {

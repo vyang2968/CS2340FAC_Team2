@@ -5,6 +5,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.example.sprintproject.model.User;
 import com.example.sprintproject.utils.DataCallback;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -19,9 +20,11 @@ public class AuthService {
     private static final String TAG = "AuthService";
     private FirebaseAuth auth;
     private static AuthService instance;
+    private UserService userService;
 
     private AuthService() {
         auth = FirebaseAuth.getInstance();
+        userService = UserService.getInstance();
     }
 
     public static AuthService getInstance() {
@@ -37,6 +40,7 @@ public class AuthService {
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         Log.d(TAG, "registerUser:success");
+                        setCurrentUser();
                         callback.onSuccess(getUser());
                     } else {
                         Log.d(TAG, "registerUser:failed", task.getException());
@@ -50,12 +54,21 @@ public class AuthService {
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         Log.d(TAG, "login:success");
+                        setCurrentUser();
                         callback.onSuccess(getUser());
                     } else {
                         Log.d(TAG, "login:failed", task.getException());
                         callback.onError(task.getException());
                     }
                 });
+    }
+
+    public void setCurrentUser() {
+        Log.i(TAG, "setting current user...");
+        User user = new User();
+        user.setId(getUser().getUid());
+        user.setEmail(getUser().getEmail());
+        userService.setCurrentUser(user);
     }
 
     public void logOutUser() {

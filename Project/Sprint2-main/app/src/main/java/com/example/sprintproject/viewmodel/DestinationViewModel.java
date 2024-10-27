@@ -3,6 +3,7 @@ package com.example.sprintproject.viewmodel;
 import android.util.Log;
 import android.widget.EditText;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -11,11 +12,18 @@ import com.example.sprintproject.model.Destination;
 import com.example.sprintproject.model.User;
 import com.example.sprintproject.service.DestinationService;
 import com.example.sprintproject.service.UserService;
+import com.example.sprintproject.utils.DataCallback;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 
 import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 public class DestinationViewModel extends ViewModel {
@@ -27,8 +35,16 @@ public class DestinationViewModel extends ViewModel {
 
     private MutableLiveData<String> logErrorMsg;
     private MutableLiveData<String> calcErrorMsg;
+    private MutableLiveData<List<Destination>> destinations;
 
     private MutableLiveData<Boolean> submitted;
+    private MutableLiveData<Boolean> updateUserSuccess;
+    private MutableLiveData<Boolean> addDestSuccess;
+
+    private MutableLiveData<Boolean> userStartDateHasValue;
+    private MutableLiveData<Boolean> userEndDateHasValue;
+    private MutableLiveData<Boolean> userDurationHasValue;
+    private MutableLiveData<Boolean> userHasTwoValues;
 
     private boolean locationValid;
     private boolean destStartDateValid;
@@ -42,6 +58,18 @@ public class DestinationViewModel extends ViewModel {
         this.userService = UserService.getInstance();
         this.destinationService = DestinationService.getInstance();
         this.currUser = userService.getCurrentUser();
+        this.destination = new Destination();
+
+        this.logErrorMsg = new MutableLiveData<>();
+        this.calcErrorMsg = new MutableLiveData<>();
+        this.submitted = new MutableLiveData<>();
+        this.updateUserSuccess = new MutableLiveData<>();
+        this.addDestSuccess = new MutableLiveData<>();
+        this.destinations = new MutableLiveData<>();
+        this.userStartDateHasValue = new MutableLiveData<>();
+        this.userEndDateHasValue = new MutableLiveData<>();
+        this.userDurationHasValue = new MutableLiveData<>();
+
         this.locationValid = false;
         this.destStartDateValid = false;
         this.destEndDateValid = false;
@@ -49,9 +77,27 @@ public class DestinationViewModel extends ViewModel {
         this.userEndDateValid = false;
     }
 
+    public void queryForDestinations() {
+        destinations.setValue(new ArrayList<>());
+        destinationService.getFirstKDestinations(5, new DataCallback<List<Destination>>() {
+            @Override
+            public void onSuccess(List<Destination> result) {
+                Log.i(TAG, "getDestinations:success");
+                destinations.setValue(result);
+            }
+
+            @Override
+            public void onError(Exception e) {
+                Log.d(TAG, "getDestinations:failed");
+                destinations.setValue(new ArrayList<>());
+            }
+        });
+    }
+
     public void setLocation(EditText locationInput) {
         if (validateLocation(locationInput)) {
             destination.setDestination(locationInput.getText().toString());
+            Log.i(TAG, "setLocation:success");
         }
     }
 
@@ -93,30 +139,27 @@ public class DestinationViewModel extends ViewModel {
         return endDate;
     }
 
-    private Date parseDate(EditText input) {
-        try {
-            Date date = DateFormat.getDateInstance().parse(input.getText().toString());
-            Log.i(TAG, "parseDate:success");
-            return date;
-        } catch (ParseException error) {
-            Log.d(TAG, "date could not be parsed");
-            input.setError("start");
-            return null;
-        }
-    }
-
-    public boolean addDestination() {
+    public void addDestination() {
         if (locationValid && destStartDateValid && destEndDateValid) {
+            Log.i(TAG, "adding destination...");
             logErrorMsg.setValue(null);
             destination.getCollaboratorManager().setCreator(currUser);
-            destinationService.addDestination(destination);
-            setSubmitted(true);
-
-            return true;
+            destinationService.addDestination(destination).addOnCompleteListener(bool -> {
+                if (bool.isSuccessful()) {
+                    Log.i(TAG, "addDestination:success");
+                    addDestSuccess.setValue(true);
+                    submitted.setValue(true);
+                } else {
+                    Log.i(TAG, "addDestination:fail");
+                    addDestSuccess.setValue(false);
+                    submitted.setValue(false);
+                }
+            });
         } else {
+            Log.i(TAG, String.format("field errors present. location: %b, start: %b, end: %b", locationValid, destStartDateValid, destEndDateValid));
             logErrorMsg.setValue("Please fix required fields before submitting");
-            setSubmitted(false);
-            return false;
+            addDestSuccess.setValue(false);
+            submitted.setValue(false);
         }
     }
 
@@ -124,12 +167,11 @@ public class DestinationViewModel extends ViewModel {
         Date startDate = parseDate(startDateInput);
 
         if (startDate != null) {
-            destStartDateValid = true;
             currUser.setStartDate(startDate);
             Log.i(TAG, "setUserStartDate:success");
         }
 
-        destStartDateValid = startDateInput.getError() == null;
+        userStartDateValid = startDateInput.getError() == null;
         return startDate;
     }
 
@@ -141,7 +183,7 @@ public class DestinationViewModel extends ViewModel {
             Log.i(TAG, "setUserEndDate:success");
         }
 
-        destEndDateValid = endDateInput.getError() == null;
+        userEndDateValid = endDateInput.getError() == null;
         return endDate;
     }
 
@@ -154,37 +196,115 @@ public class DestinationViewModel extends ViewModel {
                 durationInput.setError(msg);
             }
         } else {
+            Log.i(TAG, "filled in duration");
             durationInput.setText(String.valueOf(duration));
         }
 
         durationValid = durationInput.getError() == null;
-    }
 
-    public boolean updateUser() {
-        if (durationValid && userStartDateValid && userEndDateValid) {
-            return userService.updateUser(currUser);
-        } else {
-            calcErrorMsg.setValue("Please fix required fields before submitting");
-            return false;
+        if (durationValid) {
+            Log.i(TAG, "setDuration:success");
+            currUser.setDuration((int) duration);
         }
     }
 
+    public void updateUser() {
+        if (durationValid && userStartDateValid && userEndDateValid) {
+            Log.i(TAG, "updating user...");
+            userService.updateUser(currUser).addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    Log.i(TAG, "updateUser:success");
+                    updateUserSuccess.setValue(true);
+                    submitted.setValue(true);
+                } else {
+                    Log.i(TAG, "updateUser:fail");
+                    updateUserSuccess.setValue(false);
+                    submitted.setValue(false);
+                }
+            });
+        } else {
+            Log.i(TAG, String.format("field errors present. duration: %b, start: %b, end: %b", durationValid, userStartDateValid, userEndDateValid));
+            calcErrorMsg.setValue("Please fix required fields before submitting");
+            updateUserSuccess.setValue(false);
+            submitted.setValue(false);
+        }
+    }
+
+    public void calculateHasTwoValues() {
+        userHasTwoValues.setValue(
+                userStartDateHasValue.getValue() &&
+                userEndDateHasValue.getValue() &&
+                userDurationHasValue.getValue()
+        );
+    }
+
+    
+
     public long dateDifference(Date a, Date b) {
+        if (a == null || b == null) {
+            Log.i(TAG, "one of inputs is null");
+            return -1;
+        }
+
         long x = a.getTime();
         long y = b.getTime();
 
-        if (y > x) {
-            long temp = x;
-            x = y;
-            y = temp;
+        if (x > y) {
+            Log.i(TAG, "invalid inputs, x > y");
+            calcErrorMsg.setValue("start date must be smaller than end date");
+            return -1;
+        } else {
+            Log.i(TAG, "valid inputs");
+            calcErrorMsg.setValue(null);
+            long diff = y - x;
+            return TimeUnit.MILLISECONDS.toDays(diff);
         }
-
-        long diff = x - y;
-        return TimeUnit.MILLISECONDS.toDays(diff);
     }
 
-    public void setSubmitted(boolean val) {
-        submitted.setValue(val);
+    private Date parseDate(EditText input) {
+        Log.i(TAG, "parsing " + input.getText().toString());
+        try {
+            SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
+            Date date = format.parse(input.getText().toString());
+            Log.i(TAG, "parseDate:success");
+            return date;
+        } catch (ParseException error) {
+            Log.d(TAG, "date could not be parsed");
+            input.setError("date must be mm/dd/yyyy format");
+            return null;
+        }
+    }
+
+    public MutableLiveData<Boolean> getUserDurationHasValue() {
+        return userDurationHasValue;
+    }
+
+    public void setUserDurationHasValue(boolean userDurationHasValue) {
+        this.userDurationHasValue.setValue(userDurationHasValue);
+    }
+
+    public MutableLiveData<Boolean> getUserEndDateHasValue() {
+        return userEndDateHasValue;
+    }
+
+    public void setUserEndDateHasValue(boolean userEndDateHasValue) {
+        this.userEndDateHasValue.setValue(userEndDateHasValue);
+    }
+
+    public MutableLiveData<Boolean> getUserStateDateHasValue() {
+        return userStartDateHasValue;
+    }
+
+    public void setUserStateDateHasValue(boolean userStateDateHasValue) {
+        this.userStartDateHasValue.setValue(userStateDateHasValue);
+    }
+
+    public LiveData<Boolean> getUpdateUserSuccess() {
+        return updateUserSuccess;
+    }
+
+    public LiveData<Boolean> getAddDestSuccess() {
+        return addDestSuccess;
     }
 
     public LiveData<Boolean> getSubmitted() {
@@ -195,15 +315,11 @@ public class DestinationViewModel extends ViewModel {
         return logErrorMsg;
     }
 
-    public List<Destination> getDestinations() {
-        List<Destination> result = destinationService.getFirstKDestinations(10);
+    public LiveData<String> getCalcErrorMsg() {
+        return calcErrorMsg;
+    }
 
-        if (!result.isEmpty()) {
-            Log.i(TAG, "returning destinations...");
-            return result;
-        } else {
-            Log.d(TAG, "no results!");
-            return null;
-        }
+    public LiveData<List<Destination>> getDestinations() {
+        return destinations;
     }
 }

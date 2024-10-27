@@ -131,27 +131,31 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="vertical">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+                            <Button
+                                android:id="@+id/cancelButton"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="15dp"
+                                android:layout_marginTop="5dp"
+                                android:layout_marginEnd="15dp"
+                                android:layout_weight="1"
+                                android:text="Cancel" />
 
-                        <Button
-                            android:id="@+id/cancelButton"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="15dp"
-                            android:layout_marginTop="5dp"
-                            android:layout_marginEnd="15dp"
-                            android:layout_weight="1"
-                            android:text="Cancel" />
+                            <Button
+                                android:id="@+id/submitButton"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="15dp"
+                                android:layout_marginTop="5dp"
+                                android:layout_marginEnd="15dp"
+                                android:layout_weight="1"
+                                android:text="Submit" />
+                        </LinearLayout>
 
-                        <Button
-                            android:id="@+id/submitButton"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="15dp"
-                            android:layout_marginTop="5dp"
-                            android:layout_marginEnd="15dp"
-                            android:layout_weight="1"
-                            android:text="Submit" />
                         <TextView
                             android:id="@+id/logErrorDisplay"
                             android:layout_width="match_parent"
@@ -160,9 +164,10 @@
                             android:textAlignment="center"
                             android:textSize="10dp"
                             android:layout_marginTop="10dp"
-                            android:visibility="gone"
+                            android:visibility="visible"
                             android:textColor="#FF0000" />
                     </LinearLayout>
+
                 </LinearLayout>
 
                 <ToggleButton
@@ -246,7 +251,7 @@
                         android:textAlignment="center"
                         android:textSize="10dp"
                         android:layout_marginTop="10dp"
-                        android:visibility="gone"
+                        android:visibility="visible"
                         android:textColor="#FF0000" />
                 </LinearLayout>
 
@@ -270,10 +275,10 @@
                     android:id="@+id/destArea"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:background="#E0E0E0"
+                    android:layout_marginTop="50dp">
                 </LinearLayout>
-
-
             </LinearLayout>
         </ScrollView>
 

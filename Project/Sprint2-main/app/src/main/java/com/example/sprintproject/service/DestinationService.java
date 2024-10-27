@@ -13,6 +13,7 @@ import java.util.List;
 public class DestinationService {
     private DestinationRepositoryImpl destinationRepository;
     private static DestinationService instance;
+    private static final String TAG = "DestService";
 
     private DestinationService() {
         this.destinationRepository = new DestinationRepositoryImpl();
@@ -55,20 +56,8 @@ public class DestinationService {
         return null;
     }
 
-    public List<Destination> getFirstKDestinations(int k) {
+    public void getFirstKDestinations(int k, DataCallback<List<Destination>> callback) {
         List<Destination> destinations = new ArrayList<>();
-        destinationRepository.getFirstKDestinations(k, new DataCallback<List<Destination>>() {
-            @Override
-            public void onSuccess(List<Destination> result) {
-                destinations.addAll(result);
-            }
-
-            @Override
-            public void onError(Exception e) {
-
-            }
-        });
-
-        return destinations;
+        destinationRepository.getFirstKDestinations(k, callback);
     }
 }

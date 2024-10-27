@@ -40,32 +40,32 @@ public class DestinationScreen extends NavBarScreen {
 //        binding.setVariable(BR.destViewModel, destinationViewModel);
 //        binding.setLifecycleOwner(this);
 
-        ToggleButton logOpenButton = findViewById(0);
-        ToggleButton calculateOpenButton = findViewById(0);
+        ToggleButton logOpenButton = findViewById(R.id.logOpenButton);
+        ToggleButton calculateOpenButton = findViewById(R.id.calculateOpenButton);
 
         // log area components
-        LinearLayout logArea = findViewById(0);
-        Button cancelButton = findViewById(0);
-        Button submitButton = findViewById(0);
-        EditText locationInput = findViewById(0);
-        EditText destStartDateInput = findViewById(0);
-        EditText destEndDateInput = findViewById(0);
-        TextView logErrorDisplay = findViewById(0);
+        LinearLayout logArea = findViewById(R.id.logArea);
+        Button cancelButton = findViewById(R.id.cancelButton);
+        Button submitButton = findViewById(R.id.submitButton);
+        EditText locationInput = findViewById(R.id.locationInput);
+        EditText destStartDateInput = findViewById(R.id.destStartDateInput);
+        EditText destEndDateInput = findViewById(R.id.destEndDateInput);
+        TextView logErrorDisplay = findViewById(R.id.logErrorDisplay);
 
         // calculate area components
-        LinearLayout calcArea = findViewById(0);
-        Button calculateButton = findViewById(0);
-        EditText userStartDateInput = findViewById(0);
-        EditText userEndDateInput = findViewById(0);
-        EditText durationInput = findViewById(0);
-        TextView calcErrorDisplay = findViewById(0);
+        LinearLayout calcArea = findViewById(R.id.calcArea);
+        Button calculateButton = findViewById(R.id.calculateButton);
+        EditText userStartDateInput = findViewById(R.id.userStartDateInput);
+        EditText userEndDateInput = findViewById(R.id.userEndDateInput);
+        EditText durationInput = findViewById(R.id.durationInput);
+        TextView calcErrorDisplay = findViewById(R.id.calcErrorDisplay);
 
         // result area components
-        LinearLayout resultArea = findViewById(0);
-        Button resetButton = findViewById(0);
+        LinearLayout resultArea = findViewById(R.id.resultArea);
+        Button resetButton = findViewById(R.id.resetButton);
 
         // populate destinations
-        LinearLayout destArea = findViewById(0);
+        LinearLayout destArea = findViewById(R.id.destArea);
         List<Destination> destinations = destinationViewModel.getDestinations();
 
         // submitted observer

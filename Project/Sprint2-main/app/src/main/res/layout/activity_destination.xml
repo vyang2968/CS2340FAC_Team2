@@ -2,73 +2,338 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="bottom">
+    android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/transportation_header"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginBottom="500dp"
-        android:text="Transportation"
-        android:textSize="30sp"
-        android:textStyle="bold"/>
+    <!-- Main Layout Element -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingStart="20sp"
+            android:paddingEnd="20sp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="20dp"
+                android:text="Destinations"
+                android:textSize="40sp"
+                android:textStyle="bold" />
+
+            <ToggleButton
+                android:id="@+id/logOpenButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                android:textOff="Log Travel"
+                android:textOn="Log Travel"
+                android:background="@drawable/toggle_button"
+                android:textColor="#FFFFFF"
+                />
+
+            <!-- Log Area -->
+            <LinearLayout
+                android:id="@+id/logArea"
+                android:visibility="visible"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:background="#E0E0E0"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Travel Destination:"
+                    android:textSize="12dp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/locationInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:autofillHints="Location Name"
+                    android:background="#FFFFFF"
+                    android:inputType="text"
+                    android:padding="3dp"
+                    android:textSize="12sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Estimated Start:"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Estimated End:"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/destStartDateInput"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:layout_weight="1"
+                        android:autofillHints="Start Date"
+                        android:background="#FFFFFF"
+                        android:inputType="date"
+                        android:padding="3dp"
+                        android:textSize="12sp" />
+
+                    <EditText
+                        android:id="@+id/destEndDateInput"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:layout_weight="1"
+                        android:autofillHints="End Date"
+                        android:background="#FFFFFF"
+                        android:inputType="date"
+                        android:padding="3dp"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/cancelButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="15dp"
+                        android:layout_weight="1"
+                        android:text="Cancel" />
+
+                    <Button
+                        android:id="@+id/submitButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="15dp"
+                        android:layout_weight="1"
+                        android:text="Submit" />
+                    <TextView
+                        android:id="@+id/logErrorDisplay"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@{DestinationViewModel.logErrorMsg}"
+                        android:textAlignment="center"
+                        android:textSize="10dp"
+                        android:layout_marginTop="10dp"
+                        android:visibility="gone"
+                        android:textColor="#FF0000" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <ToggleButton
+                android:id="@+id/calculateOpenButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                android:textOff="Calculate Vacation Time"
+                android:textOn="Calculate Vacation Time"
+                android:background="@drawable/toggle_button"
+                android:textColor="#FFFFFF"/>
+
+            <!-- area for calculating vacation time -->
+            <LinearLayout
+                android:id="@+id/calcArea"
+                android:visibility="visible"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:background="#E0E0E0"
+                android:gravity="center"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Start Date:"
+                    android:textStyle="bold"/>
+                <EditText
+                    android:id="@+id/userStartDateInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:autofillHints="Start Date"
+                    android:inputType="date"
+                    android:layout_margin="5dp"
+                    android:padding="3dp"
+                    android:background="#FFFFFF" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="End Date:"
+                    android:textStyle="bold"/>
+                <EditText
+                    android:id="@+id/userEndDateInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:autofillHints="Start Date"
+                    android:inputType="date"
+                    android:layout_margin="5dp"
+                    android:padding="3dp"
+                    android:background="#FFFFFF" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Duration:"
+                    android:textStyle="bold"/>
+                <EditText
+                    android:id="@+id/durationInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:autofillHints="Start Date"
+                    android:inputType="date"
+                    android:layout_margin="5dp"
+                    android:padding="3dp"
+                    android:background="#FFFFFF" />
+                <Button
+                    android:id="@+id/calculateButton"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:text="Calculate"/>
+                <TextView
+                    android:id="@+id/calcErrorDisplay"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{DestinationViewModel.calcErrorMsg}"
+                    android:textAlignment="center"
+                    android:textSize="10dp"
+                    android:layout_marginTop="10dp"
+                    android:visibility="gone"
+                    android:textColor="#FF0000" />
+            </LinearLayout>
+
+            <!-- Result -->
+            <LinearLayout
+                android:id="@+id/resultArea"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#E0E0E0"
+                android:orientation="vertical"
+                android:visibility="visible">
+                <Button
+                    android:id="@+id/resetButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Reset"/>
+            </LinearLayout>
+
+            <!-- Destination List -->
+            <LinearLayout
+                android:id="@+id/destArea"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </ScrollView>
+
     <!-- Navbar -->
     <LinearLayout
         android:id="@+id/navbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:background="#000000"
+        android:orientation="horizontal"
         android:padding="2dp">
+
         <ImageButton
             android:id="@+id/navbar_destination_button"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:background="#AAAAAA"
-            android:src="@drawable/destination"/>
+            android:src="@drawable/destination" />
+
         <Space
             android:layout_width="2dp"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
+
         <ImageButton
             android:id="@+id/navbar_dining_button"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:background="#AAAAAA"
-            android:src="@drawable/dining"/>
+            android:src="@drawable/dining" />
+
         <Space
             android:layout_width="2dp"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
+
         <ImageButton
             android:id="@+id/navbar_logistics_button"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:background="#AAAAAA"
-            android:src="@drawable/logistics"
-            />
+            android:src="@drawable/logistics" />
+
         <Space
             android:layout_width="2dp"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
+
         <ImageButton
             android:id="@+id/navbar_accommodations_button"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:background="#AAAAAA"
-            android:src="@drawable/accommodations"/>
+            android:src="@drawable/accommodations" />
+
         <Space
             android:layout_width="2dp"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
+
         <ImageButton
             android:id="@+id/navbar_travel_community_button"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:background="#AAAAAA"
-            android:src="@drawable/community"/>
+            android:src="@drawable/community" />
     </LinearLayout>
 </LinearLayout>

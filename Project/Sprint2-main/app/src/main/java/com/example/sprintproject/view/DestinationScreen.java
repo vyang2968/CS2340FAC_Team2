@@ -50,13 +50,13 @@ public class DestinationScreen extends NavBarScreen {
         ToggleButton calculateOpenButton = findViewById(R.id.calculateOpenButton);
 
         // log area components
-        LinearLayout logArea = findViewById(0);
-        Button cancelButton = findViewById(0);
-        Button submitButton = findViewById(0);
-        EditText locationInput = findViewById(0);
-        EditText destStartDateInput = findViewById(0);
-        EditText destEndDateInput = findViewById(0);
-        TextView logErrorDisplay = findViewById(0);
+        LinearLayout logArea = findViewById(R.id.logArea);
+        Button cancelButton = findViewById(R.id.cancelButton);
+        Button submitButton = findViewById(R.id.submitButton);
+        EditText locationInput = findViewById(R.id.locationInput);
+        EditText destStartDateInput = findViewById(R.id.destStartDateInput);
+        EditText destEndDateInput = findViewById(R.id.destEndDateInput);
+        TextView logErrorDisplay = findViewById(R.id.logErrorDisplay);
 
         // calculate area components
         LinearLayout calcArea = findViewById(R.id.calcArea);
@@ -64,10 +64,10 @@ public class DestinationScreen extends NavBarScreen {
         EditText userStartDateInput = findViewById(R.id.userStartDateInput);
         EditText userEndDateInput = findViewById(R.id.userEndDateInput);
         EditText durationInput = findViewById(R.id.durationInput);
-        TextView calcErrorDisplay = findViewById(R.id.calcError);
+        TextView calcErrorDisplay = findViewById(R.id.calcErrorDisplay);
 
         // TODO: populate destinations
-        LinearLayout destArea = findViewById(R.id.destinationsArea);
+        LinearLayout destArea = findViewById(R.id.destArea);
         List<Destination> destinations = destinationViewModel.getDestinations();
 //        for (int i = 0; i < 5; i++) {
 //            Destination curr = destinations.get(i);

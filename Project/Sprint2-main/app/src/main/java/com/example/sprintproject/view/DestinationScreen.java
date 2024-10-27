@@ -275,16 +275,28 @@ public class DestinationScreen extends NavBarScreen {
                     if (!userStartDateInput.getText().toString().isEmpty()) {
                         Log.i(TAG, "userStartDateInput has value");
                         destinationViewModel.setUserStartDateHasValue(true);
+                    } else {
+                        Log.i(TAG, "userStartDateInput does not have value");
+                        destinationViewModel.setUserStartDateHasValue(false);
+                        userStartDateInput.setError("field cannot be empty");
                     }
 
                     if (!userEndDateInput.getText().toString().isEmpty()) {
                         Log.i(TAG, "userEndDateInput has value");
                         destinationViewModel.setUserEndDateHasValue(true);
+                    } else {
+                        Log.i(TAG, "userEndDateInput does not have value");
+                        destinationViewModel.setUserEndDateHasValue(false);
+                        userEndDateInput.setError("field cannot be empty");
                     }
 
                     if (!durationInput.getText().toString().isEmpty()) {
                         Log.i(TAG, "userDuration has value");
                         destinationViewModel.setUserDurationHasValue(true);
+                    } else {
+                        Log.i(TAG, "userDuration does not have value");
+                        destinationViewModel.setUserDurationHasValue(false);
+                        durationInput.setError("field cannot be empty");
                     }
 
                     destinationViewModel.calculateHasTwoValues();

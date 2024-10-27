@@ -72,6 +72,7 @@ public class DestinationScreen extends NavBarScreen {
         LinearLayout destArea = findViewById(R.id.destArea);
         destinationViewModel.queryForDestinations();
         destinationViewModel.getDestinations().observe(this, destinations -> {
+            destArea.removeAllViews();
             if (!destinations.isEmpty()) {
                 Log.i(TAG, "populating destinations...");
                 for (int i = 0; i < 5; i++) {
@@ -198,6 +199,27 @@ public class DestinationScreen extends NavBarScreen {
             }
         });
 
+        // startDate has input
+        destinationViewModel.getUserStateDateHasValue().observe(this, bool -> {
+            if (bool) {
+                destinationViewModel.calculateHasTwoValues();
+            }
+        });
+
+        // endDate has input
+        destinationViewModel.getUserEndDateHasValue().observe(this, bool -> {
+            if (bool) {
+                destinationViewModel.calculateHasTwoValues();
+            }
+        });
+
+        // duration has input
+        destinationViewModel.getUserDurationHasValue().observe(this, bool -> {
+            if (bool) {
+                destinationViewModel.calculateHasTwoValues();
+            }
+        });
+
         calculateOpenButton.setOnClickListener(view -> {
             Log.i(TAG, "calculateOpenButton:clicked");
 
@@ -212,12 +234,16 @@ public class DestinationScreen extends NavBarScreen {
                 calculateButton.setOnClickListener(view1 -> {
                     Log.i(TAG, "calcButton clicked");
 
-                    Date start = destinationViewModel.setUserStartDate(userStartDateInput);
-                    Date end = destinationViewModel.setUserEndDate(userEndDateInput);
-                    long duration = destinationViewModel.dateDifference(start, end);
+                    if (!userStartDateInput.getText().toString().isEmpty()) {
+                        destinationViewModel.setUserStateDateHasValue(true);
+                    }
 
-                    if (duration >= 0) {
-                        destinationViewModel.setDuration(durationInput, duration);
+                    if (!userEndDateInput.getText().toString().isEmpty()) {
+                        destinationViewModel.setUserEndDateHasValue(true);
+                    }
+
+                    if (!durationInput.getText().toString().isEmpty()) {
+                        destinationViewModel.setUserDurationHasValue(true);
                     }
 
                     destinationViewModel.updateUser();

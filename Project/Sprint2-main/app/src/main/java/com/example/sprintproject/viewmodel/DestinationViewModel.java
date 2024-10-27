@@ -41,6 +41,11 @@ public class DestinationViewModel extends ViewModel {
     private MutableLiveData<Boolean> updateUserSuccess;
     private MutableLiveData<Boolean> addDestSuccess;
 
+    private MutableLiveData<Boolean> userStartDateHasValue;
+    private MutableLiveData<Boolean> userEndDateHasValue;
+    private MutableLiveData<Boolean> userDurationHasValue;
+    private MutableLiveData<Boolean> userHasTwoValues;
+
     private boolean locationValid;
     private boolean destStartDateValid;
     private boolean destEndDateValid;
@@ -61,6 +66,9 @@ public class DestinationViewModel extends ViewModel {
         this.updateUserSuccess = new MutableLiveData<>();
         this.addDestSuccess = new MutableLiveData<>();
         this.destinations = new MutableLiveData<>();
+        this.userStartDateHasValue = new MutableLiveData<>();
+        this.userEndDateHasValue = new MutableLiveData<>();
+        this.userDurationHasValue = new MutableLiveData<>();
 
         this.locationValid = false;
         this.destStartDateValid = false;
@@ -222,6 +230,16 @@ public class DestinationViewModel extends ViewModel {
         }
     }
 
+    public void calculateHasTwoValues() {
+        userHasTwoValues.setValue(
+                userStartDateHasValue.getValue() &&
+                userEndDateHasValue.getValue() &&
+                userDurationHasValue.getValue()
+        );
+    }
+
+    
+
     public long dateDifference(Date a, Date b) {
         if (a == null || b == null) {
             Log.i(TAG, "one of inputs is null");
@@ -255,6 +273,30 @@ public class DestinationViewModel extends ViewModel {
             input.setError("date must be mm/dd/yyyy format");
             return null;
         }
+    }
+
+    public MutableLiveData<Boolean> getUserDurationHasValue() {
+        return userDurationHasValue;
+    }
+
+    public void setUserDurationHasValue(boolean userDurationHasValue) {
+        this.userDurationHasValue.setValue(userDurationHasValue);
+    }
+
+    public MutableLiveData<Boolean> getUserEndDateHasValue() {
+        return userEndDateHasValue;
+    }
+
+    public void setUserEndDateHasValue(boolean userEndDateHasValue) {
+        this.userEndDateHasValue.setValue(userEndDateHasValue);
+    }
+
+    public MutableLiveData<Boolean> getUserStateDateHasValue() {
+        return userStartDateHasValue;
+    }
+
+    public void setUserStateDateHasValue(boolean userStateDateHasValue) {
+        this.userStartDateHasValue.setValue(userStateDateHasValue);
     }
 
     public LiveData<Boolean> getUpdateUserSuccess() {

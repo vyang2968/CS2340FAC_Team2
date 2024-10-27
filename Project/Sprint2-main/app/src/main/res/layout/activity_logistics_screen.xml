@@ -1,75 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="bottom">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginBottom="500dp"
-        android:text="Logistics"
-        android:textSize="30sp"
-        android:textStyle="bold"/>
-    <!-- Navbar -->
+    <data>
+        <variable
+            name="logisticsViewModel"
+            type="com.example.sprintproject.viewmodel.LogisticsViewModel"/>
+    </data>
+
     <LinearLayout
-        android:id="@+id/navbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:background="#000000"
-        android:padding="2dp">
-        <ImageButton
-            android:id="@+id/navbar_destination_button"
-            android:layout_width="0dp"
-            android:layout_weight="1"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingStart="20sp"
+                android:paddingEnd="20sp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="20dp"
+                    android:text="Logistics"
+                    android:textSize="40sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/totalDaysText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:textSize="20sp"
+                    android:text="@{logisticsViewModel.getTotalDaysTraveledMessage()}"/>
+
+            </LinearLayout>
+        </ScrollView>
+
+        <!-- Navbar -->
+
+        <LinearLayout
+            android:id="@+id/navbar"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#AAAAAA"
-            android:src="@drawable/destination"/>
-        <Space
-            android:layout_width="2dp"
-            android:layout_height="wrap_content"/>
-        <ImageButton
-            android:id="@+id/navbar_dining_button"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:background="#AAAAAA"
-            android:src="@drawable/dining"/>
-        <Space
-            android:layout_width="2dp"
-            android:layout_height="wrap_content"/>
-        <ImageButton
-            android:id="@+id/navbar_logistics_button"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:background="#AAAAAA"
-            android:src="@drawable/logistics"
-            />
-        <Space
-            android:layout_width="2dp"
-            android:layout_height="wrap_content"/>
-        <ImageButton
-            android:id="@+id/navbar_accommodations_button"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:background="#AAAAAA"
-            android:src="@drawable/accommodations"/>
-        <Space
-            android:layout_width="2dp"
-            android:layout_height="wrap_content"/>
-        <ImageButton
-            android:id="@+id/navbar_travel_community_button"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:background="#AAAAAA"
-            android:src="@drawable/community"/>
+            android:orientation="horizontal"
+            android:background="#000000"
+            android:padding="2dp">
+            <ImageButton
+                android:id="@+id/navbar_destination_button"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:background="#AAAAAA"
+                android:src="@drawable/destination"/>
+            <Space
+                android:layout_width="2dp"
+                android:layout_height="wrap_content"/>
+            <ImageButton
+                android:id="@+id/navbar_dining_button"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:background="#AAAAAA"
+                android:src="@drawable/dining"/>
+            <Space
+                android:layout_width="2dp"
+                android:layout_height="wrap_content"/>
+            <ImageButton
+                android:id="@+id/navbar_logistics_button"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:background="#AAAAAA"
+                android:src="@drawable/logistics"
+                />
+            <Space
+                android:layout_width="2dp"
+                android:layout_height="wrap_content"/>
+            <ImageButton
+                android:id="@+id/navbar_accommodations_button"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:background="#AAAAAA"
+                android:src="@drawable/accommodations"/>
+            <Space
+                android:layout_width="2dp"
+                android:layout_height="wrap_content"/>
+            <ImageButton
+                android:id="@+id/navbar_travel_community_button"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:background="#AAAAAA"
+                android:src="@drawable/community"/>
+        </LinearLayout>
+
+
     </LinearLayout>
-
-
-</LinearLayout>
+</layout>

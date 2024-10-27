@@ -57,7 +57,10 @@ public class DestinationService {
     }
 
     public void getFirstKDestinations(int k, DataCallback<List<Destination>> callback) {
-        List<Destination> destinations = new ArrayList<>();
         destinationRepository.getFirstKDestinations(k, callback);
+    }
+
+    public void getAllDestinations(DataCallback<List<Destination>> callback) {
+        destinationRepository.getAllDestinations(callback);
     }
 }

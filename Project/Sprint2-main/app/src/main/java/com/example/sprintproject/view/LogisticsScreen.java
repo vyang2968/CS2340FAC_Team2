@@ -121,11 +121,11 @@ public class LogisticsScreen extends NavBarScreen {
         }
 
         List<PieEntry> entries = new ArrayList<>();
-        entries.add(new PieEntry(plannedDays, "Planned Days"));
+        entries.add(new PieEntry(plannedDays, "% Planned Days"));
 
         int remainingDays = Math.max(0, totalDays - plannedDays);
         if (remainingDays > 0) {
-            entries.add(new PieEntry(remainingDays, "Remaining Days"));
+            entries.add(new PieEntry(remainingDays, "% Remaining Days"));
         }
 
         PieDataSet dataSet = new PieDataSet(entries, "Trip Days");

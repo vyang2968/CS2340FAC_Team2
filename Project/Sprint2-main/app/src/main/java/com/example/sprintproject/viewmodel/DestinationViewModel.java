@@ -3,7 +3,6 @@ package com.example.sprintproject.viewmodel;
 import android.util.Log;
 import android.widget.EditText;
 
-import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -13,13 +12,9 @@ import com.example.sprintproject.model.User;
 import com.example.sprintproject.service.DestinationService;
 import com.example.sprintproject.service.UserService;
 import com.example.sprintproject.utils.DataCallback;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -41,10 +36,10 @@ public class DestinationViewModel extends ViewModel {
     private MutableLiveData<Boolean> updateUserSuccess;
     private MutableLiveData<Boolean> addDestSuccess;
 
-    private MutableLiveData<Boolean> userStartDateHasValue;
-    private MutableLiveData<Boolean> userEndDateHasValue;
-    private MutableLiveData<Boolean> userDurationHasValue;
-    private MutableLiveData<Boolean> userHasTwoValues;
+    private boolean userStartDateHasValue;
+    private boolean userEndDateHasValue;
+    private boolean userDurationHasValue;
+    private MutableLiveData<Boolean> userHasAtLeastTwoValues;
 
     private boolean locationValid;
     private boolean destStartDateValid;
@@ -66,9 +61,10 @@ public class DestinationViewModel extends ViewModel {
         this.updateUserSuccess = new MutableLiveData<>();
         this.addDestSuccess = new MutableLiveData<>();
         this.destinations = new MutableLiveData<>();
-        this.userStartDateHasValue = new MutableLiveData<>();
-        this.userEndDateHasValue = new MutableLiveData<>();
-        this.userDurationHasValue = new MutableLiveData<>();
+        this.userStartDateHasValue = false;
+        this.userEndDateHasValue = false;
+        this.userDurationHasValue = false;
+        this.userHasAtLeastTwoValues = new MutableLiveData<>();
 
         this.locationValid = false;
         this.destStartDateValid = false;
@@ -187,25 +183,14 @@ public class DestinationViewModel extends ViewModel {
         return endDate;
     }
 
-    public void setDuration(EditText durationInput, long duration) {
+    public void setDuration(EditText durationInput) {
         String durationText = durationInput.getText().toString();
+
         if (!durationText.isEmpty()) {
-            long num = Long.parseLong(durationText);
-            if (num != duration) {
-                String msg = String.format("duration should be %d", duration);
-                durationInput.setError(msg);
-            }
-        } else {
-            Log.i(TAG, "filled in duration");
-            durationInput.setText(String.valueOf(duration));
+            currUser.setDuration(Integer.parseInt(durationText));
         }
 
         durationValid = durationInput.getError() == null;
-
-        if (durationValid) {
-            Log.i(TAG, "setDuration:success");
-            currUser.setDuration((int) duration);
-        }
     }
 
     public void updateUser() {
@@ -231,14 +216,13 @@ public class DestinationViewModel extends ViewModel {
     }
 
     public void calculateHasTwoValues() {
-        userHasTwoValues.setValue(
-                userStartDateHasValue.getValue() &&
-                userEndDateHasValue.getValue() &&
-                userDurationHasValue.getValue()
-        );
-    }
+        int duration = userDurationHasValue ? 1 : 0;
+        int userStart = userStartDateHasValue ? 1 : 0;
+        int userEnd = userEndDateHasValue ? 1 : 0;
 
-    
+        userHasAtLeastTwoValues.setValue(duration + userStart + userEnd >= 2);
+        Log.i(TAG, "calculateHasTwoValues:" + userHasAtLeastTwoValues.getValue());
+    }
 
     public long dateDifference(Date a, Date b) {
         if (a == null || b == null) {
@@ -275,28 +259,32 @@ public class DestinationViewModel extends ViewModel {
         }
     }
 
-    public MutableLiveData<Boolean> getUserDurationHasValue() {
+    public LiveData<Boolean> getUserHasAtLeastTwoValues() {
+        return userHasAtLeastTwoValues;
+    }
+
+    public boolean getUserDurationHasValue() {
         return userDurationHasValue;
     }
 
     public void setUserDurationHasValue(boolean userDurationHasValue) {
-        this.userDurationHasValue.setValue(userDurationHasValue);
+        this.userDurationHasValue = userDurationHasValue;
     }
 
-    public MutableLiveData<Boolean> getUserEndDateHasValue() {
+    public boolean getUserEndDateHasValue() {
         return userEndDateHasValue;
     }
 
     public void setUserEndDateHasValue(boolean userEndDateHasValue) {
-        this.userEndDateHasValue.setValue(userEndDateHasValue);
+        this.userEndDateHasValue = userEndDateHasValue;
     }
 
-    public MutableLiveData<Boolean> getUserStateDateHasValue() {
+    public boolean getUserStartDateHasValue() {
         return userStartDateHasValue;
     }
 
-    public void setUserStateDateHasValue(boolean userStateDateHasValue) {
-        this.userStartDateHasValue.setValue(userStateDateHasValue);
+    public void setUserStartDateHasValue(boolean userStateDateHasValue) {
+        this.userStartDateHasValue = userStateDateHasValue;
     }
 
     public LiveData<Boolean> getUpdateUserSuccess() {

@@ -79,6 +79,7 @@ public class DestinationScreen extends NavBarScreen {
                         Destination destination = destinations.get(i);
                         location = destination.getDestination();
                         allocatedDays = String.valueOf(destination.getDurationInDays());
+
                     } else {
                         location = "Destination";
                         allocatedDays = "XX";

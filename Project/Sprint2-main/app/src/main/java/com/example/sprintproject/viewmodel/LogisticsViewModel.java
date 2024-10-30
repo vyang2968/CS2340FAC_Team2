@@ -1,13 +1,14 @@
 package com.example.sprintproject.viewmodel;
 
-import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.sprintproject.model.Destination;
+import com.example.sprintproject.model.User;
 import com.example.sprintproject.service.DestinationService;
+import com.example.sprintproject.service.UserService;
 import com.example.sprintproject.utils.DataCallback;
 
 import java.util.List;
@@ -16,14 +17,23 @@ public class LogisticsViewModel extends ViewModel implements LogSource {
 
     private static final String TAG = "LogisticsViewModel";
     private DestinationService destinationService;
+    private UserService userService;
     private MutableLiveData<Integer> totalDaysTraveled;
     private MutableLiveData<String> totalDaysTraveledMessage;
+    private MutableLiveData<Integer> totalTripDays;
 
     public LogisticsViewModel() {
         this.destinationService = DestinationService.getInstance();
-
+        this.userService = UserService.getInstance();
         totalDaysTraveled = new MutableLiveData<>(0);
         totalDaysTraveledMessage = new MutableLiveData<>("Loading Total Days Planned...");
+        totalTripDays = new MutableLiveData<>(0);
+
+        // Get total trip days from user
+        User currentUser = userService.getCurrentUser();
+        if (currentUser != null) {
+            totalTripDays.setValue(currentUser.getDuration());
+        }
     }
 
     public void updateDaysTraveled() {
@@ -32,13 +42,15 @@ public class LogisticsViewModel extends ViewModel implements LogSource {
             public void onSuccess(List<Destination> result) {
                 logInfo("updateDaysTraveled:success");
 
-                int days = 0;
+                int plannedDays = 0;
                 for (Destination destination : result) {
-                    days += destination.getDurationInDays();
+                    plannedDays += destination.getDurationInDays();
                 }
 
-                totalDaysTraveled.setValue(days);
-                totalDaysTraveledMessage.setValue("Total Days Planned: " + days);
+                int totalDays = totalTripDays.getValue() != null ? totalTripDays.getValue() : 0;
+                totalDaysTraveled.setValue(plannedDays);
+                totalDaysTraveledMessage.setValue(String.format("Days Planned: %d of %d total days",
+                        plannedDays, totalDays));
             }
 
             @Override
@@ -46,6 +58,14 @@ public class LogisticsViewModel extends ViewModel implements LogSource {
                 logDebug("updateDaysTraveled:failed");
             }
         });
+    }
+
+    public void refreshTotalTripDays() {
+        User currentUser = userService.getCurrentUser();
+        if (currentUser != null) {
+            totalTripDays.setValue(currentUser.getDuration());
+            updateDaysTraveled();
+        }
     }
 
     @Override
@@ -56,4 +76,13 @@ public class LogisticsViewModel extends ViewModel implements LogSource {
     public LiveData<String> getTotalDaysTraveledMessage() {
         return totalDaysTraveledMessage;
     }
+
+    public LiveData<Integer> getTotalTripDays() {
+        return totalTripDays;
+    }
+
+    public LiveData<Integer> getTotalDaysTraveled() {
+        return totalDaysTraveled;
+    }
 }
+

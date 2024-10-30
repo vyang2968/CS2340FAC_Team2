@@ -42,7 +42,36 @@
                     android:layout_marginEnd="15dp"
                     android:textSize="20sp"
                     android:text="@{logisticsViewModel.getTotalDaysTraveledMessage()}"/>
+                <Button
+                    android:id="@+id/visualizeButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="Visualize Data"
+                    android:padding="12dp"/>
 
+                <ProgressBar
+                    android:id="@+id/loadingIndicator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:visibility="gone"/>
+
+                <com.github.mikephil.charting.charts.PieChart
+                    android:id="@+id/daysChart"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:layout_marginTop="16dp"
+                    android:visibility="gone"/>
+
+                <TextView
+                    android:id="@+id/errorText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:textColor="#FF0000"
+                    android:visibility="gone"
+                    android:text="Error loading data"/>
             </LinearLayout>
         </ScrollView>
 

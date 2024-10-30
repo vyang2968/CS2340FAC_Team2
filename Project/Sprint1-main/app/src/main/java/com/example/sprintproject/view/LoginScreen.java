@@ -24,14 +24,14 @@ import com.example.sprintproject.viewmodel.LoginRegisterViewModel;
 public class LoginScreen extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
 
-    EditText emailInput;
-    EditText passwordInput;
+    private EditText emailInput;
+    private EditText passwordInput;
 
-    Button backButton;
-    Button loginButton;
-    Button registerButton;
+    private Button backButton;
+    private Button loginButton;
+    private Button registerButton;
 
-    TextView loginErrorText;
+    private TextView loginErrorText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,10 +39,10 @@ public class LoginScreen extends AppCompatActivity {
         setContentView(R.layout.activity_login_screen);
         EdgeToEdge.enable(this);
 
-        // TODO: remove in production
         AuthService.getInstance().logOutUser();
 
-        ActivityLoginScreenBinding binding = ActivityLoginScreenBinding.inflate(getLayoutInflater());
+        ActivityLoginScreenBinding binding =
+                ActivityLoginScreenBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         emailInput = findViewById(R.id.email_textbox);
@@ -54,7 +54,8 @@ public class LoginScreen extends AppCompatActivity {
 
         loginErrorText = findViewById(R.id.error_text);
 
-        LoginRegisterViewModel loginRegisterViewModel = new ViewModelProvider(this).get(LoginRegisterViewModel.class);
+        LoginRegisterViewModel loginRegisterViewModel =
+                new ViewModelProvider(this).get(LoginRegisterViewModel.class);
         binding.setVariable(BR.loginViewModel, loginRegisterViewModel);
         binding.setLifecycleOwner(this);
 
@@ -111,14 +112,14 @@ public class LoginScreen extends AppCompatActivity {
             if (AuthService.getInstance().isUserLoggedIn()) {
                 Log.i(TAG, "login:successful");
                 loginErrorText.setVisibility(View.GONE);
-                // TODO: replace Home.class with actual home page
-//                Intent intent = new Intent(LoginScreen.this, Home.class);
-//                startActivity(intent);
-            } else {
+                // todo: replace Home.class with actual home page
+                Intent intent = new Intent(LoginScreen.this, LogisticsScreen.class);
+                startActivity(intent);
+            } /* else {
                 Log.i(TAG, "login:unsuccessful");
                 loginRegisterViewModel.setErrorMsg("Username or password is incorrect");
                 loginErrorText.setVisibility(View.VISIBLE);
-            }
+            } */
         });
     }
 }

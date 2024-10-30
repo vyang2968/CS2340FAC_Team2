@@ -23,6 +23,6 @@ jobs:
         github_token: ${{ secrets.github_token }}
         fail_on_error: true
         filter_mode: nofilter
-        workdir: ./Project/Sprint2-main/app/src/main/java
+        workdir: ./Project/Sprint3-main/app/src/main/java
         checkstyle_config: cs2340_checks.xml
         level: error

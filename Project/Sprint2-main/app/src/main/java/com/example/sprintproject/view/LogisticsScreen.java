@@ -1,12 +1,12 @@
 package com.example.sprintproject.view;
 
-import androidx.lifecycle.ViewModelProvider;
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.sprintproject.BR;
 import com.example.sprintproject.R;
@@ -36,7 +36,8 @@ public class LogisticsScreen extends NavBarScreen {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        ActivityLogisticsScreenBinding binding = ActivityLogisticsScreenBinding.inflate(getLayoutInflater());
+        ActivityLogisticsScreenBinding binding =
+                ActivityLogisticsScreenBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         setupNavBar();
@@ -108,7 +109,9 @@ public class LogisticsScreen extends NavBarScreen {
     }
 
     private void updateChartData() {
-        if (pieChart == null) return;
+        if (pieChart == null) {
+            return;
+        }
 
         Integer totalDays = logisticsViewModel.getTotalTripDays().getValue();
         Integer plannedDays = logisticsViewModel.getTotalDaysTraveled().getValue();

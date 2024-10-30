@@ -16,11 +16,11 @@ import java.util.List;
 public class LogisticsViewModel extends ViewModel implements LogSource {
 
     private static final String TAG = "LogisticsViewModel";
-    private DestinationService destinationService;
-    private UserService userService;
-    private MutableLiveData<Integer> totalDaysTraveled;
-    private MutableLiveData<String> totalDaysTraveledMessage;
-    private MutableLiveData<Integer> totalTripDays;
+    private final DestinationService destinationService;
+    private final UserService userService;
+    private final MutableLiveData<Integer> totalDaysTraveled;
+    private final MutableLiveData<String> totalDaysTraveledMessage;
+    private final MutableLiveData<Integer> totalTripDays;
 
     public LogisticsViewModel() {
         this.destinationService = DestinationService.getInstance();

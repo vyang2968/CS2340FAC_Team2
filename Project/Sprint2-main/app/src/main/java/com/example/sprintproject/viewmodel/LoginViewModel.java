@@ -1,6 +1,5 @@
 package com.example.sprintproject.viewmodel;
 
-import android.util.Log;
 import android.widget.EditText;
 
 import androidx.lifecycle.LiveData;
@@ -12,8 +11,8 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class LoginViewModel extends AuthViewModel {
     private static final String TAG = "LoginViewModel";
-    private AuthService authService;
-    private UserService userService;
+    private final AuthService authService;
+    private final UserService userService;
 
     public LoginViewModel() {
         super();
@@ -60,7 +59,7 @@ public class LoginViewModel extends AuthViewModel {
     }
 
     public boolean canBeSubmitted() {
-        logInfo("canBeSubmitted:" + String.valueOf(emailValid && passwordValid));
+        logInfo("canBeSubmitted:" + (emailValid && passwordValid));
         return emailValid && passwordValid;
     }
 

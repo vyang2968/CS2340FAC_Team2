@@ -23,23 +23,23 @@ import java.util.concurrent.TimeUnit;
 
 public class DestinationViewModel extends ViewModel {
     private static final String TAG = "DestinationViewModel";
-    private UserService userService;
-    private DestinationService destinationService;
-    private User currUser;
-    private Destination destination;
+    private final UserService userService;
+    private final DestinationService destinationService;
+    private final User currUser;
+    private final Destination destination;
 
-    private MutableLiveData<String> logErrorMsg;
-    private MutableLiveData<String> calcErrorMsg;
-    private MutableLiveData<List<Destination>> destinations;
+    private final MutableLiveData<String> logErrorMsg;
+    private final MutableLiveData<String> calcErrorMsg;
+    private final MutableLiveData<List<Destination>> destinations;
 
-    private MutableLiveData<Boolean> submitted;
-    private MutableLiveData<Boolean> updateUserSuccess;
-    private MutableLiveData<Boolean> addDestSuccess;
+    private final MutableLiveData<Boolean> submitted;
+    private final MutableLiveData<Boolean> updateUserSuccess;
+    private final MutableLiveData<Boolean> addDestSuccess;
 
     private boolean userStartDateHasValue;
     private boolean userEndDateHasValue;
     private boolean userDurationHasValue;
-    private MutableLiveData<Boolean> userHasAtLeastTwoValues;
+    private final MutableLiveData<Boolean> userHasAtLeastTwoValues;
 
     private boolean locationValid;
     private boolean destStartDateValid;
@@ -152,7 +152,14 @@ public class DestinationViewModel extends ViewModel {
                 }
             });
         } else {
-            Log.i(TAG, String.format("field errors present. location: %b, start: %b, end: %b", locationValid, destStartDateValid, destEndDateValid));
+            Log.i(TAG,
+                    String.format(
+                        "field errors present. location: %b, start: %b, end: %b",
+                        locationValid,
+                        destStartDateValid,
+                        destEndDateValid
+                    )
+            );
             logErrorMsg.setValue("Please fix required fields before submitting");
             addDestSuccess.setValue(false);
             submitted.setValue(false);
@@ -208,7 +215,14 @@ public class DestinationViewModel extends ViewModel {
                 }
             });
         } else {
-            Log.i(TAG, String.format("field errors present. duration: %b, start: %b, end: %b", durationValid, userStartDateValid, userEndDateValid));
+            Log.i(TAG,
+                    String.format(
+                            "field errors present. duration: %b, start: %b, end: %b",
+                            durationValid,
+                            userStartDateValid,
+                            userEndDateValid
+                    )
+            );
             calcErrorMsg.setValue("Please fix required fields before submitting");
             updateUserSuccess.setValue(false);
             submitted.setValue(false);

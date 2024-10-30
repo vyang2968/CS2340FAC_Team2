@@ -1,14 +1,13 @@
 package com.example.sprintproject;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import com.example.sprintproject.model.CollaboratorManager;
 import com.example.sprintproject.model.Destination;
-
 import com.example.sprintproject.model.User;
 
 import org.junit.Before;
-import org. junit.Test;
+import org.junit.Test;
 
 public class AdditionalDestinationUnitTests {
     private Destination destination;

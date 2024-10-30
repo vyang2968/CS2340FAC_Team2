@@ -1,33 +1,27 @@
 package com.example.sprintproject.viewmodel;
 
-import android.util.Log;
-import android.util.Patterns;
 import android.widget.EditText;
 
-import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
 import com.example.sprintproject.model.User;
 import com.example.sprintproject.service.AuthService;
 import com.example.sprintproject.service.UserService;
 import com.example.sprintproject.utils.DataCallback;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseUser;
 
 public class RegisterViewModel extends AuthViewModel {
     private static final String TAG = "RegisterViewModel";
-    private MutableLiveData<Boolean> authSuccess;
-    private MutableLiveData<Boolean> createSuccess;
-    private MutableLiveData<Boolean> proceed;
-    private MutableLiveData<String> errorMsg;
-    private boolean emailValid;
+    private final MutableLiveData<Boolean> authSuccess;
+    private final MutableLiveData<Boolean> createSuccess;
+    private final MutableLiveData<Boolean> proceed;
+    private final MutableLiveData<String> errorMsg;
+    private final boolean emailValid;
     private boolean passwordValid;
     private boolean passwordsMatch;
-    private AuthService authService;
-    private UserService userService;
+    private final AuthService authService;
+    private final UserService userService;
 
     public RegisterViewModel() {
         this.errorMsg = new MutableLiveData<>();
@@ -116,12 +110,13 @@ public class RegisterViewModel extends AuthViewModel {
             confirmPasswordInput.setError(null);
         }
 
-        passwordsMatch = (passwordInput.getError() == null && confirmPasswordInput.getError() == null);
+        passwordsMatch = (passwordInput.getError() == null
+                            && confirmPasswordInput.getError() == null);
         return passwordsMatch;
     }
 
     public boolean canBeSubmitted() {
-        logInfo("canBeSubmitted:" + String.valueOf(emailValid && passwordValid && passwordsMatch));
+        logInfo("canBeSubmitted:" + (emailValid && passwordValid && passwordsMatch));
         return emailValid && passwordValid && passwordsMatch;
     }
     

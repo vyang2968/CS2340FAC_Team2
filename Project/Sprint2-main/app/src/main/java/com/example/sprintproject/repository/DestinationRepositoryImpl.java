@@ -3,13 +3,11 @@ package com.example.sprintproject.repository;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import com.example.sprintproject.model.Destination;
-import com.example.sprintproject.utils.DataCallback;
 import com.example.sprintproject.repository.contracts.DestinationRepository;
+import com.example.sprintproject.utils.DataCallback;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -22,7 +20,7 @@ import java.util.List;
 
 public class DestinationRepositoryImpl implements DestinationRepository {
     private static final String TAG = "DestRepoImpl";
-    private DatabaseReference destDBRef;
+    private final DatabaseReference destDBRef;
 
     public DestinationRepositoryImpl() {
         Log.i(TAG, "connecting to destinations database...");
@@ -54,14 +52,13 @@ public class DestinationRepositoryImpl implements DestinationRepository {
 
     @Override
     public void getFirstKDestinations(int k, DataCallback<List<Destination>> callback) {
-        destDBRef.orderByChild("location").limitToFirst(k).addValueEventListener(new ValueEventListener() {
+        ValueEventListener eventListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 List<Destination> results = new ArrayList<>();
 
-                Iterator<DataSnapshot> iterator = snapshot.getChildren().iterator();
-                while (iterator.hasNext()) {
-                    results.add(iterator.next().getValue(Destination.class));
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    results.add(dataSnapshot.getValue(Destination.class));
                 }
 
                 callback.onSuccess(results);
@@ -71,7 +68,9 @@ public class DestinationRepositoryImpl implements DestinationRepository {
             public void onCancelled(@NonNull DatabaseError error) {
                 callback.onError(error.toException());
             }
-        });
+        };
+
+        destDBRef.orderByChild("location").limitToFirst(k).addValueEventListener(eventListener);
     }
 
     @Override

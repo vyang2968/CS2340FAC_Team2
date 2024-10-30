@@ -1,9 +1,5 @@
 package com.example.sprintproject.view;
 
-import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AlertDialog;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,6 +10,10 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.ToggleButton;
+
+import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AlertDialog;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.sprintproject.BR;
 import com.example.sprintproject.R;
@@ -26,17 +26,17 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
-import java.util.concurrent.TimeUnit;
 
 public class DestinationScreen extends NavBarScreen {
-    public final String TAG = "DestinationScreen";
+    private static final String TAG = "DestinationScreen";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
 
-        ActivityDestinationBinding binding = ActivityDestinationBinding.inflate(getLayoutInflater());
+        ActivityDestinationBinding binding =
+                ActivityDestinationBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         setupNavBar();

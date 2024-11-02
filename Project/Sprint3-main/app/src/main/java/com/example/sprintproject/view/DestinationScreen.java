@@ -26,10 +26,14 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
-import java.util.concurrent.TimeUnit;
+
 
 public class DestinationScreen extends NavBarScreen {
-    public final String TAG = "DestinationScreen";
+    private final String TAG = "destinationScreen";
+
+    public String returnTag(){
+        return TAG;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

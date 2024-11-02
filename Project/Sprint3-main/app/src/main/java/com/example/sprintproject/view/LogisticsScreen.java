@@ -108,7 +108,9 @@ public class LogisticsScreen extends NavBarScreen {
     }
 
     private void updateChartData() {
-        if (pieChart == null) return;
+        if (pieChart == null){
+            return;
+        }
 
         Integer totalDays = logisticsViewModel.getTotalTripDays().getValue();
         Integer plannedDays = logisticsViewModel.getTotalDaysTraveled().getValue();

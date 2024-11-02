@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import com.example.sprintproject.R;
-import com.example.sprintproject.service.AuthService;
+
 import com.example.sprintproject.viewmodel.WelcomeViewModel;
 
 public class WelcomeScreen extends AppCompatActivity {

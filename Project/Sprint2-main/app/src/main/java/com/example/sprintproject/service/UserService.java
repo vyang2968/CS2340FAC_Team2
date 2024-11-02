@@ -32,25 +32,14 @@ public class UserService {
         return userRepository.addUser(user);
     }
 
-    public User getUser(String id) {
+    public void getUser(String id, DataCallback<User> callback) {
         if (id == null) {
             throw new IllegalArgumentException("id cannot be null");
         } else if (id.isEmpty()) {
             throw new IllegalArgumentException("id cannot be empty");
         }
 
-        userRepository.getUserById(id, new DataCallback<User>() {
-            @Override
-            public void onSuccess(User result) {
-
-            }
-
-            @Override
-            public void onError(Exception e) {
-
-            }
-        });
-        return null;
+        userRepository.getUserById(id, callback);
     }
 
     public void setCurrentUser(User user) {
@@ -71,14 +60,14 @@ public class UserService {
         return userRepository.updateUser(user);
     }
 
-    public boolean deleteUser(String id) {
+    public Task<Void> deleteUser(String id) {
         if (id == null) {
             throw new IllegalArgumentException("id cannot be null");
         } else if (id.isEmpty()) {
             throw new IllegalArgumentException("id cannot be empty");
         }
 
-        return userRepository.deleteUser(id).isSuccessful();
+        return userRepository.deleteUser(id);
     }
 
 }

@@ -1,20 +1,20 @@
 package com.example.sprintproject.viewmodel;
 
-import android.util.Log;
-import android.util.Patterns;
+
+
 import android.widget.EditText;
 
-import androidx.annotation.NonNull;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
+
 
 import com.example.sprintproject.model.User;
 import com.example.sprintproject.service.AuthService;
 import com.example.sprintproject.service.UserService;
 import com.example.sprintproject.utils.DataCallback;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
+
+
 import com.google.firebase.auth.FirebaseUser;
 
 public class RegisterViewModel extends AuthViewModel {

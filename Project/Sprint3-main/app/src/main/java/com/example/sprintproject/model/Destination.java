@@ -45,7 +45,7 @@ public class Destination {
     public int getDurationInDays() {
         long milliseconds = endDate.getTime() - startDate.getTime();
 
-        return (int)TimeUnit.DAYS.convert(milliseconds, TimeUnit.MILLISECONDS);
+        return (int) TimeUnit.DAYS.convert(milliseconds, TimeUnit.MILLISECONDS);
     }
 
     public String getDestination() {

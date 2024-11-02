@@ -2,7 +2,7 @@ package com.example.sprintproject.view;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
+
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;

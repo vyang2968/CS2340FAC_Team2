@@ -2,7 +2,7 @@ package com.example.sprintproject.view;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
+
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
@@ -11,7 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Button;
-import android.widget.Spinner;
+
 import android.widget.TextView;
 
 
@@ -19,7 +19,7 @@ import com.example.sprintproject.BR;
 import com.example.sprintproject.R;
 import com.example.sprintproject.databinding.ActivityRegisterBinding;
 import com.example.sprintproject.service.AuthService;
-import com.example.sprintproject.databinding.ActivityLoginScreenBinding;
+
 import com.example.sprintproject.viewmodel.RegisterViewModel;
 
 

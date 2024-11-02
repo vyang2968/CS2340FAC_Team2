@@ -1,6 +1,6 @@
 package com.example.sprintproject.viewmodel;
 
-import android.util.Log;
+
 import android.widget.EditText;
 
 import androidx.lifecycle.LiveData;

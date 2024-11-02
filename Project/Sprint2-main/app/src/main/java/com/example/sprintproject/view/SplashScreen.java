@@ -3,7 +3,9 @@ package com.example.sprintproject.view;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.sprintproject.R;
 
 public class SplashScreen extends AppCompatActivity {

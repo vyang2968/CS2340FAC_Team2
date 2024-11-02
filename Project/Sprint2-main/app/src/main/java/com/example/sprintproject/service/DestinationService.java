@@ -1,17 +1,14 @@
 package com.example.sprintproject.service;
 
-import android.util.Log;
-
 import com.example.sprintproject.model.Destination;
 import com.example.sprintproject.repository.DestinationRepositoryImpl;
 import com.example.sprintproject.utils.DataCallback;
 import com.google.android.gms.tasks.Task;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class DestinationService {
-    private DestinationRepositoryImpl destinationRepository;
+    private final DestinationRepositoryImpl destinationRepository;
     private static DestinationService instance;
     private static final String TAG = "DestService";
 

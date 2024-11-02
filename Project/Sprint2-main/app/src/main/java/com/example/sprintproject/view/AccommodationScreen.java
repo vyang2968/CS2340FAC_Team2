@@ -1,7 +1,7 @@
 package com.example.sprintproject.view;
 
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+
 import com.example.sprintproject.R;
 
 public class AccommodationScreen extends NavBarScreen {

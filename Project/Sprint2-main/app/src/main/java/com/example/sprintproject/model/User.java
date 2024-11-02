@@ -1,8 +1,5 @@
 package com.example.sprintproject.model;
 
-import com.example.sprintproject.service.AuthService;
-import com.google.firebase.auth.FirebaseUser;
-
 import java.util.Date;
 
 public class User {

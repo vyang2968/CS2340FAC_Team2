@@ -1,17 +1,15 @@
 package com.example.sprintproject.service;
 
-import android.util.Log;
-
 import com.example.sprintproject.model.User;
 import com.example.sprintproject.repository.UserRepositoryImpl;
 import com.example.sprintproject.utils.DataCallback;
 import com.google.android.gms.tasks.Task;
 
 public class UserService {
-    private UserRepositoryImpl userRepository;
+    private final UserRepositoryImpl userRepository;
     private static UserService instance;
     private User user;
-    private final String TAG = "UserService";
+    private static final String TAG = "UserService";
 
     private UserService() {
         this.userRepository = new UserRepositoryImpl();

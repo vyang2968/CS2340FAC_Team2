@@ -4,6 +4,12 @@ public class Order {
     private List<Item> items;
     private String customerName;
     private String customerEmail;
+    private static final double GIFT_CARD_AMT = 10.0;
+    private static final double MIN_ORDER_TOTAL = 0.0;
+    private static final double BULK_DISCOUNT_MIN = 100.0;
+    private static final double BULK_DISCOUNT_AMT = 0.10;
+    private static final double PERCENTAGE_DIVISOR = 100;
+    private static final double NO_DISCOUNT_AMT = 0;
 
     public Order(List<Item> items, String customerName, String customerEmail) {
         this.items = items;
@@ -15,41 +21,58 @@ public class Order {
     	double total = 0.0;
     	for (Item item : items) {
         	double price = item.getPrice();
-        	switch (item.getDiscountType()) {
-            	case PERCENTAGE:
-                	price -= item.getDiscountAmount() * price;
-                	break;
-            	case AMOUNT:
-                	price -= item.getDiscountAmount();
-                	break;
-            	default:
-                	// no discount
-                	break;
-        	}
-        	total += price * item.getQuantity();
-       	    if (item instanceof TaxableItem) {
-                TaxableItem taxableItem = (TaxableItem) item;
-                double tax = taxableItem.getTaxRate() / 100.0 * item.getPrice();
-                total += tax;
+
+        	total += (price - calculateDiscount(item)) * item.getQuantity();
+
+       	    if (item instanceof TaxableItem taxableItem) {
+                total += calculateTax(taxableItem.getTaxRate(), item.getPrice());
             }
         }
-    	if (hasGiftCard()) {
-        	total -= 10.0; // subtract $10 for gift card
-    	}
-    	if (total > 100.0) {
-        	total *= 0.9; // apply 10% discount for orders over $100
-    	}
+
+        total = applyGiftCardIfNecessary(total, hasGiftCard());
+        total = applyBulkDiscountIfNecessary(total);
+
     	return total;
     }
 
-    public void sendConfirmationEmail() {
-        String message = "Thank you for your order, " + customerName + "!\n\n" +
-                "Your order details:\n";
-        for (Item item : items) {
-            message += item.getName() + " - " + item.getPrice() + "\n";
+    private double calculateDiscount(Item item) {
+        if (item.getDiscountType() == DiscountType.PERCENTAGE) {
+            return item.getDiscountAmount() * item.getPrice();
+        } else if (item.getDiscountType() == DiscountType.AMOUNT) {
+            return item.getDiscountAmount();
+        } else {
+            return NO_DISCOUNT_AMT;
         }
-        message += "Total: " + calculateTotalPrice();
-        EmailSender.sendEmail(customerEmail, "Order Confirmation", message);
+    }
+
+    private double calculateTax(double taxRate, double price) {
+        return (taxRate / PERCENTAGE_DIVISOR) * price;
+    }
+
+    private double applyGiftCardIfNecessary(double total, boolean hasGiftCard) {
+        return hasGiftCard ? Math.max(MIN_ORDER_TOTAL, total - GIFT_CARD_AMT) : total;
+    }
+
+    private double applyBulkDiscountIfNecessary(double total) {
+        return (total > BULK_DISCOUNT_AMT) ? total * BULK_DISCOUNT_AMT : total;
+    }
+
+    public void sendConfirmationEmail() {
+        String thanksMessage = String.format("Thank you for your order, %s!\n\n", customerName);
+        String orderHeader = "Your order details\n";
+
+        StringBuilder builder = new StringBuilder(thanksMessage);
+        builder.append(orderHeader);
+
+        for (Item item : items) {
+            String itemInfo = String.format("%s - %f\n", item.getName(), item.getPrice());
+            builder.append(itemInfo);
+        }
+
+        String totalInfo = String.format("Total: %f", calculateTotalPrice());
+        builder.append(totalInfo);
+
+        EmailSender.sendEmail(customerEmail, "Order Confirmation", builder.toString());
     }
 
 
@@ -83,17 +106,6 @@ public class Order {
 
     public void setCustomerEmail(String customerEmail) {
         this.customerEmail = customerEmail;
-    }
-
-    public boolean hasGiftCard() {
-        boolean has_gift_card = false;
-        for (Item item : items) {
-            if (item.getGiftCard()) {
-                has_gift_card = true;
-                break;
-            }
-        }
-        return has_gift_card;
     }
 
    public void printOrder() {

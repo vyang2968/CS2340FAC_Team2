@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 public class Destination {
+    private String id;
     private String destination;
     private Date startDate;
     private Date endDate;

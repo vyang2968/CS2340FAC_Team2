@@ -116,7 +116,8 @@ public class RegisterViewModel extends AuthViewModel {
             confirmPasswordInput.setError(null);
         }
 
-        passwordsMatch = (passwordInput.getError() == null && confirmPasswordInput.getError() == null);
+        passwordsMatch =
+                (passwordInput.getError() == null && confirmPasswordInput.getError() == null);
         return passwordsMatch;
     }
 

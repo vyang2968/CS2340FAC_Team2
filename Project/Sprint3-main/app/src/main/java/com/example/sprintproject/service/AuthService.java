@@ -35,7 +35,10 @@ public class AuthService {
         return instance;
     }
 
-    public Task<AuthResult> registerUser(String email, String password, DataCallback<FirebaseUser> callback) {
+    public Task<AuthResult> registerUser(
+            String email,
+            String password,
+            DataCallback<FirebaseUser> callback) {
         return auth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
@@ -49,7 +52,10 @@ public class AuthService {
                 });
     }
 
-    public Task<AuthResult> logInUser(String email, String password, DataCallback<FirebaseUser> callback) {
+    public Task<AuthResult> logInUser(
+            String email,
+            String password,
+            DataCallback<FirebaseUser> callback) {
         return auth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {

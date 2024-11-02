@@ -76,24 +76,25 @@ public class DestinationRepositoryImpl implements DestinationRepository {
 
     @Override
     public void getAllDestinations(DataCallback<List<Destination>> callback) {
-        destDBRef.orderByChild("location").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                List<Destination> results = new ArrayList<>();
+        destDBRef.orderByChild("location").addValueEventListener(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        List<Destination> results = new ArrayList<>();
 
-                Iterator<DataSnapshot> iterator = snapshot.getChildren().iterator();
-                while (iterator.hasNext()) {
-                    results.add(iterator.next().getValue(Destination.class));
+                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                            results.add(dataSnapshot.getValue(Destination.class));
+                        }
+
+                        callback.onSuccess(results);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        callback.onError(error.toException());
+                    }
                 }
-
-                callback.onSuccess(results);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                callback.onError(error.toException());
-            }
-        });
+        );
     }
 
 

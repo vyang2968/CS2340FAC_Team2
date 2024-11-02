@@ -172,6 +172,7 @@ public class DestinationViewModel extends ViewModel {
         if (startDate != null) {
             currUser.setStartDate(startDate);
             Log.i(TAG, "setUserStartDate:success");
+            startDateInput.setError(null);
         }
 
         userStartDateValid = startDateInput.getError() == null;
@@ -184,6 +185,7 @@ public class DestinationViewModel extends ViewModel {
         if (endDate != null) {
             currUser.setEndDate(endDate);
             Log.i(TAG, "setUserEndDate:success");
+            endDateInput.setError(null);
         }
 
         userEndDateValid = endDateInput.getError() == null;
@@ -195,6 +197,7 @@ public class DestinationViewModel extends ViewModel {
 
         if (!durationText.isEmpty()) {
             currUser.setDuration(Integer.parseInt(durationText));
+            durationInput.setError(null);
         }
 
         durationValid = durationInput.getError() == null;

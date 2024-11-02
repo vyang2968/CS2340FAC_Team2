@@ -4,12 +4,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CollaboratorManager {
+    private int daysPlanned;
     private User creator;
     private final List<User> collaborators;
 
     public CollaboratorManager() {
         this.collaborators = new ArrayList<>();
         this.creator = new User();
+    }
+
+    public int getDaysPlanned() {
+        return daysPlanned;
+    }
+
+    public void setDaysPlanned(int daysPlanned) {
+        this.daysPlanned = daysPlanned;
     }
 
     public void addCollaborator(User user) {

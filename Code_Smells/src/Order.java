@@ -108,17 +108,6 @@ public class Order {
         this.customerEmail = customerEmail;
     }
 
-    public boolean hasGiftCard() {
-        boolean has_gift_card = false;
-        for (Item item : items) {
-            if (item instanceof GiftCardItem) {
-                has_gift_card = true;
-                break;
-            }
-        }
-        return has_gift_card;
-    }
-
    public void printOrder() {
         System.out.println("Order Details:");
         for (Item item : items) {

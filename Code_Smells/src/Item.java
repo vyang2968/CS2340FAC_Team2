@@ -35,7 +35,7 @@ class Item {
         return discountAmount;
     }
 
-    public boolean getGiftCard(){
+    public boolean isGiftCard(){
         return isGiftCard;
     }
 }

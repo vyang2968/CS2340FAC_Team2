@@ -11,11 +11,7 @@ public class UserService {
     private UserRepositoryImpl userRepository;
     private static UserService instance;
     private User user;
-    private final String TAG = "userService";
-
-    public String returnTag(){
-        return TAG;
-    }
+    private static final String TAG = "UserService";
 
     private UserService() {
         this.userRepository = new UserRepositoryImpl();

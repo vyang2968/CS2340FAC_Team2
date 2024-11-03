@@ -36,8 +36,7 @@ public class UserRepositoryImpl implements UserRepository {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Log.d(TAG, "getUserById:success");
-                User user = snapshot.getValue(User.class);
-                callback.onSuccess(user);
+                callback.onSuccess(snapshot.getValue(User.class));
             }
 
             @Override

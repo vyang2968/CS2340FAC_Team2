@@ -34,29 +34,21 @@ public class DestinationService {
         return destinationRepository.addDestination(destination);
     }
 
-    public Destination getDestination(String id) {
+    public void getDestination(String id, DataCallback<Destination> callback) {
         if (id == null) {
             throw new IllegalArgumentException("id cannot be null");
         } else if (id.isEmpty()) {
             throw new IllegalArgumentException("id cannot be empty");
         }
 
-        destinationRepository.getDestinationById(id, new DataCallback<Destination>() {
-            @Override
-            public void onSuccess(Destination result) {
-
-            }
-
-            @Override
-            public void onError(Exception e) {
-
-            }
-        });
-
-        return null;
+        destinationRepository.getDestinationById(id, callback);
     }
 
     public void getFirstKDestinations(int k, DataCallback<List<Destination>> callback) {
+        if (k <= 0) {
+            throw new IllegalArgumentException("k needs to be greater than 0");
+        }
+
         destinationRepository.getFirstKDestinations(k, callback);
     }
 

@@ -36,7 +36,8 @@ public class LogisticsScreen extends NavBarScreen {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        ActivityLogisticsScreenBinding binding = ActivityLogisticsScreenBinding.inflate(getLayoutInflater());
+        ActivityLogisticsScreenBinding binding =
+                ActivityLogisticsScreenBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         setupNavBar();
@@ -108,7 +109,7 @@ public class LogisticsScreen extends NavBarScreen {
     }
 
     private void updateChartData() {
-        if (pieChart == null){
+        if (pieChart == null) {
             return;
         }
 

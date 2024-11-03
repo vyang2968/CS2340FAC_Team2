@@ -15,7 +15,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public class DestinationRepositoryImpl implements DestinationRepository {
@@ -80,9 +79,8 @@ public class DestinationRepositoryImpl implements DestinationRepository {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 List<Destination> results = new ArrayList<>();
 
-                Iterator<DataSnapshot> iterator = snapshot.getChildren().iterator();
-                while (iterator.hasNext()) {
-                    results.add(iterator.next().getValue(Destination.class));
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    results.add(dataSnapshot.getValue(Destination.class));
                 }
 
                 callback.onSuccess(results);
@@ -94,9 +92,6 @@ public class DestinationRepositoryImpl implements DestinationRepository {
             }
         });
     }
-
-
-
 
     @Override
     public Task<Void> updateDestination(Destination destination) {

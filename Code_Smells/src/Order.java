@@ -29,7 +29,7 @@ public class Order {
         }
 
         total = applyGiftCardIfNecessary(total, hasGiftCard());
-        total = applyBulkDiscountIfNecessary(total);
+        total -= applyBulkDiscountIfNecessary(total);
 
     	return total;
     }
@@ -52,7 +52,7 @@ public class Order {
     }
 
     private double applyBulkDiscountIfNecessary(double total) {
-        return (total > BULK_DISCOUNT_AMT) ? total * BULK_DISCOUNT_AMT : total;
+        return (total > BULK_DISCOUNT_MIN) ? total * BULK_DISCOUNT_AMT : total;
     }
 
     public void sendConfirmationEmail() {

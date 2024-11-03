@@ -9,7 +9,6 @@ public class Order {
     private static final double BULK_DISCOUNT_MIN = 100.0;
     private static final double BULK_DISCOUNT_AMT = 0.10;
     private static final double PERCENTAGE_DIVISOR = 100;
-    private static final double NO_DISCOUNT_AMT = 0;
 
     public Order(List<Item> items, String customerName, String customerEmail) {
         this.items = items;
@@ -22,10 +21,10 @@ public class Order {
     	for (Item item : items) {
         	double price = item.getPrice();
 
-        	total += (price - calculateDiscount(item)) * item.getQuantity();
+        	total += (applyDiscount(item)) * item.getQuantity();
 
        	    if (item instanceof TaxableItem taxableItem) {
-                total += calculateTax(taxableItem.getTaxRate(), item.getPrice());
+                total += calculateTax(taxableItem.getTaxRate(), price);
             }
         }
 
@@ -35,13 +34,12 @@ public class Order {
     	return total;
     }
 
-    private double calculateDiscount(Item item) {
-        if (item.getDiscountType() == DiscountType.PERCENTAGE) {
-            return item.getDiscountAmount() * item.getPrice();
-        } else if (item.getDiscountType() == DiscountType.AMOUNT) {
-            return item.getDiscountAmount();
+    private double applyDiscount(Item item) {
+        if (item.getDiscountType() == null) {
+            return item.getPrice();
         } else {
-            return NO_DISCOUNT_AMT;
+            return item.getDiscountType()
+                    .applyDiscount(item.getPrice(), item.getDiscountAmount());
         }
     }
 

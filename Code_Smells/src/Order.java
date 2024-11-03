@@ -30,7 +30,7 @@ public class Order {
         }
 
         total = applyGiftCardIfNecessary(total, hasGiftCard());
-        total = applyBulkDiscountIfNecessary(total);
+        total -= applyBulkDiscountIfNecessary(total);
 
     	return total;
     }

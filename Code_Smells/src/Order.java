@@ -21,7 +21,7 @@ public class Order {
     	for (Item item : items) {
         	double price = item.getPrice();
 
-        	total += (applyDiscount(item)) * item.getQuantity();
+        	total += (item.applyDiscount() * item.getQuantity());
 
        	    if (item instanceof TaxableItem taxableItem) {
                 total += calculateTax(taxableItem.getTaxRate(), price);
@@ -32,15 +32,6 @@ public class Order {
         total -= applyBulkDiscountIfNecessary(total);
 
     	return total;
-    }
-
-    private double applyDiscount(Item item) {
-        if (item.getDiscountType() == null) {
-            return item.getPrice();
-        } else {
-            return item.getDiscountType()
-                    .applyDiscount(item.getPrice(), item.getDiscountAmount());
-        }
     }
 
     private double calculateTax(double taxRate, double price) {

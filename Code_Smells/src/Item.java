@@ -15,6 +15,14 @@ class Item {
         this.isGiftCard = isGiftCard;
     }
 
+    public double applyDiscount() {
+        if (discountType == null) {
+            return price;
+        } else {
+            return discountType.applyDiscount(price, discountAmount);
+        }
+    }
+
     public String getName() {
         return name;
     }

@@ -1,20 +1,21 @@
 package com.example.sprintproject.model;
 
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 public class Destination {
     private String id;
     private String destination;
     private Date startDate;
     private Date endDate;
-    private CollaborationManager collaborationManager;
+    private final CollaboratorManager collaboratorManager;
 
     public Destination() {
         this.id = "";
         this.destination = "";
         this.startDate = new Date();
         this.endDate = new Date();
-        this.collaborationManager = new CollaborationManager();
+        this.collaboratorManager = new CollaboratorManager();
     }
 
     public String getId() {
@@ -41,6 +42,12 @@ public class Destination {
         this.startDate = startDate;
     }
 
+    public int getDurationInDays() {
+        long milliseconds = endDate.getTime() - startDate.getTime();
+
+        return (int) TimeUnit.DAYS.convert(milliseconds, TimeUnit.MILLISECONDS);
+    }
+
     public String getDestination() {
         return destination;
     }
@@ -49,7 +56,7 @@ public class Destination {
         this.destination = destination;
     }
 
-    public CollaborationManager getCollaborationManager() {
-        return collaborationManager;
+    public CollaboratorManager getCollaboratorManager() {
+        return collaboratorManager;
     }
 }

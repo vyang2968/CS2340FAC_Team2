@@ -42,4 +42,19 @@ public class BaseTask implements Task {
         return priority;
     }
 
+    @Override
+    public void setDueDate(Date dueDate) {
+        this.dueDate = dueDate;
+    }
+
+    @Override
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    @Override
+    public void completeTask(){
+        this.status = "complete";
+    }
+
 }

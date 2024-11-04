@@ -1,0 +1,28 @@
+name: Checkstyle
+
+on:
+  pull_request:
+    branches:
+      [ main ]
+
+jobs:
+  checkstyle_job:
+    runs-on: ubuntu-latest
+    name: Checkstyle
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Download CS2340 Checkstyle File
+      run: |
+        wget https://raw.githubusercontent.com/Georgia-Tech-CS2340/cs2340-codestyle/master/cs2340_checks.xml
+      
+    - name: Run Checkstyle
+      uses: dbelyaev/action-checkstyle@master
+      with:
+        github_token: ${{ secrets.github_token }}
+        fail_on_error: true
+        filter_mode: nofilter
+        workdir: ./Project/Sprint3-main/app/src/main/java
+        checkstyle_config: cs2340_checks.xml
+        level: error

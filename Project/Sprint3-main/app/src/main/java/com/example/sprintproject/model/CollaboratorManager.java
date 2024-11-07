@@ -1,11 +1,12 @@
 package com.example.sprintproject.model;
 
+import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CollaboratorManager {
     private User creator;
-    private final List<User> collaborators;
+    private List<User> collaborators;
 
     public CollaboratorManager() {
         this.collaborators = new ArrayList<>();

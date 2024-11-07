@@ -1,0 +1,64 @@
+package com.example.sprintproject.model;
+
+import android.location.Address;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+
+public class DiningReservation {
+    private String id;
+    private Address location;
+    private String websiteLink;
+    private List<Review> reviews;
+    private Date reservationTime;
+
+    public DiningReservation() {
+        this.id = "";
+        this.location = new Address(Locale.getDefault());
+        this.websiteLink = "";
+        this.reviews = new ArrayList<>();
+        this.reservationTime = new Date();
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public Address getLocation() {
+        return location;
+    }
+
+    public void setLocation(Address location) {
+        this.location = location;
+    }
+
+    public String getWebsiteLink() {
+        return websiteLink;
+    }
+
+    public void setWebsiteLink(String websiteLink) {
+        this.websiteLink = websiteLink;
+    }
+
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
+    }
+
+    public Date getReservationTime() {
+        return reservationTime;
+    }
+
+    public void setReservationTime(Date reservationTime) {
+        this.reservationTime = reservationTime;
+    }
+}

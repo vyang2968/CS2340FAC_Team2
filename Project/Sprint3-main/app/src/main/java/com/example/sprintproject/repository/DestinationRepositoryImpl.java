@@ -37,7 +37,7 @@ public class DestinationRepositoryImpl implements DestinationRepository {
 
     @Override
     public void getDestinationById(String id, DataCallback<Destination> callback) {
-        destDBRef.addValueEventListener(new ValueEventListener() {
+        destDBRef.child(id).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Destination dest = snapshot.getValue(Destination.class);

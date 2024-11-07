@@ -2,7 +2,7 @@ package com.example.sprintproject.model;
 
 import java.util.Date;
 
-public class LodgingReservation {
+public class Accommodation {
     public enum RoomType {
         SINGLE,
         DOUBLE,
@@ -11,12 +11,13 @@ public class LodgingReservation {
         SUITE
     }
 
+    private String id;
     private Date checkInTime;
     private Date checkOutTime;
     private int numRooms;
     private RoomType roomType;
 
-    public LodgingReservation() {
+    public Accommodation() {
         this.checkInTime = new Date();
         this.checkOutTime = new Date();
         this.numRooms = 0;
@@ -53,5 +54,13 @@ public class LodgingReservation {
 
     public void setRoomType(RoomType roomType) {
         this.roomType = roomType;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

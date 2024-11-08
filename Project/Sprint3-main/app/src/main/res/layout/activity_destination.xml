@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="bottom">
     <data>
         <variable
             name="destViewModel"
@@ -9,7 +13,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:gravity="bottom">
         <!-- Main Layout Element -->
         <ScrollView
             android:layout_width="match_parent"
@@ -281,7 +286,6 @@
                 </LinearLayout>
             </LinearLayout>
         </ScrollView>
-
         <!-- Navbar -->
         <LinearLayout
             android:id="@+id/navbar"

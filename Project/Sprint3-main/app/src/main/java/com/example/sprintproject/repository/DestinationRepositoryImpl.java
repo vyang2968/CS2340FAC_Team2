@@ -21,7 +21,7 @@ import java.util.List;
 
 public class DestinationRepositoryImpl implements DestinationRepository {
     private static final String TAG = "DestRepoImpl";
-    private DatabaseReference destDBRef;
+    private final DatabaseReference destDBRef;
 
     public DestinationRepositoryImpl() {
         Log.i(TAG, "connecting to destinations database...");
@@ -37,7 +37,7 @@ public class DestinationRepositoryImpl implements DestinationRepository {
 
     @Override
     public void getDestinationById(String id, DataCallback<Destination> callback) {
-        destDBRef.addValueEventListener(new ValueEventListener() {
+        destDBRef.child(id).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Destination dest = snapshot.getValue(Destination.class);

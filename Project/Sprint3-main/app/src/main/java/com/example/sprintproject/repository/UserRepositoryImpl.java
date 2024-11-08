@@ -16,7 +16,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class UserRepositoryImpl implements UserRepository {
     private static final String TAG = "UserRepoImpl";
-    private DatabaseReference usersRef;
+    private final DatabaseReference usersRef;
 
     public UserRepositoryImpl() {
         Log.i(TAG, "connecting to users database...");

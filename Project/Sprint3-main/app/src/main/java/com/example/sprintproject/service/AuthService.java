@@ -18,9 +18,9 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class AuthService {
     private static final String TAG = "AuthService";
-    private FirebaseAuth auth;
+    private final FirebaseAuth auth;
     private static AuthService instance;
-    private UserService userService;
+    private final UserService userService;
 
     private AuthService() {
         auth = FirebaseAuth.getInstance();

@@ -8,7 +8,7 @@ public class Destination {
     private String destination;
     private Date startDate;
     private Date endDate;
-    private CollaboratorManager collaboratorManager;
+    private final CollaboratorManager collaboratorManager;
 
     public Destination() {
         this.id = "";

@@ -19,15 +19,15 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class RegisterViewModel extends AuthViewModel {
     private static final String TAG = "RegisterViewModel";
-    private MutableLiveData<Boolean> authSuccess;
-    private MutableLiveData<Boolean> createSuccess;
-    private MutableLiveData<Boolean> proceed;
-    private MutableLiveData<String> errorMsg;
-    private boolean emailValid;
+    private final MutableLiveData<Boolean> authSuccess;
+    private final MutableLiveData<Boolean> createSuccess;
+    private final MutableLiveData<Boolean> proceed;
+    private final MutableLiveData<String> errorMsg;
+    private final boolean emailValid;
     private boolean passwordValid;
     private boolean passwordsMatch;
-    private AuthService authService;
-    private UserService userService;
+    private final AuthService authService;
+    private final UserService userService;
 
     public RegisterViewModel() {
         this.errorMsg = new MutableLiveData<>();
@@ -122,7 +122,7 @@ public class RegisterViewModel extends AuthViewModel {
     }
 
     public boolean canBeSubmitted() {
-        logInfo("canBeSubmitted:" + String.valueOf(emailValid && passwordValid && passwordsMatch));
+        logInfo("canBeSubmitted:" + (emailValid && passwordValid && passwordsMatch));
         return emailValid && passwordValid && passwordsMatch;
     }
     

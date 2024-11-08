@@ -16,7 +16,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class AccommodationRepositoryImpl implements AccommodationRepository {
     private static final String TAG = "AccomRepoImpl";
-    private DatabaseReference dbRef;
+    private final DatabaseReference dbRef;
 
     public AccommodationRepositoryImpl() {
         Log.i(TAG, "connecting to accommodations database...");

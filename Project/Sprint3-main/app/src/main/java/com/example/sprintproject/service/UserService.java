@@ -8,7 +8,7 @@ import com.example.sprintproject.utils.DataCallback;
 import com.google.android.gms.tasks.Task;
 
 public class UserService {
-    private UserRepositoryImpl userRepository;
+    private final UserRepositoryImpl userRepository;
     private static UserService instance;
     private User user;
     private static final String TAG = "UserService";

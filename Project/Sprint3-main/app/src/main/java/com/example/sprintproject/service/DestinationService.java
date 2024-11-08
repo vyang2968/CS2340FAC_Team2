@@ -11,7 +11,7 @@ import com.google.android.gms.tasks.Task;
 import java.util.List;
 
 public class DestinationService {
-    private DestinationRepositoryImpl destinationRepository;
+    private final DestinationRepositoryImpl destinationRepository;
     private static DestinationService instance;
     private static final String TAG = "DestService";
 

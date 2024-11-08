@@ -16,7 +16,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class DiningReservationRepositoryImpl implements DiningReservationRepository {
     private static final String TAG = "DiningResRepoImpl";
-    private DatabaseReference dbRef;
+    private final DatabaseReference dbRef;
 
     public DiningReservationRepositoryImpl() {
         Log.i(TAG, "connecting to dining reservation...");

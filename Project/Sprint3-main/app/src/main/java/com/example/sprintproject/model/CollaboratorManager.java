@@ -1,15 +1,18 @@
 package com.example.sprintproject.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CollaboratorManager {
+public class CollaboratorManager implements Serializable {
     private User creator;
     private final List<User> collaborators;
+    private final List<Note> notes;
 
     public CollaboratorManager() {
         this.collaborators = new ArrayList<>();
         this.creator = new User();
+        this.notes = new ArrayList<>();
     }
 
     public void addCollaborator(User user) {
@@ -30,5 +33,9 @@ public class CollaboratorManager {
 
     public void setCreator(User creator) {
         this.creator = creator;
+    }
+
+    public List<Note> getNotes() {
+        return notes;
     }
 }

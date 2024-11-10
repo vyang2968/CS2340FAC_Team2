@@ -1,6 +1,8 @@
 package com.example.sprintproject.model;
 
-public class Review {
+import java.io.Serializable;
+
+public class Review implements Serializable {
     private String id;
     private int rating;
     private String review;

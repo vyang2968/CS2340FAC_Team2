@@ -14,6 +14,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class AccommodationRepositoryImpl implements AccommodationRepository {
     private static final String TAG = "AccomRepoImpl";
     private final DatabaseReference dbRef;
@@ -27,7 +30,7 @@ public class AccommodationRepositoryImpl implements AccommodationRepository {
     public Task<Void> addAccommodation(Accommodation accommodation) {
         String id = dbRef.push().getKey();
         accommodation.setId(id);
-        return dbRef.push().setValue(accommodation);
+        return dbRef.child(accommodation.getId()).setValue(accommodation);
     }
 
     @Override
@@ -43,6 +46,29 @@ public class AccommodationRepositoryImpl implements AccommodationRepository {
                 callback.onError(error.toException());
             }
         });
+    }
+
+    @Override
+    public void getAllAccommodations(DataCallback<List<Accommodation>> callback) {
+        dbRef.orderByChild("id").addValueEventListener(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        List<Accommodation> results = new ArrayList<>();
+
+                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                            results.add(dataSnapshot.getValue(Accommodation.class));
+                        }
+
+                        callback.onSuccess(results);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        callback.onError(error.toException());
+                    }
+                }
+        );
     }
 
     @Override

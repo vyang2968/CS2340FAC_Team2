@@ -1,6 +1,8 @@
 package com.example.sprintproject;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
 import com.example.sprintproject.model.User;
 
@@ -35,8 +37,7 @@ public class UserUnitTests {
         user.setEmail(testEmail);
         String actualUsername = user.getUsername();
 
-        assertSame(expectedUsername, actualUsername);
-
+        assertEquals(expectedUsername, actualUsername);
     }
 
     @Test

@@ -30,6 +30,10 @@ public class DestinationUnitTests {
         User userB = new User();
         User userC = new User();
 
+        userA.setId("1");
+        userB.setId("2");
+        userC.setId("3");
+
         collabManager.addCollaborator(userA);
         collabManager.addCollaborator(userC);
 

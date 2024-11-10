@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+
+    <!-- Square bubble shape with a tail -->
+    <path
+        android:fillColor="#000000"
+        android:pathData="M4,4h16v12h-4l-2,3 -2,-3h-8z" />
+
+    <!-- First line (top) inside bubble -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M6,8h12v1H6z" />
+
+    <!-- Second line (middle) inside bubble -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M6,11h10v1H6z" />
+
+    <!-- Third line (bottom) inside bubble -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M6,14h8v1H6z" />
+</vector>

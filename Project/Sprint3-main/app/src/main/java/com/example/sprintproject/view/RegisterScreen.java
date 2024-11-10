@@ -1,25 +1,21 @@
 package com.example.sprintproject.view;
 
-import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AppCompatActivity;
-
-import androidx.lifecycle.ViewModelProvider;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.Button;
-
+import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.sprintproject.BR;
 import com.example.sprintproject.R;
 import com.example.sprintproject.databinding.ActivityRegisterBinding;
 import com.example.sprintproject.service.AuthService;
-
 import com.example.sprintproject.viewmodel.RegisterViewModel;
 
 

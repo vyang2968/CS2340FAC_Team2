@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
 import androidx.lifecycle.ViewModelProvider;
@@ -16,7 +17,7 @@ import com.example.sprintproject.R;
 public class DiningEstablishmentScreen extends NavBarScreen {
     private DiningEstablishmentViewModel diningEstablishmentViewModel;
     private LinearLayout reservationForm;
-    private Button addButton;
+    private ImageButton addButton;
     private Button submitButton;
 
     @Override
@@ -27,9 +28,9 @@ public class DiningEstablishmentScreen extends NavBarScreen {
         diningEstablishmentViewModel =
                 new ViewModelProvider(this).get(DiningEstablishmentViewModel.class);
 
-        reservationForm = findViewById(R.id.reservation_form);
-        addButton = findViewById(R.id.button_add_reservation);
-        submitButton = findViewById(R.id.button_submit_reservation);
+        reservationForm = findViewById(R.id.addReservationWindow);
+        addButton = findViewById(R.id.openReservationButton);
+        submitButton = findViewById(R.id.addReservationButton);
 
         addButton.setOnClickListener(view -> toggleFormVisibility());
         submitButton.setOnClickListener(view -> submitReservation());
@@ -46,9 +47,9 @@ public class DiningEstablishmentScreen extends NavBarScreen {
     }
 
     private void submitReservation() {
-        EditText timeInput = findViewById(R.id.edit_text_time);
-        EditText locationInput = findViewById(R.id.edit_text_location);
-        EditText websiteInput = findViewById(R.id.edit_text_website);
+        EditText timeInput = findViewById(R.id.timeInput);
+        EditText locationInput = findViewById(R.id.locationInput);
+        EditText websiteInput = findViewById(R.id.websiteInput);
 
         String time = timeInput.getText().toString();
         String location = locationInput.getText().toString();

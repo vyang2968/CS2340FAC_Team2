@@ -10,7 +10,7 @@ public class Destination implements Serializable {
     private Date startDate;
     private Date endDate;
     private final CollaboratorManager collaboratorManager;
-    private DayPlansManager dayPlansManager;
+    private final DayPlansManager dayPlansManager;
 
     public Destination() {
         this.id = "";

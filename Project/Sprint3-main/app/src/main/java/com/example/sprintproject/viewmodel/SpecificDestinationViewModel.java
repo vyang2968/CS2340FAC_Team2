@@ -21,11 +21,11 @@ public class SpecificDestinationViewModel extends ViewModel {
     private static final String TAG = "SpecificDestViewModel";
     private static final int STARTING_DAY = 1;
 
-    private UserService userService;
-    private MutableLiveData<Destination> destination;
-    private MutableLiveData<Integer> startingDay;
-    private DestinationService destinationService;
-    private MutableLiveData<Boolean> updateDestinationSuccessful;
+    private final UserService userService;
+    private final MutableLiveData<Destination> destination;
+    private final MutableLiveData<Integer> startingDay;
+    private final DestinationService destinationService;
+    private final MutableLiveData<Boolean> updateDestinationSuccessful;
 
     public SpecificDestinationViewModel() {
         this.destination = new MutableLiveData<>();

@@ -1,6 +1,5 @@
 package com.example.sprintproject.view;
 
-import android.content.DialogInterface;
 import android.graphics.Typeface;
 import android.icu.util.Calendar;
 import android.os.Bundle;

@@ -2,6 +2,7 @@ package com.example.sprintproject.view;
 
 
 import android.os.Bundle;
+
 import com.example.sprintproject.R;
 
 public class DiningEstablishmentScreen extends NavBarScreen {

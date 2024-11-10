@@ -1,12 +1,12 @@
 package com.example.sprintproject.view;
 
-import androidx.lifecycle.ViewModelProvider;
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.sprintproject.BR;
 import com.example.sprintproject.R;

@@ -8,8 +8,8 @@ import java.util.Map;
 
 public class CollaboratorManager implements Serializable {
     private User creator;
-    private List<User> collaborators;
-    private List<Note> notes;
+    private final List<User> collaborators;
+    private final List<Note> notes;
 
     public CollaboratorManager() {
         this.collaborators = new ArrayList<>();

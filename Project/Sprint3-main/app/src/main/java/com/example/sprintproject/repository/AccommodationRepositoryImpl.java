@@ -5,7 +5,6 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.example.sprintproject.model.Accommodation;
-import com.example.sprintproject.model.Destination;
 import com.example.sprintproject.repository.contracts.AccommodationRepository;
 import com.example.sprintproject.utils.DataCallback;
 import com.google.android.gms.tasks.Task;

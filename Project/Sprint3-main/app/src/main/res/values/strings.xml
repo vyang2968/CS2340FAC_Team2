@@ -42,4 +42,20 @@
         libero vel nunc consequat, quis tincidunt nisl eleifend. Cras bibendum enim a justo luctus
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
+
+    <string-array name = "RoomOptions">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5+</item>
+    </string-array>
+
+    <string-array name = "RoomTypeOptions">
+        <item>Single</item>
+        <item>Double</item>
+        <item>Suite</item>
+        <item>Queen Suite</item>
+        <item>King Suite</item>
+    </string-array>
 </resources>

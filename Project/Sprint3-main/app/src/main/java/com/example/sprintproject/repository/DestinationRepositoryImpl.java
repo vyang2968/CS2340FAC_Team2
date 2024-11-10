@@ -32,7 +32,7 @@ public class DestinationRepositoryImpl implements DestinationRepository {
     public Task<Void> addDestination(Destination destination) {
         String id = destDBRef.push().getKey();
         destination.setId(id);
-        return destDBRef.push().setValue(destination);
+        return destDBRef.child(id).setValue(destination);
     }
 
     @Override
@@ -53,7 +53,7 @@ public class DestinationRepositoryImpl implements DestinationRepository {
 
     @Override
     public void getFirstKDestinations(int k, DataCallback<List<Destination>> callback) {
-        destDBRef.orderByChild("location").limitToFirst(k).addValueEventListener(
+        destDBRef.orderByChild("destinationName").limitToFirst(k).addValueEventListener(
                 new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -76,7 +76,7 @@ public class DestinationRepositoryImpl implements DestinationRepository {
 
     @Override
     public void getAllDestinations(DataCallback<List<Destination>> callback) {
-        destDBRef.orderByChild("location").addValueEventListener(
+        destDBRef.orderByChild("destinationName").addValueEventListener(
                 new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -96,8 +96,6 @@ public class DestinationRepositoryImpl implements DestinationRepository {
                 }
         );
     }
-
-
 
 
     @Override

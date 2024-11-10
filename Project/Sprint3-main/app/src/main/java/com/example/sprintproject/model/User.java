@@ -1,11 +1,10 @@
 package com.example.sprintproject.model;
 
-
-
-
+import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 
-public class User {
+public class User implements Serializable {
     private String id;
     private String email;
     private String username;
@@ -69,5 +68,18 @@ public class User {
 
     public void setDuration(int duration) {
         this.duration = duration;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(id, user.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
     }
 }

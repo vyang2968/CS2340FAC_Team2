@@ -2,12 +2,13 @@ package com.example.sprintproject.model;
 
 import android.location.Address;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-public class DiningReservation {
+public class DiningReservation implements Serializable {
     private String id;
     private Address location;
     private String websiteLink;

@@ -1,21 +1,24 @@
 package com.example.sprintproject.model;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
-public class Destination {
+public class Destination implements Serializable {
     private String id;
-    private String destination;
+    private String destinationName;
     private Date startDate;
     private Date endDate;
     private final CollaboratorManager collaboratorManager;
+    private DayPlansManager dayPlansManager;
 
     public Destination() {
         this.id = "";
-        this.destination = "";
+        this.destinationName = "";
         this.startDate = new Date();
         this.endDate = new Date();
         this.collaboratorManager = new CollaboratorManager();
+        this.dayPlansManager = new DayPlansManager();
     }
 
     public String getId() {
@@ -48,15 +51,19 @@ public class Destination {
         return (int) TimeUnit.DAYS.convert(milliseconds, TimeUnit.MILLISECONDS);
     }
 
-    public String getDestination() {
-        return destination;
+    public String getDestinationName() {
+        return destinationName;
     }
 
-    public void setDestination(String destination) {
-        this.destination = destination;
+    public void setDestinationName(String destinationName) {
+        this.destinationName = destinationName;
     }
 
     public CollaboratorManager getCollaboratorManager() {
         return collaboratorManager;
+    }
+
+    public DayPlansManager getDayPlansManager() {
+        return dayPlansManager;
     }
 }

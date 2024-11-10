@@ -34,8 +34,8 @@ public class AdditionalDestinationUnitTests {
     }
     @Test
     public void testDestination(){
-        destination.setDestination("Paris");
+        destination.setDestinationName("Paris");
 
-        assertEquals("Paris", destination.getDestination());
+        assertEquals("Paris", destination.getDestinationName());
     }
 }

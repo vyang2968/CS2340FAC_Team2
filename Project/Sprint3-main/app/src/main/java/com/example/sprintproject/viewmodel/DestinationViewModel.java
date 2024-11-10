@@ -75,7 +75,7 @@ public class DestinationViewModel extends ViewModel {
 
     public void queryForDestinations() {
         destinations.setValue(new ArrayList<>());
-        destinationService.getFirstKDestinations(5, new DataCallback<List<Destination>>() {
+        destinationService.getFirstKDestinations(20, new DataCallback<List<Destination>>() {
             @Override
             public void onSuccess(List<Destination> result) {
                 Log.i(TAG, "getDestinations:success");
@@ -92,7 +92,7 @@ public class DestinationViewModel extends ViewModel {
 
     public void setLocation(EditText locationInput) {
         if (validateLocation(locationInput)) {
-            destination.setDestination(locationInput.getText().toString());
+            destination.setDestinationName(locationInput.getText().toString());
             Log.i(TAG, "setLocation:success");
         }
     }

@@ -1,10 +1,12 @@
 package com.example.sprintproject.view;
 
-import android.graphics.Color;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ContextThemeWrapper;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -189,57 +191,66 @@ public class DestinationScreen extends NavBarScreen {
             area.removeAllViews();
             if (!destinations.isEmpty()) {
                 Log.i(TAG, "populating destinations...");
-                for (int i = 0; i < 5; i++) {
-                    String location;
-                    String allocatedDays;
-                    if (i < destinations.size()) {
-                        Destination destination = destinations.get(i);
-                        location = destination.getDestination();
-                        allocatedDays = String.valueOf(destination.getDurationInDays());
-                    } else {
-                        location = "Destination";
-                        allocatedDays = "XX";
-                    }
-
-                    LinearLayout row = new LinearLayout(this);
-                    row.setOrientation(LinearLayout.HORIZONTAL);
-                    LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(
-                            LinearLayout.LayoutParams.MATCH_PARENT,
-                            LinearLayout.LayoutParams.WRAP_CONTENT);
-                    param.setMargins(0, 10, 0, 10);
-                    row.setLayoutParams(param);
-                    row.setBackgroundColor(Color.parseColor("#E0E0E0"));
-
-                    TextView locationText = new TextView(this);
-                    locationText.setText(location);
-                    locationText.setTextSize(18);
-                    locationText.setLayoutParams(new LinearLayout.LayoutParams(
-                            0,
-                            LinearLayout.LayoutParams.WRAP_CONTENT,
-                            1f));
-                    locationText.setGravity(Gravity.START);
-
-                    TextView allocatedDaysText = new TextView(this);
-                    String message = String.format("%s days planned", allocatedDays);
-                    allocatedDaysText.setText(message);
-                    allocatedDaysText.setTextSize(18);
-                    allocatedDaysText.setLayoutParams(new LinearLayout.LayoutParams(
-                            0,
-                            LinearLayout.LayoutParams.WRAP_CONTENT,
-                            1f));
-                    allocatedDaysText.setGravity(Gravity.END);
-
-                    row.addView(locationText);
-                    row.addView(allocatedDaysText);
-
-                    area.addView(row);
-
-                    Log.i(TAG, String.format("%s, %s days", location, allocatedDays));
+                for (int i = 0; i < destinations.size(); i++) {
+                    Destination currDest = destinations.get(i);
+                    LinearLayout layout = createClickableArea(currDest);
+                    layout.setClickable(true);
+                    layout.setOnClickListener(view -> {
+                        Log.i(TAG, "destination area clicked");
+                        Intent intent = new Intent(this, SpecificDestinationScreen.class);
+                        intent.putExtra("destination", currDest);
+                        startActivity(intent);
+                    });
+                    area.addView(layout);
                 }
             } else {
                 Log.i(TAG, "empty");
             }
         });
+    }
+
+    private LinearLayout createClickableArea(Destination data) {
+        LinearLayout layout = new LinearLayout(
+                new ContextThemeWrapper(this, R.style.destClickable)
+        );
+        layout.setLayoutParams(new ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
+        ));
+
+        TextView leftText = new TextView(this);
+        TextView rightText = new TextView(this);
+        View spacer = new View(this);
+
+        leftText.setLayoutParams(new ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT)
+        );
+        spacer.setLayoutParams(new LinearLayout.LayoutParams(
+                0,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                1f
+        ));
+        rightText.setLayoutParams(new ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT)
+        );
+        leftText.setGravity(Gravity.START);
+        leftText.setPadding(30, 0, 0, 0);
+        rightText.setGravity(Gravity.END);
+        rightText.setPadding(0, 0, 30, 0);
+
+        leftText.setText(data.getDestinationName());
+        rightText.setText(String.format(
+                "%d days planned",
+                data.getDayPlansManager().getDayPlans().keySet().size()
+        ));
+
+        layout.addView(leftText);
+        layout.addView(spacer);
+        layout.addView(rightText);
+
+        return layout;
     }
 
     private void observeAndShowDialog(LiveData<Boolean> submitted) {

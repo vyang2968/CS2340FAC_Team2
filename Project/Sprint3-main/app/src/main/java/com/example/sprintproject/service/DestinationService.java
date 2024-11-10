@@ -55,4 +55,12 @@ public class DestinationService {
     public void getAllDestinations(DataCallback<List<Destination>> callback) {
         destinationRepository.getAllDestinations(callback);
     }
+
+    public Task<Void> updateDestination(Destination destination) {
+        if (destination == null) {
+            throw new IllegalArgumentException("destination cannot be null");
+        }
+
+        return destinationRepository.updateDestination(destination);
+    }
 }

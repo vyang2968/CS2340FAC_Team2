@@ -1,23 +1,19 @@
 package com.example.sprintproject.view;
 
+import android.content.DialogInterface;
 import android.graphics.Typeface;
 import android.icu.util.Calendar;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
-import android.view.Gravity;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -26,9 +22,7 @@ import com.example.sprintproject.R;
 import com.example.sprintproject.databinding.ActivitySpecificDestinationScreenBinding;
 import com.example.sprintproject.model.Destination;
 import com.example.sprintproject.viewmodel.SpecificDestinationViewModel;
-import com.google.android.material.resources.TextAppearance;
 
-import java.net.ContentHandler;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -94,7 +88,7 @@ public class SpecificDestinationScreen extends AppCompatActivity {
                 if (count++ > sDestViewModel.getDuration() + 1) {
                     break;
                 }
-                String details = sDestViewModel.getDayPlan(i);
+                String details = sDestViewModel.getDayPlanDetail(i);
 
                 LinearLayout layout = createRow(finalParsed, i, details);
                 dayPlansArea.addView(layout);
@@ -108,7 +102,7 @@ public class SpecificDestinationScreen extends AppCompatActivity {
         );
         layout.setClickable(true);
         layout.setOnClickListener(view -> {
-            openDetailsDialog();
+            openDetailsDialog(day, sDestViewModel.getStartDate());
         });
 
         LinearLayout dayInfo = new LinearLayout(new ContextThemeWrapper(this, R.style.dayLayout));
@@ -135,7 +129,7 @@ public class SpecificDestinationScreen extends AppCompatActivity {
             detailsTruncated.setText("No details present");
             detailsTruncated.setTypeface(null, Typeface.BOLD);
         } else {
-            detailsTruncated.setText(details.concat("..."));
+            detailsTruncated.setText(details);
         }
 
         ImageButton noteButton = new ImageButton(new ContextThemeWrapper(this, R.style.noteButton));
@@ -149,8 +143,52 @@ public class SpecificDestinationScreen extends AppCompatActivity {
         return layout;
     }
 
-    private void openDetailsDialog() {
+    private void openDetailsDialog(int day, String date) {
         Log.i(TAG, "dayPlan:clicked");
+
+        boolean isOwner = sDestViewModel.getIsOwner();
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(String.format("Day %d, %s", day, date));
+        String dayPlan = sDestViewModel.getDayPlanDetail(day);
+
+        AlertDialog.Builder builder2 = new AlertDialog.Builder(SpecificDestinationScreen.this);
+        AlertDialog status = builder2.create();
+        sDestViewModel.getUpdateDestinationSuccessful()
+                .observe(this, new Observer<Boolean>() {
+                    @Override
+                    public void onChanged(Boolean bool) {
+                        status.setMessage(
+                                bool ? "Successfully saved!" : "Unsuccessful, please try again"
+                        );
+                        status.show();
+                        sDestViewModel.getUpdateDestinationSuccessful().removeObserver(this);
+                    }
+                });
+
+        if (isOwner) {
+            EditText editText = new EditText(this);
+            editText.setText(dayPlan);
+            builder.setView(editText);
+
+            builder.setPositiveButton("Save", (dialogInterface, i) -> {
+                Log.i(TAG, "saving details...");
+                sDestViewModel.updateDetail(day, editText.getText().toString());
+            });
+
+            builder.setNegativeButton("Cancel", (dialogInterface, i) -> {
+                dialogInterface.cancel();
+            });
+        } else {
+            TextView textView = new TextView(this);
+            textView.setText(dayPlan);
+            builder.setView(textView);
+            builder.setNegativeButton("Cancel", (dialogInterface, i) -> {
+                dialogInterface.cancel();
+            });
+        }
+        AlertDialog detail = builder.create();
+        detail.show();
     }
 
     private void openNotesDialog() {

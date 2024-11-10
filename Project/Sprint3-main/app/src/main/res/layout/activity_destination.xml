@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="bottom">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
     <data>
         <variable
             name="destViewModel"
@@ -13,8 +9,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="bottom">
+        android:orientation="vertical">
         <!-- Main Layout Element -->
         <ScrollView
             android:layout_width="match_parent"
@@ -172,7 +167,6 @@
                             android:visibility="visible"
                             android:textColor="#FF0000" />
                     </LinearLayout>
-
                 </LinearLayout>
 
                 <ToggleButton
@@ -286,6 +280,7 @@
                 </LinearLayout>
             </LinearLayout>
         </ScrollView>
+
         <!-- Navbar -->
         <LinearLayout
             android:id="@+id/navbar"

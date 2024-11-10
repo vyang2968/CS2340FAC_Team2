@@ -1,8 +1,9 @@
 package com.example.sprintproject.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Accommodation {
+public class Accommodation implements Serializable {
     public enum RoomType {
         SINGLE,
         DOUBLE,

@@ -23,7 +23,8 @@ public class DiningEstablishmentScreen extends NavBarScreen {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dining_establishment);
 
-        diningEstablishmentViewModel = new ViewModelProvider(this).get(DiningEstablishmentViewModel.class);
+        diningEstablishmentViewModel =
+                new ViewModelProvider(this).get(DiningEstablishmentViewModel.class);
 
         reservationForm = findViewById(R.id.reservation_form);
         addButton = findViewById(R.id.button_add_reservation);

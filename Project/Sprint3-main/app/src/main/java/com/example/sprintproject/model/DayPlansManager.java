@@ -2,20 +2,31 @@ package com.example.sprintproject.model;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class DayPlansManager implements Serializable {
-    private Map<String, String> dayPlans;
+    private Map<String, String> dayPlansDetails;
+    private Map<String, List<Note>> dayPlansNotes;
 
     public DayPlansManager() {
-        dayPlans = new HashMap<>();
+        dayPlansDetails = new HashMap<>();
+        dayPlansNotes = new HashMap<>();
     }
 
-    public Map<String, String> getDayPlans() {
-        return dayPlans;
+    public Map<String, String> getDayPlansDetails() {
+        return dayPlansDetails;
     }
 
-    public void setDayPlans(Map<String, String> dayPlans) {
-        this.dayPlans = dayPlans;
+    public void setDayPlansDetails(Map<String, String> dayPlansDetails) {
+        this.dayPlansDetails = dayPlansDetails;
+    }
+
+    public Map<String, List<Note>> getDayPlansNotes() {
+        return dayPlansNotes;
+    }
+
+    public void setDayPlansNotes(Map<String, List<Note>> dayPlansNotes) {
+        this.dayPlansNotes = dayPlansNotes;
     }
 }

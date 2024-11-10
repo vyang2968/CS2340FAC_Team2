@@ -5,9 +5,11 @@ import android.icu.util.Calendar;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
+import android.view.Gravity;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -20,11 +22,13 @@ import com.example.sprintproject.BR;
 import com.example.sprintproject.R;
 import com.example.sprintproject.databinding.ActivitySpecificDestinationScreenBinding;
 import com.example.sprintproject.model.Destination;
+import com.example.sprintproject.model.Note;
 import com.example.sprintproject.viewmodel.SpecificDestinationViewModel;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.Locale;
 
 public class SpecificDestinationScreen extends AppCompatActivity {
@@ -78,6 +82,8 @@ public class SpecificDestinationScreen extends AppCompatActivity {
             Log.d(TAG, "could not parse date");
         }
 
+        createSubmissionStatusObserver();
+
         Date finalParsed = parsed;
         sDestViewModel.getStartingDay().observe(this, startingDay -> {
             dayPlansArea.removeAllViews();
@@ -100,9 +106,7 @@ public class SpecificDestinationScreen extends AppCompatActivity {
                 new ContextThemeWrapper(this, R.style.dayPlanRow)
         );
         layout.setClickable(true);
-        layout.setOnClickListener(view -> {
-            openDetailsDialog(day, sDestViewModel.getStartDate());
-        });
+
 
         LinearLayout dayInfo = new LinearLayout(new ContextThemeWrapper(this, R.style.dayLayout));
 
@@ -133,24 +137,23 @@ public class SpecificDestinationScreen extends AppCompatActivity {
 
         ImageButton noteButton = new ImageButton(new ContextThemeWrapper(this, R.style.noteButton));
         noteButton.setOnClickListener(view -> {
-            openNotesDialog();
+            openNotesDialog(day);
         });
+
+        layout.setOnClickListener(view -> {
+            openDetailsDialog(day, sDestViewModel.getStartDate(), detailsTruncated);
+        });
+
         layout.addView(dayInfo);
         layout.addView(detailsTruncated);
         layout.addView(noteButton);
 
+
+
         return layout;
     }
 
-    private void openDetailsDialog(int day, String date) {
-        Log.i(TAG, "dayPlan:clicked");
-
-        boolean isOwner = sDestViewModel.getIsOwner();
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(String.format("Day %d, %s", day, date));
-        String dayPlan = sDestViewModel.getDayPlanDetail(day);
-
+    private void createSubmissionStatusObserver() {
         AlertDialog.Builder builder2 = new AlertDialog.Builder(SpecificDestinationScreen.this);
         AlertDialog status = builder2.create();
         sDestViewModel.getUpdateDestinationSuccessful()
@@ -161,9 +164,18 @@ public class SpecificDestinationScreen extends AppCompatActivity {
                                 bool ? "Successfully saved!" : "Unsuccessful, please try again"
                         );
                         status.show();
-                        sDestViewModel.getUpdateDestinationSuccessful().removeObserver(this);
                     }
                 });
+    }
+
+    private void openDetailsDialog(int day, String date, TextView textArea) {
+        Log.i(TAG, "dayPlan:clicked");
+
+        boolean isOwner = sDestViewModel.getIsOwner();
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(String.format("Day %d, %s", day, date));
+        String dayPlan = sDestViewModel.getDayPlanDetail(day);
 
         if (isOwner) {
             EditText editText = new EditText(this);
@@ -173,6 +185,8 @@ public class SpecificDestinationScreen extends AppCompatActivity {
             builder.setPositiveButton("Save", (dialogInterface, i) -> {
                 Log.i(TAG, "saving details...");
                 sDestViewModel.updateDetail(day, editText.getText().toString());
+                textArea.setText(editText.getText().toString());
+                textArea.setTypeface(Typeface.DEFAULT);
             });
 
             builder.setNegativeButton("Cancel", (dialogInterface, i) -> {
@@ -190,7 +204,82 @@ public class SpecificDestinationScreen extends AppCompatActivity {
         detail.show();
     }
 
-    private void openNotesDialog() {
+    private void openNotesDialog(int day) {
         Log.i(TAG, "notesButton:clicked");
+        List<Note> notes = sDestViewModel.getDayPlanNotes(day);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Notes");
+
+        EditText noteInput = new EditText(new ContextThemeWrapper(this, R.style.noteInput));
+
+        LinearLayout outerContainer = createNotesDialogContent(notes, noteInput);
+
+        builder.setView(outerContainer);
+
+        builder.setPositiveButton("Save", (dialog, i) -> {
+            String text = noteInput.getText().toString().trim();
+            if (text.isEmpty()) {
+                noteInput.setError("Note can't be empty");
+            } else {
+                noteInput.setError(null);
+            }
+
+            sDestViewModel.updateNote(day, text);
+        });
+
+        builder.setNegativeButton("Cancel", (dialog, i) -> {
+            dialog.dismiss();
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    private LinearLayout createNotesDialogContent(List<Note> notes, EditText noteInput) {
+        LinearLayout outerContainer = new LinearLayout(this);
+        outerContainer.setLayoutParams(new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT
+        ));
+        outerContainer.setOrientation(LinearLayout.VERTICAL);
+
+        ScrollView scroll = new ScrollView(new ContextThemeWrapper(this, R.style.notesScroll));
+        LinearLayout container = new LinearLayout(this);
+        container.setLayoutParams(new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+        ));
+        container.setOrientation(LinearLayout.VERTICAL);
+        container.setGravity(Gravity.CENTER_VERTICAL);
+
+        if (!notes.isEmpty()) {
+            for (Note note : notes) {
+                LinearLayout row = new LinearLayout(
+                        new ContextThemeWrapper(this, R.style.dayPlanRow)
+                );
+
+                TextView noteText = new TextView(new ContextThemeWrapper(this, R.style.note));
+                noteText.setText(note.getNote());
+
+                TextView noteCreatorText = new TextView(new ContextThemeWrapper(this, R.style.noteCreator));
+                noteCreatorText.setText(String.format("Created by: %s", note.getCreator().getUsername()));
+
+                row.addView(noteText);
+                row.addView(noteCreatorText);
+
+                container.addView(row);
+            }
+        } else {
+            TextView noNotesText = new TextView(new ContextThemeWrapper(this, R.style.noNotes));
+            container.addView(noNotesText);
+        }
+
+        scroll.addView(container);
+
+        outerContainer.addView(scroll);
+        outerContainer.addView(noteInput);
+
+        return outerContainer;
     }
 }

@@ -7,14 +7,18 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.sprintproject.model.Destination;
+import com.example.sprintproject.model.Note;
 import com.example.sprintproject.model.User;
 import com.example.sprintproject.service.DestinationService;
 import com.example.sprintproject.service.UserService;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 public class SpecificDestinationViewModel extends ViewModel {
     private static final String TAG = "SpecificDestViewModel";
@@ -31,7 +35,7 @@ public class SpecificDestinationViewModel extends ViewModel {
         this.startingDay = new MutableLiveData<>(STARTING_DAY);
         this.userService = UserService.getInstance();
         this.destinationService = DestinationService.getInstance();
-        this.updateDestinationSuccessful = new MutableLiveData<>(false);
+        this.updateDestinationSuccessful = new MutableLiveData<>();
     }
 
     public void setDestination(Destination destination) {
@@ -64,9 +68,14 @@ public class SpecificDestinationViewModel extends ViewModel {
     }
 
     public String getDayPlanDetail(int day) {
-        Map<String, String> dayPlans = destination.getValue().getDayPlansManager().getDayPlans();
+        Map<String, String> dayPlans = destination.getValue().getDayPlansManager().getDayPlansDetails();
 
         return dayPlans.getOrDefault("day" + day, "");
+    }
+
+    public List<Note> getDayPlanNotes(int day) {
+        Map<String, List<Note>> dayPlansNotes = destination.getValue().getDayPlansManager().getDayPlansNotes();
+        return dayPlansNotes.getOrDefault("day" + day, new ArrayList<>());
     }
 
     public int getDuration() {
@@ -80,13 +89,34 @@ public class SpecificDestinationViewModel extends ViewModel {
 
     public void updateDetail(int i, String detail) {
         Destination updated = destination.getValue();
-        updated.getDayPlansManager().getDayPlans().put("day" + i, detail);
+        updated.getDayPlansManager().getDayPlansDetails().put("day" + i, detail);
         destinationService.updateDestination(updated).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
-                Log.i(TAG, "updateDestination:success");
+                Log.i(TAG, "updateDetail:success");
                 updateDestinationSuccessful.setValue(true);
             } else {
-                Log.i(TAG, "updateDestination:failed");
+                Log.i(TAG, "updateDetail:failed");
+                updateDestinationSuccessful.setValue(false);
+            }
+        });
+    }
+
+    public void updateNote(int i, String noteMsg) {
+        Destination updated = destination.getValue();
+        List<Note> notes = updated.getDayPlansManager()
+                                    .getDayPlansNotes().getOrDefault("day" + i, new ArrayList<>());
+
+        Note note = new Note();
+        note.setNote(noteMsg);
+        note.setCreator(userService.getCurrentUser());
+        notes.add(note);
+        updated.getDayPlansManager().getDayPlansNotes().put("day" + i, notes);
+        destinationService.updateDestination(updated).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                Log.i(TAG, "updateNote:success");
+                updateDestinationSuccessful.setValue(true);
+            } else {
+                Log.i(TAG, "updateNote:failed");
                 updateDestinationSuccessful.setValue(false);
             }
         });

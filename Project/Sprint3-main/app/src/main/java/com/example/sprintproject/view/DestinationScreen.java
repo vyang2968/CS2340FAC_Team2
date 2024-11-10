@@ -243,7 +243,7 @@ public class DestinationScreen extends NavBarScreen {
         leftText.setText(data.getDestinationName());
         rightText.setText(String.format(
                 "%d days planned",
-                data.getDayPlansManager().getDayPlans().keySet().size()
+                data.getDayPlansManager().getDayPlansDetails().keySet().size()
         ));
 
         layout.addView(leftText);

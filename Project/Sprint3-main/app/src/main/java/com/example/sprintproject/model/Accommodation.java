@@ -88,18 +88,18 @@ public class Accommodation implements Serializable, Plannable {
         public static RoomType fromString(String type) {
             // Since this is an enum, this should be fine
             switch (type) {
-                case "Single":
-                    return SINGLE;
-                case "Double":
-                    return DOUBLE;
-                case "Suite":
-                    return SUITE;
-                case "Queen Suite":
-                    return QUEEN;
-                case "King Suite":
-                    return KING;
-                default:
-                    throw new IllegalArgumentException("Unknown room type " + type);
+            case "Single":
+                return SINGLE;
+            case "Double":
+                return DOUBLE;
+            case "Suite":
+                return SUITE;
+            case "Queen Suite":
+                return QUEEN;
+            case "King Suite":
+                return KING;
+            default:
+                throw new IllegalArgumentException("Unknown room type " + type);
             }
         }
     }

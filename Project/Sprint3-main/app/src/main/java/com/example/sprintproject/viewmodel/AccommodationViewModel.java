@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.sprintproject.model.Accommodation;
+import com.example.sprintproject.utils.LogSource;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

@@ -3,13 +3,15 @@ package com.example.sprintproject.model;
 import android.location.Address;
 import android.util.Patterns;
 
+import com.example.sprintproject.utils.Plannable;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-public class DiningReservation implements Serializable {
+public class DiningReservation implements Serializable, Plannable {
     private String id;
     private Address location;
     private String websiteLink;
@@ -66,5 +68,10 @@ public class DiningReservation implements Serializable {
 
     public void setReservationTime(Date reservationTime) {
         this.reservationTime = reservationTime;
+    }
+
+    @Override
+    public Date getPlannedDate() {
+        return getReservationTime();
     }
 }

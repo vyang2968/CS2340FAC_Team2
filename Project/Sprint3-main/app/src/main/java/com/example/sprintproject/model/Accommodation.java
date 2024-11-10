@@ -1,17 +1,11 @@
 package com.example.sprintproject.model;
 
+import com.example.sprintproject.utils.Plannable;
+
 import java.io.Serializable;
 import java.util.Date;
 
-public class Accommodation implements Serializable {
-    public enum RoomType {
-        SINGLE,
-        DOUBLE,
-        QUEEN,
-        KING,
-        SUITE
-    }
-
+public class Accommodation implements Serializable, Plannable {
     private String id;
     private Date checkInTime;
     private Date checkOutTime;
@@ -63,5 +57,18 @@ public class Accommodation implements Serializable {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    @Override
+    public Date getPlannedDate() {
+        return getCheckInTime();
+    }
+
+    public enum RoomType {
+        SINGLE,
+        DOUBLE,
+        QUEEN,
+        KING,
+        SUITE
     }
 }

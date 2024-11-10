@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel;
 import com.example.sprintproject.model.Accommodation;
 import com.example.sprintproject.model.User;
 import com.example.sprintproject.service.UserService;
+import com.example.sprintproject.utils.LogSource;
 
 import java.util.List;
 

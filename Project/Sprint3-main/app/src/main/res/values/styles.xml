@@ -9,7 +9,7 @@
         <item name="android:textSize">15sp</item>
         <item name="android:paddingTop">10dp</item>
         <item name="android:padding">10dp</item>
-        <item name="android:background">@drawable/button_border</item>
+        <item name="android:background">@drawable/toggle_button</item>
     </style>
     <style name="dayPlanRow">
         <item name="android:orientation">horizontal</item>

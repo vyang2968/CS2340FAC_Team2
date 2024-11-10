@@ -1,7 +1,6 @@
 package com.example.sprintproject.repository.contracts;
 
 import com.example.sprintproject.model.Accommodation;
-import com.example.sprintproject.model.User;
 import com.example.sprintproject.utils.DataCallback;
 import com.google.android.gms.tasks.Task;
 

@@ -1,6 +1,7 @@
 package com.example.sprintproject.model;
 
 import android.location.Address;
+import android.util.Patterns;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -44,6 +45,10 @@ public class DiningReservation implements Serializable {
     }
 
     public void setWebsiteLink(String websiteLink) {
+        if (Patterns.WEB_URL.matcher(websiteLink).matches()) {
+            throw new IllegalArgumentException("websiteLink is not a valid URL");
+        }
+
         this.websiteLink = websiteLink;
     }
 

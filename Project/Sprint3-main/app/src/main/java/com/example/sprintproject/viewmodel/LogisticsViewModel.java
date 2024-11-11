@@ -119,9 +119,8 @@ public class LogisticsViewModel extends ViewModel implements LogSource {
 
     public void updateDestinations(User user) {
         for (Destination dest : allDests.getValue()) {
-            CollaboratorManager manager = dest.getCollaboratorManager();
+            dest.getCollaboratorManager().getCollaborators().add(user);
             Log.i(TAG, "adding to dest: " + dest.getId());
-            manager.addCollaborator(user);
             destinationService.updateDestination(dest).addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
                     updateDestinationSucessful.setValue(true);
@@ -133,7 +132,7 @@ public class LogisticsViewModel extends ViewModel implements LogSource {
     }
 
     public void logOutUser() {
-
+        AuthService.getInstance().logOutUser();
     }
 
     @Override

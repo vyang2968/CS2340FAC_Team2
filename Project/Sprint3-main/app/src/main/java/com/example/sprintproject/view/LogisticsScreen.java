@@ -1,5 +1,6 @@
 package com.example.sprintproject.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -115,6 +116,9 @@ public class LogisticsScreen extends NavBarScreen {
         logOutButton.setOnClickListener(v -> {
             Log.i(TAG, "logout button clicked");
             logisticsViewModel.logOutUser();
+            Intent intent = new Intent(this, WelcomeScreen.class);
+            startActivity(intent);
+            finish();
         });
     }
 
@@ -197,10 +201,11 @@ public class LogisticsScreen extends NavBarScreen {
         logisticsViewModel.setHasError(false);
     }
 
+
     @Override
     protected void onResume() {
         super.onResume();
+
         logisticsViewModel.refreshTotalTripDays();
-        pieChart.setVisibility(View.VISIBLE);
     }
 }

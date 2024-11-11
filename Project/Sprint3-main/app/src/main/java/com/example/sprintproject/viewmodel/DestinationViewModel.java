@@ -79,7 +79,16 @@ public class DestinationViewModel extends ViewModel {
             @Override
             public void onSuccess(List<Destination> result) {
                 Log.i(TAG, "getDestinations:success");
-                destinations.setValue(result);
+                List<Destination> included = new ArrayList<>();
+                User currUser = UserService.getInstance().getCurrentUser();
+                Log.i(TAG, currUser.getId());
+                for (Destination dest : result) {
+                    if (dest.getCollaboratorManager().getCollaborators().contains(currUser)
+                            || dest.getCollaboratorManager().getCreator().equals(currUser)) {
+                        included.add(dest);
+                    }
+                }
+                destinations.setValue(included);
             }
 
             @Override

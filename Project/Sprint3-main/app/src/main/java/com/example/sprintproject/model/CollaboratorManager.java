@@ -13,16 +13,8 @@ public class CollaboratorManager implements Serializable {
         this.creator = new User();
     }
 
-    public void addCollaborator(User user) {
-        collaborators.add(user);
-    }
-
-    public void removeCollaborator(User user) {
-        collaborators.remove(user);
-    }
-
-    public boolean hasCollaborator(User user) {
-        return collaborators.contains(user);
+    public List<User> getCollaborators() {
+        return collaborators;
     }
 
     public User getCreator() {

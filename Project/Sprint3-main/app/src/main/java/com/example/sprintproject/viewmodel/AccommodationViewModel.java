@@ -15,7 +15,6 @@ import com.example.sprintproject.utils.SortMethod;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -99,12 +98,16 @@ public class AccommodationViewModel extends ViewModel implements LogSource {
     }
 
     public String formatDate(Date date) {
-        if (date == null) return "";
+        if (date == null) {
+            return "";
+        }
         return dateFormat.format(date);
     }
 
     public boolean isPastReservation(Date checkOutDate) {
-        if (checkOutDate == null) return false;
+        if (checkOutDate == null) {
+            return false;
+        }
         return checkOutDate.before(new Date());
     }
 

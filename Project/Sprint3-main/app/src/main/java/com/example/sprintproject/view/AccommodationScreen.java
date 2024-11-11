@@ -66,7 +66,8 @@ public class AccommodationScreen extends NavBarScreen {
         accommodationContainer.removeAllViews();
 
         for (Accommodation accommodation : accommodations) {
-            View itemView = inflater.inflate(R.layout.accommodation_item, accommodationContainer, false);
+            View itemView =
+                    inflater.inflate(R.layout.accommodation_item, accommodationContainer, false);
 
 
             TextView locationText = itemView.findViewById(R.id.text_location);

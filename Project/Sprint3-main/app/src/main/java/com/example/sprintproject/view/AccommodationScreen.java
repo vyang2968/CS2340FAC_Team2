@@ -2,11 +2,13 @@ package com.example.sprintproject.view;
 
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.lifecycle.ViewModelProvider;
@@ -14,14 +16,19 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.sprintproject.BR;
 import com.example.sprintproject.R;
 import com.example.sprintproject.databinding.ActivityAccommodationBinding;
+import com.example.sprintproject.model.Accommodation;
 import com.example.sprintproject.viewmodel.AccommodationViewModel;
+
+import java.util.List;
 
 public class AccommodationScreen extends NavBarScreen {
 
     private AccommodationViewModel viewModel;
     private LinearLayout accommodationForm;
+    private LinearLayout accommodationContainer;
     private Button addButton;
     private Button submitButton;
+    private LayoutInflater inflater;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,12 +48,51 @@ public class AccommodationScreen extends NavBarScreen {
 
         viewModel.queryForAccommodations();
 
+        inflater = LayoutInflater.from(this);
+        accommodationContainer = findViewById(R.id.accommodation_container);
         accommodationForm = findViewById(R.id.accommodations_form);
         addButton = findViewById(R.id.button_add_accommodation);
         submitButton = findViewById(R.id.button_submit_accommodation);
 
+        viewModel.getAccommodations().observe(this, this::updateAccommodationList);
+
         addButton.setOnClickListener(view -> toggleFormVisibility());
         submitButton.setOnClickListener(view -> submitAccommodation());
+
+        viewModel.queryForAccommodations();
+    }
+
+    private void updateAccommodationList(List<Accommodation> accommodations) {
+        accommodationContainer.removeAllViews();
+
+        for (Accommodation accommodation : accommodations) {
+            View itemView =
+                    inflater.inflate(R.layout.accommodation_item, accommodationContainer, false);
+
+
+            TextView locationText = itemView.findViewById(R.id.text_location);
+            TextView datesText = itemView.findViewById(R.id.text_dates);
+            TextView roomCountText = itemView.findViewById(R.id.text_room_count);
+            TextView roomTypeText = itemView.findViewById(R.id.text_room_type);
+            TextView pastReservationText = itemView.findViewById(R.id.text_past_reservation);
+
+            locationText.setText(accommodation.getLocation());
+
+            String dates = String.format("Check-in: %s, Check-out: %s",
+                    viewModel.formatDate(accommodation.getCheckInTime()),
+                    viewModel.formatDate(accommodation.getCheckOutTime()));
+            datesText.setText(dates);
+
+            roomCountText.setText("Number of Rooms: " + accommodation.getNumRooms());
+            roomTypeText.setText(accommodation.getRoomType().toString());
+
+            // Past Reservation
+            if (viewModel.isPastReservation(accommodation.getCheckOutTime())) {
+                pastReservationText.setVisibility(View.VISIBLE);
+            }
+
+            accommodationContainer.addView(itemView);
+        }
     }
 
     private void toggleFormVisibility() {

@@ -24,8 +24,8 @@ public class DiningEstablishmentScreen extends NavBarScreen {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dining_establishment);
 
-        diningEstablishmentViewModel = new ViewModelProvider
-                (this).get(DiningEstablishmentViewModel.class);
+        diningEstablishmentViewModel = new ViewModelProvider(
+            this).get(DiningEstablishmentViewModel.class);
 
         reservationForm = findViewById(R.id.addReservationWindow);
         addButton = findViewById(R.id.openReservationButton);
@@ -36,8 +36,8 @@ public class DiningEstablishmentScreen extends NavBarScreen {
 
         diningEstablishmentViewModel.getErrorMessage().observe(this, errorMessage -> {
             if (errorMessage != null && !errorMessage.isEmpty()) {
-                Toast.makeText
-                        (DiningEstablishmentScreen.this, errorMessage, Toast.LENGTH_SHORT).show();
+                Toast.makeText(
+                DiningEstablishmentScreen.this, errorMessage, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -91,8 +91,8 @@ public class DiningEstablishmentScreen extends NavBarScreen {
 
         diningEstablishmentViewModel.getErrorMessage().observe(this, errorMessage -> {
             if (errorMessage != null && !errorMessage.isEmpty()) {
-                Toast.makeText
-                        (DiningEstablishmentScreen.this, errorMessage, Toast.LENGTH_SHORT).show();
+                Toast.makeText(
+                DiningEstablishmentScreen.this, errorMessage, Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -6,25 +6,15 @@ import java.util.List;
 
 public class CollaboratorManager implements Serializable {
     private User creator;
-    private final List<User> collaborators;
-    private final List<Note> notes;
+    private List<User> collaborators;
 
     public CollaboratorManager() {
         this.collaborators = new ArrayList<>();
         this.creator = new User();
-        this.notes = new ArrayList<>();
     }
 
-    public void addCollaborator(User user) {
-        collaborators.add(user);
-    }
-
-    public void removeCollaborator(User user) {
-        collaborators.remove(user);
-    }
-
-    public boolean hasCollaborator(User user) {
-        return collaborators.contains(user);
+    public List<User> getCollaborators() {
+        return collaborators;
     }
 
     public User getCreator() {
@@ -33,9 +23,5 @@ public class CollaboratorManager implements Serializable {
 
     public void setCreator(User creator) {
         this.creator = creator;
-    }
-
-    public List<Note> getNotes() {
-        return notes;
     }
 }

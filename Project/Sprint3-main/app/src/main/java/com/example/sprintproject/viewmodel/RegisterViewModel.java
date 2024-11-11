@@ -23,7 +23,6 @@ public class RegisterViewModel extends AuthViewModel {
     private final MutableLiveData<Boolean> createSuccess;
     private final MutableLiveData<Boolean> proceed;
     private final MutableLiveData<String> errorMsg;
-    private final boolean emailValid;
     private boolean passwordValid;
     private boolean passwordsMatch;
     private final AuthService authService;
@@ -38,7 +37,6 @@ public class RegisterViewModel extends AuthViewModel {
         this.createSuccess.setValue(false);
         this.proceed = new MutableLiveData<>();
         this.proceed.setValue(false);
-        this.emailValid = false;
         this.passwordValid = false;
         this.authService = AuthService.getInstance();
         this.userService = UserService.getInstance();
@@ -124,6 +122,10 @@ public class RegisterViewModel extends AuthViewModel {
     public boolean canBeSubmitted() {
         logInfo("canBeSubmitted:" + (emailValid && passwordValid && passwordsMatch));
         return emailValid && passwordValid && passwordsMatch;
+    }
+
+    public void setEmailValid(boolean valid) {
+        this.emailValid = valid;
     }
     
     public LiveData<Boolean> getProceed() {

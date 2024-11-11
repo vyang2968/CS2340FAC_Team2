@@ -2,6 +2,7 @@ package com.example.sprintproject.service;
 
 
 
+
 import com.example.sprintproject.model.Destination;
 import com.example.sprintproject.repository.DestinationRepositoryImpl;
 import com.example.sprintproject.utils.DataCallback;
@@ -60,7 +61,6 @@ public class DestinationService {
         if (destination == null) {
             throw new IllegalArgumentException("destination cannot be null");
         }
-
         return destinationRepository.updateDestination(destination);
     }
 }

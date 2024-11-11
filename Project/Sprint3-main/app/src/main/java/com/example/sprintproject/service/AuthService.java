@@ -71,10 +71,18 @@ public class AuthService {
 
     public void setCurrentUser() {
         Log.i(TAG, "setting current user...");
-        User user = new User();
-        user.setId(getUser().getUid());
-        user.setEmail(getUser().getEmail());
-        userService.setCurrentUser(user);
+        String userId = getUser().getUid();
+        userService.getUser(userId, new DataCallback<User>() {
+            @Override
+            public void onSuccess(User result) {
+                userService.setCurrentUser(result);
+            }
+
+            @Override
+            public void onError(Exception e) {
+                Log.d(TAG, e.toString());
+            }
+        });
     }
 
     public void logOutUser() {

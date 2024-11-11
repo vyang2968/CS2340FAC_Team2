@@ -32,7 +32,7 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public void getUserById(String id, DataCallback<User> callback) {
         Log.d(TAG, "getting from users database...");
-        usersRef.addValueEventListener(new ValueEventListener() {
+        usersRef.child(id).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Log.d(TAG, "getUserById:success");
@@ -46,6 +46,35 @@ public class UserRepositoryImpl implements UserRepository {
                 callback.onError(error.toException());
             }
         });
+    }
+
+    public void getUserByEmail(String email, DataCallback<User> callback) {
+        Log.d(TAG, "getting from users database...");
+        usersRef.orderByChild("email").equalTo(email)
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        Log.d(TAG, "getUserByEmail:success");
+                        User user = new User();
+                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                            user = dataSnapshot.getValue(User.class);
+                            break;
+                        }
+
+                        if (!user.equals(new User())) {
+                            callback.onSuccess(user);
+                        } else {
+                            callback.onError(new Exception("No match users found"));
+                        }
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Log.d(TAG, "getUserByEmail:failed");
+                        callback.onError(error.toException());
+                    }
+                });
     }
 
     @Override

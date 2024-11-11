@@ -14,6 +14,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+
 public class DiningEstablishmentViewModel extends ViewModel {
     private static final String TAG = "DiningEstablishmentViewModel";
 
@@ -25,6 +26,9 @@ public class DiningEstablishmentViewModel extends ViewModel {
     public LiveData<String> getErrorMessage() {
         return errorMessage;
     }
+
+    private MutableLiveData<SortMethod<DiningReservation>> sortMethod =
+        new MutableLiveData<>(new PlannableSortMethod<>());
 
     public void setTime(String reservationTime) {
         time.setValue(reservationTime);
@@ -68,9 +72,9 @@ public class DiningEstablishmentViewModel extends ViewModel {
         }
 
         try {
-            // Parse time string into Date object
+           
             SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.getDefault());
-            Date reservationDate = sdf.parse(timeValue);  // Parse time to Date
+            Date reservationDate = sdf.parse(timeValue);
 
             if (reservationDate == null) {
                 errorMessage.setValue("Invalid time format. Use HH:mm.");
@@ -78,7 +82,7 @@ public class DiningEstablishmentViewModel extends ViewModel {
             }
 
             DiningReservation reservation = new DiningReservation();
-            reservation.setReservationTime(reservationDate);  // Store as Date
+            reservation.setReservationTime(reservationDate);
             reservation.setWebsiteLink(websiteValue);
             reservation.setLocation(locationValue);
 

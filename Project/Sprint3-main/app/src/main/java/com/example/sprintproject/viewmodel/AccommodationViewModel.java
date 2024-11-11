@@ -9,6 +9,8 @@ import com.example.sprintproject.model.Accommodation;
 import com.example.sprintproject.service.AccommodationService;
 import com.example.sprintproject.utils.DataCallback;
 import com.example.sprintproject.utils.LogSource;
+import com.example.sprintproject.utils.PlannableSortMethod;
+import com.example.sprintproject.utils.SortMethod;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -22,9 +24,12 @@ public class AccommodationViewModel extends ViewModel implements LogSource {
     private static final String TAG = "AccommodationViewModel";
 
     private final MutableLiveData<List<Accommodation>> accommodations;
+    // Changeable Behavior
+    private MutableLiveData<SortMethod<Accommodation>> sortMethod;
 
     public AccommodationViewModel() {
         this.accommodations = new MutableLiveData<>();
+        this.sortMethod = new MutableLiveData<>(new PlannableSortMethod<>());
     }
 
     public void addAccommodation(String checkInTime, String checkOutTime,
@@ -45,6 +50,8 @@ public class AccommodationViewModel extends ViewModel implements LogSource {
 
         list.add(accommodation);
 
+        sortMethod.getValue().sortList(list);
+
         accommodations.setValue(list);
 
         AccommodationService.getInstance().addAccommodation(accommodation)
@@ -64,6 +71,7 @@ public class AccommodationViewModel extends ViewModel implements LogSource {
                 @Override
                 public void onSuccess(List<Accommodation> result) {
                     Log.i(TAG, "getAccommodations:success");
+                    sortMethod.getValue().sortList(result);
                     accommodations.setValue(result);
                 }
                 @Override
@@ -85,6 +93,14 @@ public class AccommodationViewModel extends ViewModel implements LogSource {
             Log.d(TAG, "date could not be parsed");
             throw new IllegalArgumentException(error);
         }
+    }
+
+    public void setSortMethod(SortMethod<Accommodation> sortMethod) {
+        this.sortMethod.setValue(sortMethod);
+    }
+
+    public SortMethod<Accommodation> getSortMethod() {
+        return this.sortMethod.getValue();
     }
 
     @Override

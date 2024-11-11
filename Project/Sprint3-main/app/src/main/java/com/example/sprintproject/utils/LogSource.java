@@ -1,4 +1,4 @@
-package com.example.sprintproject.viewmodel;
+package com.example.sprintproject.utils;
 
 import android.util.Log;
 

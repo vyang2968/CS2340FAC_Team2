@@ -1,18 +1,14 @@
 package com.example.sprintproject.model;
 
+import com.example.sprintproject.utils.Plannable;
+
 import java.io.Serializable;
 import java.util.Date;
 
-public class Accommodation implements Serializable {
-    public enum RoomType {
-        SINGLE,
-        DOUBLE,
-        QUEEN,
-        KING,
-        SUITE
-    }
+public class Accommodation implements Serializable, Plannable {
 
     private String id;
+    private String location;
     private Date checkInTime;
     private Date checkOutTime;
     private int numRooms;
@@ -57,11 +53,54 @@ public class Accommodation implements Serializable {
         this.roomType = roomType;
     }
 
+    public void setRoomTypeFromString(String roomType) {
+        setRoomType(RoomType.fromString(roomType));
+    }
+
     public String getId() {
         return id;
     }
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    @Override
+    public Date getPlannedDate() {
+        return getCheckInTime();
+    }
+
+    public enum RoomType {
+        SINGLE,
+        DOUBLE,
+        QUEEN,
+        KING,
+        SUITE;
+
+        public static RoomType fromString(String type) {
+            // Since this is an enum, this should be fine
+            switch (type) {
+            case "Single":
+                return SINGLE;
+            case "Double":
+                return DOUBLE;
+            case "Suite":
+                return SUITE;
+            case "Queen Suite":
+                return QUEEN;
+            case "King Suite":
+                return KING;
+            default:
+                throw new IllegalArgumentException("Unknown room type " + type);
+            }
+        }
     }
 }

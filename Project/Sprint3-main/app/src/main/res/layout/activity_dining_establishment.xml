@@ -1,161 +1,169 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
-    <data>
-        <variable
-            name="diningViewModel"
-            type="com.example.sprintproject.viewmodel.DiningEstablishmentViewModel"/>
-    </data>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
-
-                <!-- Title -->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:text="Dining Establishments"
-                    android:textSize="30sp"
-                    android:textStyle="bold"/>
-
-                <!-- Reservation Form -->
-                <LinearLayout
-                    android:id="@+id/reservation_form"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="16dp"
-                    android:background="#E0E0E0"
-                    android:layout_marginTop="16dp"
-                    android:visibility="gone">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Time:"
-                        android:textStyle="bold"/>
-
-                    <EditText
-                        android:id="@+id/edit_text_time"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="datetime"
-                        android:layout_marginTop="8dp"
-                        android:background="#FFFFFF"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Location:"
-                        android:textStyle="bold"
-                        android:layout_marginTop="8dp"/>
-
-                    <EditText
-                        android:id="@+id/edit_text_location"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="text"
-                        android:layout_marginTop="8dp"
-                        android:background="#FFFFFF"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Website:"
-                        android:textStyle="bold"
-                        android:layout_marginTop="8dp"/>
-
-                    <EditText
-                        android:id="@+id/edit_text_website"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="textUri"
-                        android:layout_marginTop="8dp"
-                        android:background="#FFFFFF"/>
-
-                    <Button
-                        android:id="@+id/button_submit_reservation"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Add Reservation"
-                        android:layout_marginTop="16dp"/>
-                </LinearLayout>
-
-                <!-- Add Reservation Button -->
-                <Button
-                    android:id="@+id/button_add_reservation"
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
-                    android:layout_gravity="end"
-                    android:layout_marginTop="16dp"
-                    android:text="+"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-                    android:textColor="#FFFFFF" />
-            </LinearLayout>
-        </ScrollView>
-
-        <!-- Navbar -->
+        <!-- Main Screen -->
         <LinearLayout
-            android:id="@+id/navbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#000000"
-            android:orientation="horizontal"
-            android:padding="1dp">
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="top">
 
-            <ImageButton
-                android:id="@+id/navbar_destination_button"
-                android:layout_width="0dp"
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="#AAAAAA"
-                android:src="@drawable/destination" />
+                android:layout_gravity="center"
+                android:text="Dining Establishments"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                android:layout_marginTop="20dp"/>
 
-            <ImageButton
-                android:id="@+id/navbar_dining_button"
-                android:layout_width="0dp"
+            <!-- Restaurant List -->
+            <LinearLayout
+                android:id="@+id/restaurantList"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="#AAAAAA"
-                android:src="@drawable/dining" />
+                android:orientation="vertical">
+            </LinearLayout>
 
-            <ImageButton
-                android:id="@+id/navbar_logistics_button"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="#AAAAAA"
-                android:src="@drawable/logistics" />
-
-            <ImageButton
-                android:id="@+id/navbar_accommodations_button"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="#AAAAAA"
-                android:src="@drawable/accommodations" />
-
-            <ImageButton
-                android:id="@+id/navbar_travel_community_button"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="#AAAAAA"
-                android:src="@drawable/community" />
         </LinearLayout>
 
-    </LinearLayout>
-</layout>
+        <!-- Bottom Section -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="bottom">
+
+            <ImageButton
+                android:id="@+id/openReservationButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/plus"/>
+
+            <!-- Navbar -->
+            <LinearLayout
+                android:id="@+id/navbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="#000000"
+                android:padding="2dp">
+                <ImageButton
+                    android:id="@+id/navbar_destination_button"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:background="#AAAAAA"
+                    android:src="@drawable/destination"/>
+                <Space
+                    android:layout_width="2dp"
+                    android:layout_height="wrap_content"/>
+                <ImageButton
+                    android:id="@+id/navbar_dining_button"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:background="#AAAAAA"
+                    android:src="@drawable/dining"/>
+                <Space
+                    android:layout_width="2dp"
+                    android:layout_height="wrap_content"/>
+                <ImageButton
+                    android:id="@+id/navbar_logistics_button"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:background="#AAAAAA"
+                    android:src="@drawable/logistics"
+                    />
+                <Space
+                    android:layout_width="2dp"
+                    android:layout_height="wrap_content"/>
+                <ImageButton
+                    android:id="@+id/navbar_accommodations_button"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:background="#AAAAAA"
+                    android:src="@drawable/accommodations"/>
+                <Space
+                    android:layout_width="2dp"
+                    android:layout_height="wrap_content"/>
+                <ImageButton
+                    android:id="@+id/navbar_travel_community_button"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:background="#AAAAAA"
+                    android:src="@drawable/community"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- Add Reservation (Pop-up) -->
+        <LinearLayout
+            android:id="@+id/addReservationWindow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="#E0E0E0"
+            android:layout_margin="10dp"
+            android:padding="10dp"
+            android:layout_gravity="center"
+            android:visibility="gone">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="New Reservation"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:layout_gravity="center"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Time:"/>
+            <EditText
+                android:id="@+id/timeInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#FFFFFF"
+                android:layout_margin="5dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Location:"/>
+            <EditText
+                android:id="@+id/locationInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#FFFFFF"
+                android:layout_margin="5dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Website:"/>
+            <EditText
+                android:id="@+id/websiteInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#FFFFFF"
+                android:layout_margin="5dp"/>
+            <Button
+                android:id="@+id/addReservationButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add Reservation"
+                android:layout_gravity="center"/>
+        </LinearLayout>
+
+    </FrameLayout>
+
+</LinearLayout>

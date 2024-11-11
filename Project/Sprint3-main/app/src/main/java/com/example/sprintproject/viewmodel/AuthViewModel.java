@@ -6,6 +6,8 @@ import android.widget.EditText;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.sprintproject.utils.LogSource;
+
 public abstract class AuthViewModel extends ViewModel implements LogSource {
     protected MutableLiveData<Boolean> authSuccess;
     protected MutableLiveData<String> errorMsg;

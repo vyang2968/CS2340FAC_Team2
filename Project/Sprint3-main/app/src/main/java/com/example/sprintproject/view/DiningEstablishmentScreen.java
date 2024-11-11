@@ -1,22 +1,22 @@
 package com.example.sprintproject.view;
 
-import com.example.sprintproject.viewmodel.DiningEstablishmentViewModel;
-
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.sprintproject.R;
+import com.example.sprintproject.viewmodel.DiningEstablishmentViewModel;
 
 public class DiningEstablishmentScreen extends NavBarScreen {
     private DiningEstablishmentViewModel diningEstablishmentViewModel;
     private LinearLayout reservationForm;
-    private Button addButton;
+    private ImageButton addButton;
     private Button submitButton;
 
     @Override
@@ -24,15 +24,22 @@ public class DiningEstablishmentScreen extends NavBarScreen {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dining_establishment);
 
-        diningEstablishmentViewModel =
-                new ViewModelProvider(this).get(DiningEstablishmentViewModel.class);
+        diningEstablishmentViewModel = new ViewModelProvider(
+            this).get(DiningEstablishmentViewModel.class);
 
-        reservationForm = findViewById(R.id.reservation_form);
-        addButton = findViewById(R.id.button_add_reservation);
-        submitButton = findViewById(R.id.button_submit_reservation);
+        reservationForm = findViewById(R.id.addReservationWindow);
+        addButton = findViewById(R.id.openReservationButton);
+        submitButton = findViewById(R.id.addReservationButton);
 
         addButton.setOnClickListener(view -> toggleFormVisibility());
         submitButton.setOnClickListener(view -> submitReservation());
+
+        diningEstablishmentViewModel.getErrorMessage().observe(this, errorMessage -> {
+            if (errorMessage != null && !errorMessage.isEmpty()) {
+                Toast.makeText(
+                DiningEstablishmentScreen.this, errorMessage, Toast.LENGTH_SHORT).show();
+            }
+        });
 
         setupNavBar();
     }
@@ -46,23 +53,47 @@ public class DiningEstablishmentScreen extends NavBarScreen {
     }
 
     private void submitReservation() {
-        EditText timeInput = findViewById(R.id.edit_text_time);
-        EditText locationInput = findViewById(R.id.edit_text_location);
-        EditText websiteInput = findViewById(R.id.edit_text_website);
+        EditText timeInput = findViewById(R.id.timeInput);
+        EditText locationInput = findViewById(R.id.locationInput);
+        EditText websiteInput = findViewById(R.id.websiteInput);
 
         String time = timeInput.getText().toString();
         String location = locationInput.getText().toString();
         String website = websiteInput.getText().toString();
 
-        diningEstablishmentViewModel.setTime(time);
-        diningEstablishmentViewModel.setLocation(location);
-        diningEstablishmentViewModel.setWebsite(website);
+        if (time.isEmpty() || location.isEmpty() || website.isEmpty()) {
+            if (time.isEmpty()) {
+                timeInput.setError("Time is required.");
+            }
+            if (location.isEmpty()) {
+                locationInput.setError("Location is required.");
+            }
+            if (website.isEmpty()) {
+                websiteInput.setError("Website is required.");
+            }
+            return;
+        }
 
-        diningEstablishmentViewModel.addReservation();
+        try {
+            diningEstablishmentViewModel.setTime(time);
+            diningEstablishmentViewModel.setLocation(location);
+            diningEstablishmentViewModel.setWebsite(website);
 
-        timeInput.setText("");
-        locationInput.setText("");
-        websiteInput.setText("");
-        reservationForm.setVisibility(View.GONE);
+            diningEstablishmentViewModel.addReservation();
+
+            timeInput.setText("");
+            locationInput.setText("");
+            websiteInput.setText("");
+            reservationForm.setVisibility(View.GONE);
+        } catch (IllegalArgumentException e) {
+            timeInput.setError("Invalid time format. Use HH:mm.");
+        }
+
+        diningEstablishmentViewModel.getErrorMessage().observe(this, errorMessage -> {
+            if (errorMessage != null && !errorMessage.isEmpty()) {
+                Toast.makeText(
+                DiningEstablishmentScreen.this, errorMessage, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

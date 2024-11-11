@@ -8,10 +8,13 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.sprintproject.model.DiningReservation;
 import com.example.sprintproject.service.DiningReservationService;
+import com.example.sprintproject.utils.DataCallback;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 
@@ -22,6 +25,7 @@ public class DiningEstablishmentViewModel extends ViewModel {
     private final MutableLiveData<String> location = new MutableLiveData<>();
     private final MutableLiveData<String> website = new MutableLiveData<>();
     private final MutableLiveData<String> errorMessage = new MutableLiveData<>();
+    private final MutableLiveData<List<DiningReservation>> reservations = new MutableLiveData<>();
 
     public LiveData<String> getErrorMessage() {
         return errorMessage;
@@ -100,5 +104,21 @@ public class DiningEstablishmentViewModel extends ViewModel {
 
     private boolean isValidUrl(String url) {
         return url != null && android.util.Patterns.WEB_URL.matcher(url).matches();
+    }
+
+    public MutableLiveData<List<DiningReservation>> getAllReservations() {
+        DiningReservationService.getInstance().getAllDiningReservations(new DataCallback<List<DiningReservation>>() {
+            @Override
+            public void onSuccess(List<DiningReservation> result) {
+
+                reservations.setValue(result);
+            }
+
+            @Override
+            public void onError(Exception e) {
+                reservations.setValue(new ArrayList<>());
+            }
+        });
+        return reservations;
     }
 }

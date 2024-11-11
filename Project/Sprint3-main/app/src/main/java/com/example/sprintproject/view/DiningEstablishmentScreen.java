@@ -42,7 +42,8 @@ public class DiningEstablishmentScreen extends NavBarScreen {
         submitButton = findViewById(R.id.addReservationButton);
         reservationList = findViewById(R.id.restaurantList);
 
-        diningEstablishmentViewModel.getAllReservations().observe(this, this::createReservationView);
+        diningEstablishmentViewModel.getAllReservations().observe(
+                this, this::createReservationView);
 
         addButton.setOnClickListener(view -> toggleFormVisibility());
         submitButton.setOnClickListener(view -> submitReservation());

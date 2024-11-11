@@ -107,7 +107,8 @@ public class DiningEstablishmentViewModel extends ViewModel {
     }
 
     public MutableLiveData<List<DiningReservation>> getAllReservations() {
-        DiningReservationService.getInstance().getAllDiningReservations(new DataCallback<List<DiningReservation>>() {
+        DiningReservationService.getInstance().getAllDiningReservations(
+                new DataCallback<List<DiningReservation>>() {
             @Override
             public void onSuccess(List<DiningReservation> result) {
 

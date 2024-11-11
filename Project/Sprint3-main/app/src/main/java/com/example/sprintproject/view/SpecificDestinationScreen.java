@@ -262,8 +262,10 @@ public class SpecificDestinationScreen extends AppCompatActivity {
                 TextView noteText = new TextView(new ContextThemeWrapper(this, R.style.note));
                 noteText.setText(note.getNote());
 
-                TextView noteCreatorText = new TextView(new ContextThemeWrapper(this, R.style.noteCreator));
-                noteCreatorText.setText(String.format("Created by: %s", note.getCreator().getUsername()));
+                TextView noteCreatorText =
+                        new TextView(new ContextThemeWrapper(this, R.style.noteCreator));
+                noteCreatorText.setText(
+                        String.format("Created by: %s", note.getCreator().getUsername()));
 
                 row.addView(noteText);
                 row.addView(noteCreatorText);

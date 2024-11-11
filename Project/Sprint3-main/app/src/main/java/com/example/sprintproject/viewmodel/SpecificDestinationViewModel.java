@@ -18,7 +18,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
 
 public class SpecificDestinationViewModel extends ViewModel {
     private static final String TAG = "SpecificDestViewModel";
@@ -68,13 +67,15 @@ public class SpecificDestinationViewModel extends ViewModel {
     }
 
     public String getDayPlanDetail(int day) {
-        Map<String, String> dayPlans = destination.getValue().getDayPlansManager().getDayPlansDetails();
+        Map<String, String> dayPlans =
+                destination.getValue().getDayPlansManager().getDayPlansDetails();
 
         return dayPlans.getOrDefault("day" + day, "");
     }
 
     public List<Note> getDayPlanNotes(int day) {
-        Map<String, List<Note>> dayPlansNotes = destination.getValue().getDayPlansManager().getDayPlansNotes();
+        Map<String, List<Note>> dayPlansNotes =
+                destination.getValue().getDayPlansManager().getDayPlansNotes();
         return dayPlansNotes.getOrDefault("day" + day, new ArrayList<>());
     }
 

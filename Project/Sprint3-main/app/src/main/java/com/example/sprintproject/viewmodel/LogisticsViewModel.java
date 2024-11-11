@@ -4,20 +4,17 @@ package com.example.sprintproject.viewmodel;
 import android.util.Log;
 import android.widget.EditText;
 
-import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.sprintproject.model.CollaboratorManager;
 import com.example.sprintproject.model.Destination;
 import com.example.sprintproject.model.User;
 import com.example.sprintproject.service.AuthService;
 import com.example.sprintproject.service.DestinationService;
 import com.example.sprintproject.service.UserService;
 import com.example.sprintproject.utils.DataCallback;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
+import com.example.sprintproject.utils.LogSource;
 
 import java.util.List;
 

@@ -26,10 +26,7 @@ public class DiningEstablishmentViewModel extends ViewModel {
     public LiveData<String> getErrorMessage() {
         return errorMessage;
     }
-
-    private MutableLiveData<SortMethod<DiningReservation>> sortMethod =
-        new MutableLiveData<>(new PlannableSortMethod<>());
-
+    
     public void setTime(String reservationTime) {
         time.setValue(reservationTime);
     }

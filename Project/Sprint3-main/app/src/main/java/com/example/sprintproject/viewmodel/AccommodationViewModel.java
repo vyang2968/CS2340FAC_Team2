@@ -47,29 +47,31 @@ public class AccommodationViewModel extends ViewModel implements LogSource {
 
         accommodations.setValue(list);
 
-        AccommodationService.getInstance().addAccommodation(accommodation).addOnCompleteListener(bool -> {
-            if (bool.isSuccessful()) {
-                Log.i(TAG, "addAccommodation:success");
-            } else {
-                Log.i(TAG, "addAccommodation:fail");
-            }
-        });
+        AccommodationService.getInstance().addAccommodation(accommodation)
+            .addOnCompleteListener(bool -> {
+                if (bool.isSuccessful()) {
+                    Log.i(TAG, "addAccommodation:success");
+                } else {
+                    Log.i(TAG, "addAccommodation:fail");
+                }
+            });
     }
 
     public void queryForAccommodations() {
         accommodations.setValue(new ArrayList<>());
-        AccommodationService.getInstance().getAllAccommodations(new DataCallback<List<Accommodation>>() {
-            @Override
-            public void onSuccess(List<Accommodation> result) {
-                Log.i(TAG, "getAccommodations:success");
-                accommodations.setValue(result);
-            }
-            @Override
-            public void onError(Exception e) {
-                Log.d(TAG, "getDestinations:failed");
-                accommodations.setValue(new ArrayList<>());
-            }
-        });
+        AccommodationService.getInstance()
+            .getAllAccommodations(new DataCallback<List<Accommodation>>() {
+                @Override
+                public void onSuccess(List<Accommodation> result) {
+                    Log.i(TAG, "getAccommodations:success");
+                    accommodations.setValue(result);
+                }
+                @Override
+                public void onError(Exception e) {
+                    Log.d(TAG, "getDestinations:failed");
+                    accommodations.setValue(new ArrayList<>());
+                }
+            });
     }
 
     private Date parseDate(String dateText) {

@@ -53,7 +53,7 @@ public class Accommodation implements Serializable, Plannable {
         this.roomType = roomType;
     }
 
-    public void setRoomType(String roomType) {
+    public void setRoomTypeFromString(String roomType) {
         setRoomType(RoomType.fromString(roomType));
     }
 

@@ -10,6 +10,7 @@ import com.example.sprintproject.utils.DataCallback;
 
 import com.google.android.gms.tasks.Task;
 
+import com.google.firebase.Firebase;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -71,10 +72,18 @@ public class AuthService {
 
     public void setCurrentUser() {
         Log.i(TAG, "setting current user...");
-        User user = new User();
-        user.setId(getUser().getUid());
-        user.setEmail(getUser().getEmail());
-        userService.setCurrentUser(user);
+        String userId = getUser().getUid();
+        userService.getUser(userId, new DataCallback<User>() {
+            @Override
+            public void onSuccess(User result) {
+                userService.setCurrentUser(result);
+            }
+
+            @Override
+            public void onError(Exception e) {
+                Log.d(TAG, e.toString());
+            }
+        });
     }
 
     public void logOutUser() {

@@ -1,11 +1,14 @@
 package com.example.sprintproject.view;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.sprintproject.BR;
@@ -31,6 +34,10 @@ public class LogisticsScreen extends NavBarScreen {
     private ProgressBar loadingIndicator;
     private TextView errorText;
     private TextView totalDaysText;
+    private Button inviteButton;
+    private EditText inviteInput;
+    private AlertDialog.Builder builder;
+    private Button logOutButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,9 +50,9 @@ public class LogisticsScreen extends NavBarScreen {
         setupNavBar();
         initializeViews();
         setupViewModel(binding);
+        setupObservers();
         setupPieChart();
         setupButtonListeners();
-        setupObservers();
     }
 
     private void initializeViews() {
@@ -54,6 +61,10 @@ public class LogisticsScreen extends NavBarScreen {
         loadingIndicator = findViewById(R.id.loadingIndicator);
         errorText = findViewById(R.id.errorText);
         totalDaysText = findViewById(R.id.totalDaysText);
+        inviteButton = findViewById(R.id.inviteButton);
+        inviteInput = findViewById(R.id.inviteInput);
+        builder = new AlertDialog.Builder(this);
+        logOutButton = findViewById(R.id.logOutButton);
     }
 
     private void setupViewModel(ActivityLogisticsScreenBinding binding) {
@@ -88,10 +99,23 @@ public class LogisticsScreen extends NavBarScreen {
         if (visualizeButton != null) {
             visualizeButton.setOnClickListener(v -> {
                 loadingIndicator.setVisibility(View.VISIBLE);
-                errorText.setVisibility(View.GONE);
+                logisticsViewModel.setHasError(false);
                 updateChartData();
+                pieChart.setVisibility(View.VISIBLE);
             });
         }
+
+        inviteButton.setOnClickListener(v -> {
+            Log.i(TAG, "invite user clicked");
+            if (logisticsViewModel.validateInviteInput(inviteInput)) {
+                logisticsViewModel.queryForUser(inviteInput.getText().toString());
+            }
+        });
+
+        logOutButton.setOnClickListener(v -> {
+            Log.i(TAG, "logout button clicked");
+            logisticsViewModel.logOutUser();
+        });
     }
 
     private void setupObservers() {
@@ -106,6 +130,35 @@ public class LogisticsScreen extends NavBarScreen {
         logisticsViewModel.getTotalDaysTraveled().observe(this, plannedDays -> {
             updateChartData();
         });
+
+        logisticsViewModel.getHasError().observe(this, bool -> {
+            if (bool) {
+                errorText.setVisibility(View.VISIBLE);
+            } else {
+                errorText.setVisibility(View.GONE);
+            }
+        });
+
+        logisticsViewModel.getHasCurrentUser().observe(this, bool -> {
+            if (bool) {
+                logisticsViewModel.queryTotalTrips();
+                logisticsViewModel.updateDaysTraveled();
+            }
+        });
+
+        logisticsViewModel.getUpdateDestinationSucessful().observe(this, bool -> {
+            if (bool) {
+                builder.setMessage("Invite successfully sent!");
+            } else {
+                builder.setMessage("No user found");
+            }
+            builder.create().show();
+            inviteInput.setText("");
+        });
+
+        logisticsViewModel.getFoundUser().observe(this, user -> {
+            logisticsViewModel.updateDestinations(user);
+        });
     }
 
     private void updateChartData() {
@@ -117,7 +170,7 @@ public class LogisticsScreen extends NavBarScreen {
         Integer plannedDays = logisticsViewModel.getTotalDaysTraveled().getValue();
 
         if (totalDays == null || totalDays == 0 || plannedDays == null) {
-            errorText.setVisibility(View.VISIBLE);
+            logisticsViewModel.setHasError(true);
             loadingIndicator.setVisibility(View.GONE);
             pieChart.setVisibility(View.GONE);
             return;
@@ -141,13 +194,13 @@ public class LogisticsScreen extends NavBarScreen {
         pieChart.invalidate();
 
         loadingIndicator.setVisibility(View.GONE);
-        errorText.setVisibility(View.GONE);
-        pieChart.setVisibility(View.VISIBLE);
+        logisticsViewModel.setHasError(false);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         logisticsViewModel.refreshTotalTripDays();
+        pieChart.setVisibility(View.VISIBLE);
     }
 }

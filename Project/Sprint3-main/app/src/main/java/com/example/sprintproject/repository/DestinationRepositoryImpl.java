@@ -97,7 +97,6 @@ public class DestinationRepositoryImpl implements DestinationRepository {
         );
     }
 
-
     @Override
     public Task<Void> updateDestination(Destination destination) {
         return destDBRef.child(destination.getId()).setValue(destination);

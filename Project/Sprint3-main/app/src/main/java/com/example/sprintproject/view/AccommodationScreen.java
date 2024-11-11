@@ -39,6 +39,8 @@ public class AccommodationScreen extends NavBarScreen {
         binding.setVariable(BR.accoViewModel, viewModel);
         binding.setLifecycleOwner(this);
 
+        viewModel.queryForAccommodations();
+
         accommodationForm = findViewById(R.id.accommodations_form);
         addButton = findViewById(R.id.button_add_accommodation);
         submitButton = findViewById(R.id.button_submit_accommodation);

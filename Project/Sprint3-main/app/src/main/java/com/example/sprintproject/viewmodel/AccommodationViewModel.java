@@ -15,6 +15,7 @@ import com.example.sprintproject.utils.SortMethod;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -24,12 +25,18 @@ public class AccommodationViewModel extends ViewModel implements LogSource {
     private static final String TAG = "AccommodationViewModel";
 
     private final MutableLiveData<List<Accommodation>> accommodations;
+    private final SimpleDateFormat dateFormat;
     // Changeable Behavior
     private MutableLiveData<SortMethod<Accommodation>> sortMethod;
 
     public AccommodationViewModel() {
         this.accommodations = new MutableLiveData<>();
+        this.dateFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
         this.sortMethod = new MutableLiveData<>(new PlannableSortMethod<>());
+    }
+
+    public MutableLiveData<List<Accommodation>> getAccommodations() {
+        return accommodations;
     }
 
     public void addAccommodation(String checkInTime, String checkOutTime,
@@ -37,7 +44,7 @@ public class AccommodationViewModel extends ViewModel implements LogSource {
         Accommodation accommodation = new Accommodation();
 
         accommodation.setCheckInTime(parseDate(checkInTime));
-        accommodation.setCheckInTime(parseDate(checkOutTime));
+        accommodation.setCheckOutTime(parseDate(checkOutTime));
         accommodation.setLocation(location);
         accommodation.setNumRooms(rooms);
         accommodation.setRoomTypeFromString(roomType);
@@ -50,7 +57,9 @@ public class AccommodationViewModel extends ViewModel implements LogSource {
 
         list.add(accommodation);
 
-        sortMethod.getValue().sortList(list);
+        if (sortMethod.getValue() != null) {
+            sortMethod.getValue().sortList(list);
+        }
 
         accommodations.setValue(list);
 
@@ -71,9 +80,16 @@ public class AccommodationViewModel extends ViewModel implements LogSource {
                 @Override
                 public void onSuccess(List<Accommodation> result) {
                     Log.i(TAG, "getAccommodations:success");
-                    sortMethod.getValue().sortList(result);
-                    accommodations.setValue(result);
+                    List<Accommodation> sortedAccommodations = new ArrayList<>(result);
+
+                    // Apply current sort method
+                    if (sortMethod.getValue() != null) {
+                        sortMethod.getValue().sortList(sortedAccommodations);
+                    }
+
+                    accommodations.setValue(sortedAccommodations);
                 }
+
                 @Override
                 public void onError(Exception e) {
                     Log.d(TAG, "getDestinations:failed");
@@ -82,13 +98,20 @@ public class AccommodationViewModel extends ViewModel implements LogSource {
             });
     }
 
+    public String formatDate(Date date) {
+        if (date == null) return "";
+        return dateFormat.format(date);
+    }
+
+    public boolean isPastReservation(Date checkOutDate) {
+        if (checkOutDate == null) return false;
+        return checkOutDate.before(new Date());
+    }
+
     private Date parseDate(String dateText) {
         Log.i(TAG, "parsing " + dateText);
         try {
-            SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
-            Date date = format.parse(dateText);
-            Log.i(TAG, "parseDate:success");
-            return date;
+            return dateFormat.parse(dateText);
         } catch (ParseException error) {
             Log.d(TAG, "date could not be parsed");
             throw new IllegalArgumentException(error);
@@ -97,6 +120,12 @@ public class AccommodationViewModel extends ViewModel implements LogSource {
 
     public void setSortMethod(SortMethod<Accommodation> sortMethod) {
         this.sortMethod.setValue(sortMethod);
+
+        List<Accommodation> currentList = accommodations.getValue();
+        if (currentList != null && sortMethod != null) {
+            sortMethod.sortList(currentList);
+            accommodations.setValue(currentList);
+        }
     }
 
     public SortMethod<Accommodation> getSortMethod() {

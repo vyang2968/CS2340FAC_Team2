@@ -66,7 +66,8 @@ public class DiningEstablishmentViewModel extends ViewModel {
         String locationValue = location.getValue();
         String websiteValue = website.getValue();
 
-        if (dateValue == null || timeValue == null || locationValue == null || websiteValue == null) {
+        if (dateValue == null || timeValue == null ||
+                locationValue == null || websiteValue == null) {
             errorMessage.setValue("All fields are required.");
             return;
         }
@@ -113,7 +114,7 @@ public class DiningEstablishmentViewModel extends ViewModel {
     }
 
     public MutableLiveData<List<DiningReservation>> getAllReservations() {
-            DiningReservationService.getInstance().getAllDiningReservations(
+        DiningReservationService.getInstance().getAllDiningReservations(
                 new DataCallback<List<DiningReservation>>() {
                     @Override
                     public void onSuccess(List<DiningReservation> result) {

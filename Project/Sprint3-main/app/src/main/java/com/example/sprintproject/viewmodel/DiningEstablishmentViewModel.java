@@ -66,8 +66,10 @@ public class DiningEstablishmentViewModel extends ViewModel {
         String locationValue = location.getValue();
         String websiteValue = website.getValue();
 
-        if (dateValue == null || timeValue == null ||
-                locationValue == null || websiteValue == null) {
+        if (dateValue == null
+                || timeValue == null
+                || locationValue == null
+                || websiteValue == null) {
             errorMessage.setValue("All fields are required.");
             return;
         }

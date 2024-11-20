@@ -32,9 +32,13 @@ public class DiningEstablishmentViewModel extends ViewModel {
         return errorMessage;
     }
 
-    public void setDate(String reservationDate) { date.setValue(reservationDate); }
+    public void setDate(String reservationDate) {
+        date.setValue(reservationDate);
+    }
     
-    public void setTime(String reservationTime) {time.setValue(reservationTime);}
+    public void setTime(String reservationTime) {
+        time.setValue(reservationTime);
+    }
 
     public void setLocation(String reservationLocation) {
         location.setValue(reservationLocation);

@@ -8,12 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 import androidx.lifecycle.ViewModelProvider;
@@ -25,7 +25,7 @@ import com.example.sprintproject.viewmodel.DiningEstablishmentViewModel;
 public class DiningEstablishmentScreen extends NavBarScreen {
     private DiningEstablishmentViewModel diningEstablishmentViewModel;
     private LinearLayout reservationForm;
-    private ImageButton addButton;
+    private Button addButton;
     private Button submitButton;
     private LinearLayout reservationList;
 
@@ -42,7 +42,8 @@ public class DiningEstablishmentScreen extends NavBarScreen {
         submitButton = findViewById(R.id.addReservationButton);
         reservationList = findViewById(R.id.restaurantList);
 
-        diningEstablishmentViewModel.getAllReservations().observe(this, this::createReservationView);
+        diningEstablishmentViewModel.getAllReservations().observe(
+                this, this::createReservationView);
 
         addButton.setOnClickListener(view -> toggleFormVisibility());
         submitButton.setOnClickListener(view -> submitReservation());
@@ -66,15 +67,20 @@ public class DiningEstablishmentScreen extends NavBarScreen {
     }
 
     private void submitReservation() {
+        EditText dateInput = findViewById(R.id.dateInput);
         EditText timeInput = findViewById(R.id.timeInput);
         EditText locationInput = findViewById(R.id.locationInput);
         EditText websiteInput = findViewById(R.id.websiteInput);
 
+        String date = dateInput.getText().toString();
         String time = timeInput.getText().toString();
         String location = locationInput.getText().toString();
         String website = websiteInput.getText().toString();
 
-        if (time.isEmpty() || location.isEmpty() || website.isEmpty()) {
+        if (date.isEmpty() || time.isEmpty() || location.isEmpty() || website.isEmpty()) {
+            if (date.isEmpty()) {
+                dateInput.setError("Date is Required.");
+            }
             if (time.isEmpty()) {
                 timeInput.setError("Time is required.");
             }
@@ -88,19 +94,22 @@ public class DiningEstablishmentScreen extends NavBarScreen {
         }
 
         try {
+            diningEstablishmentViewModel.setDate(date);
             diningEstablishmentViewModel.setTime(time);
             diningEstablishmentViewModel.setLocation(location);
             diningEstablishmentViewModel.setWebsite(website);
 
+            reservationList.removeAllViews();
             diningEstablishmentViewModel.addReservation();
 
+            dateInput.setText("");
             timeInput.setText("");
             locationInput.setText("");
             websiteInput.setText("");
             reservationForm.setVisibility(View.GONE);
 
         } catch (IllegalArgumentException e) {
-            timeInput.setError("Invalid time format. Use HH:mm.");
+            timeInput.setError("Invalid time format. Use MM/DD/YYYY and HH:mm.");
         }
 
         diningEstablishmentViewModel.getErrorMessage().observe(this, errorMessage -> {
@@ -124,7 +133,6 @@ public class DiningEstablishmentScreen extends NavBarScreen {
             newReservation.setLayoutParams(layoutParams);
             newReservation.setOrientation(LinearLayout.VERTICAL);
             newReservation.setPadding(5, 5, 5, 5);
-
             newReservation.setBackgroundColor(Color.parseColor("#E0E0E0"));
 
             LinearLayout restaurantTimeLayout = new LinearLayout(this);
@@ -148,6 +156,9 @@ public class DiningEstablishmentScreen extends NavBarScreen {
             timeTextView.setText(i.getReservationTime().toString());
             timeTextView.setTypeface(null, Typeface.ITALIC);
             timeTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
+            if (i.getReservationTime().before(new Date())) {
+                timeTextView.setTextColor(Color.parseColor("#EE1111"));
+            }
             restaurantTimeLayout.addView(timeTextView);
 
             newReservation.addView(restaurantTimeLayout);

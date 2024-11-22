@@ -6,7 +6,6 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class Accommodation implements Serializable, Plannable {
-
     private String id;
     private String location;
     private Date checkInTime;

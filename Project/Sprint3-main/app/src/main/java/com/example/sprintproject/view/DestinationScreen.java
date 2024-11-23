@@ -72,7 +72,9 @@ public class DestinationScreen extends NavBarScreen {
         LinearLayout destArea = findViewById(R.id.destArea);
 
         destinationViewModel.queryForDestinations();
-        observeAndPopulateDestinations(destArea, destinationViewModel.getDestinations());
+        observeAndPopulateDestinations(destArea,
+                                        destinationViewModel.getDestinations(),
+                                        destinationViewModel.getDoneQueryForDestinations());
 
         observeAndShowDialog(destinationViewModel.getSubmitted());
 
@@ -83,6 +85,10 @@ public class DestinationScreen extends NavBarScreen {
                         logArea,
                         destStartDateInput, destEndDateInput, locationInput
                 );
+                destinationViewModel.clearAndRequeryData();
+                observeAndPopulateDestinations(destArea,
+                        destinationViewModel.getDestinations(),
+                        destinationViewModel.getDoneQueryForDestinations());
             } else {
                 logErrorDisplay.setVisibility(View.VISIBLE);
             }
@@ -186,25 +192,29 @@ public class DestinationScreen extends NavBarScreen {
     }
 
     private void observeAndPopulateDestinations(LinearLayout area,
-                                                LiveData<List<Destination>> destinationsData) {
-        destinationsData.observe(this, destinations -> {
-            area.removeAllViews();
-            if (!destinations.isEmpty()) {
-                Log.i(TAG, "populating destinations...");
-                for (int i = 0; i < destinations.size(); i++) {
-                    Destination currDest = destinations.get(i);
-                    LinearLayout layout = createClickableArea(currDest);
-                    layout.setClickable(true);
-                    layout.setOnClickListener(view -> {
-                        Log.i(TAG, "destination area clicked");
-                        Intent intent = new Intent(this, SpecificDestinationScreen.class);
-                        intent.putExtra("destination", currDest);
-                        startActivity(intent);
-                    });
-                    area.addView(layout);
+                                                LiveData<List<Destination>> destinationsData,
+                                                LiveData<Boolean> doneQuerying) {
+        doneQuerying.observe(this, bool -> {
+            List<Destination> destinations = destinationsData.getValue();
+            if (bool) {
+                area.removeAllViews();
+                if (!destinations.isEmpty()) {
+                    Log.i(TAG, "populating destinations...");
+                    for (int i = 0; i < destinations.size(); i++) {
+                        Destination currDest = destinations.get(i);
+                        LinearLayout layout = createClickableArea(currDest);
+                        layout.setClickable(true);
+                        layout.setOnClickListener(view -> {
+                            Log.i(TAG, "destination area clicked");
+                            Intent intent = new Intent(this, SpecificDestinationScreen.class);
+                            intent.putExtra("destination", currDest);
+                            startActivity(intent);
+                        });
+                        area.addView(layout);
+                    }
+                } else {
+                    Log.i(TAG, "empty");
                 }
-            } else {
-                Log.i(TAG, "empty");
             }
         });
     }
@@ -361,5 +371,22 @@ public class DestinationScreen extends NavBarScreen {
         for (EditText input : inputs) {
             input.setText("");
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.i(TAG, "ON RESUME");
+
+        DestinationViewModel destinationViewModel =
+                new ViewModelProvider(this).get(DestinationViewModel.class);
+
+        destinationViewModel.clearAndRequeryData();
+
+        LinearLayout destArea = findViewById(R.id.destArea);
+
+        observeAndPopulateDestinations(destArea,
+                destinationViewModel.getDestinations(),
+                destinationViewModel.getDoneQueryForDestinations());
     }
 }

@@ -148,8 +148,6 @@ public class SpecificDestinationScreen extends AppCompatActivity {
         layout.addView(detailsTruncated);
         layout.addView(noteButton);
 
-
-
         return layout;
     }
 
@@ -224,7 +222,6 @@ public class SpecificDestinationScreen extends AppCompatActivity {
             } else {
                 noteInput.setError(null);
             }
-
             sDestViewModel.updateNote(day, text);
         });
 

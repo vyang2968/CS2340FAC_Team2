@@ -4,7 +4,7 @@ package com.example.sprintproject.service;
 import android.util.Log;
 
 
-
+import com.example.sprintproject.model.Trip;
 import com.example.sprintproject.model.User;
 import com.example.sprintproject.utils.DataCallback;
 
@@ -87,6 +87,8 @@ public class AuthService {
 
     public void logOutUser() {
         auth.signOut();
+        userService.setCurrentUser(new User());
+        TripService.getInstance().setCurrentTrip(new Trip());
         Log.d(TAG, "user logged out");
     }
 

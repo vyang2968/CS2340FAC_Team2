@@ -76,8 +76,6 @@ public class UserService {
         return hasCurrentUser;
     }
 
-
-
     public Task<Void> updateUser(User user) {
         if (user == null) {
             throw new IllegalArgumentException("user cannot be null");

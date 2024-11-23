@@ -1,7 +1,6 @@
 package com.example.sprintproject.service;
 
-
-
+import android.util.Log;
 
 import com.example.sprintproject.model.Destination;
 import com.example.sprintproject.repository.DestinationRepositoryImpl;

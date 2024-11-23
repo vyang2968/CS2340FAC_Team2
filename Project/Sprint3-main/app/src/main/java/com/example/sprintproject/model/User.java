@@ -24,6 +24,7 @@ public class User implements Serializable {
         this.endDate = new Date();
         this.duration = 0;
         this.activeTripId = "";
+        this.tripIds = new ArrayList<>();
     }
 
     public String getId() {
@@ -83,9 +84,6 @@ public class User implements Serializable {
         return tripIds;
     }
 
-    public void setTripIds(List<String> tripIds) {
-        this.tripIds = tripIds;
-    }
 
     @Override
     public boolean equals(Object o) {

@@ -8,8 +8,10 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.sprintproject.model.Destination;
+import com.example.sprintproject.model.Trip;
 import com.example.sprintproject.model.User;
 import com.example.sprintproject.service.DestinationService;
+import com.example.sprintproject.service.TripService;
 import com.example.sprintproject.service.UserService;
 import com.example.sprintproject.utils.DataCallback;
 
@@ -25,12 +27,14 @@ public class DestinationViewModel extends ViewModel {
     private static final String TAG = "DestinationViewModel";
     private final UserService userService;
     private final DestinationService destinationService;
+    private final TripService tripService;
     private final User currUser;
     private final Destination destination;
 
     private final MutableLiveData<String> logErrorMsg;
     private final MutableLiveData<String> calcErrorMsg;
     private final MutableLiveData<List<Destination>> destinations;
+    private final MutableLiveData<Boolean> doneQueryForDestinations;
 
     private final MutableLiveData<Boolean> submitted;
     private final MutableLiveData<Boolean> updateUserSuccess;
@@ -52,6 +56,7 @@ public class DestinationViewModel extends ViewModel {
     public DestinationViewModel() {
         this.userService = UserService.getInstance();
         this.destinationService = DestinationService.getInstance();
+        this.tripService = TripService.getInstance();
         this.currUser = userService.getCurrentUser();
         this.destination = new Destination();
 
@@ -60,11 +65,12 @@ public class DestinationViewModel extends ViewModel {
         this.submitted = new MutableLiveData<>();
         this.updateUserSuccess = new MutableLiveData<>();
         this.addDestSuccess = new MutableLiveData<>();
-        this.destinations = new MutableLiveData<>();
+        this.destinations = new MutableLiveData<>(new ArrayList<>());
         this.userStartDateHasValue = false;
         this.userEndDateHasValue = false;
         this.userDurationHasValue = false;
         this.userHasAtLeastTwoValues = new MutableLiveData<>();
+        this.doneQueryForDestinations = new MutableLiveData<>();
 
         this.locationValid = false;
         this.destStartDateValid = false;
@@ -74,29 +80,37 @@ public class DestinationViewModel extends ViewModel {
     }
 
     public void queryForDestinations() {
-        destinations.setValue(new ArrayList<>());
-        destinationService.getFirstKDestinations(20, new DataCallback<List<Destination>>() {
-            @Override
-            public void onSuccess(List<Destination> result) {
-                Log.i(TAG, "getDestinations:success");
-                List<Destination> included = new ArrayList<>();
-                User currUser = UserService.getInstance().getCurrentUser();
-                Log.i(TAG, currUser.getId());
-                for (Destination dest : result) {
-                    if (dest.getCollaboratorManager().getCollaborators().contains(currUser)
-                            || dest.getCollaboratorManager().getCreator().equals(currUser)) {
-                        included.add(dest);
-                    }
-                }
-                destinations.setValue(included);
-            }
+        Trip currTrip = tripService.getCurrentTrip();
+        List<String> destinationsIds = currTrip.getDestinationsIds();
+        int endCondition = Math.min(destinationsIds.size(), 20);
 
-            @Override
-            public void onError(Exception e) {
-                Log.d(TAG, "getDestinations:failed");
-                destinations.setValue(new ArrayList<>());
-            }
-        });
+        if (destinationsIds.isEmpty()) {
+            return;
+        }
+
+        for (int i = 0; i < endCondition; i++) {
+            destinationService.getDestination(destinationsIds.get(i), new DataCallback<Destination>() {
+                @Override
+                public void onSuccess(Destination result) {
+                    Log.i(TAG, "getDestinations:success");
+                    List<Destination> results = destinations.getValue();
+                    results.add(result);
+
+                    if (destinationsIds.size() == destinations.getValue().size()) {
+                        doneQueryForDestinations.setValue(true);
+                    } else {
+                        doneQueryForDestinations.setValue(false);
+                    }
+                    destinations.setValue(results);
+                }
+
+                @Override
+                public void onError(Exception e) {
+                    Log.d(TAG, "getDestinations:failed");
+                    destinations.setValue(new ArrayList<>());
+                }
+            });
+        }
     }
 
     public void setLocation(EditText locationInput) {
@@ -148,9 +162,15 @@ public class DestinationViewModel extends ViewModel {
         if (locationValid && destStartDateValid && destEndDateValid) {
             Log.i(TAG, "adding destination...");
             logErrorMsg.setValue(null);
-            destination.getCollaboratorManager().setCreator(currUser);
             destinationService.addDestination(destination).addOnCompleteListener(bool -> {
                 if (bool.isSuccessful()) {
+                    Trip currTrip = tripService.getCurrentTrip();
+                    List<String> destinationsIds =
+                            currTrip.getDestinationsIds();
+                    destinationsIds.add(destination.getId());
+                    currTrip.setDestinationsIds(destinationsIds);
+                    tripService.updateTrip(currTrip);
+
                     Log.i(TAG, "addDestination:success");
                     addDestSuccess.setValue(true);
                     submitted.setValue(true);
@@ -160,6 +180,7 @@ public class DestinationViewModel extends ViewModel {
                     submitted.setValue(false);
                 }
             });
+
         } else {
             Log.i(TAG,
                     String.format(
@@ -285,6 +306,12 @@ public class DestinationViewModel extends ViewModel {
         }
     }
 
+    public void clearAndRequeryData() {
+        destinations.setValue(new ArrayList<>());
+        doneQueryForDestinations.setValue(false);
+        queryForDestinations();
+    }
+
     public LiveData<Boolean> getUserHasAtLeastTwoValues() {
         return userHasAtLeastTwoValues;
     }
@@ -335,5 +362,9 @@ public class DestinationViewModel extends ViewModel {
 
     public LiveData<List<Destination>> getDestinations() {
         return destinations;
+    }
+
+    public MutableLiveData<Boolean> getDoneQueryForDestinations() {
+        return doneQueryForDestinations;
     }
 }

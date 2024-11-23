@@ -9,15 +9,13 @@ public class Destination implements Serializable {
     private String destinationName;
     private Date startDate;
     private Date endDate;
-    private CollaboratorManager collaboratorManager;
-    private  DayPlansManager dayPlansManager;
+    private final DayPlansManager dayPlansManager;
 
     public Destination() {
         this.id = "";
         this.destinationName = "";
         this.startDate = new Date();
         this.endDate = new Date();
-        this.collaboratorManager = new CollaboratorManager();
         this.dayPlansManager = new DayPlansManager();
     }
 
@@ -57,10 +55,6 @@ public class Destination implements Serializable {
 
     public void setDestinationName(String destinationName) {
         this.destinationName = destinationName;
-    }
-
-    public CollaboratorManager getCollaboratorManager() {
-        return collaboratorManager;
     }
 
     public DayPlansManager getDayPlansManager() {

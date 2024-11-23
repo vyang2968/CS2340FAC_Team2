@@ -8,8 +8,8 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.sprintproject.model.Destination;
 import com.example.sprintproject.model.Note;
-import com.example.sprintproject.model.User;
 import com.example.sprintproject.service.DestinationService;
+import com.example.sprintproject.service.TripService;
 import com.example.sprintproject.service.UserService;
 
 import java.text.SimpleDateFormat;
@@ -84,8 +84,8 @@ public class SpecificDestinationViewModel extends ViewModel {
     }
 
     public boolean getIsOwner() {
-        User creator = destination.getValue().getCollaboratorManager().getCreator();
-        return creator.equals(userService.getCurrentUser());
+        String creator = TripService.getInstance().getCurrentTrip().getManager().getCreator();
+        return creator.equals(userService.getCurrentUser().getId());
     }
 
     public void updateDetail(int i, String detail) {

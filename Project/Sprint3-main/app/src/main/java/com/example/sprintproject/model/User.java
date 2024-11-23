@@ -1,7 +1,9 @@
 package com.example.sprintproject.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 public class User implements Serializable {
@@ -11,6 +13,8 @@ public class User implements Serializable {
     private Date startDate;
     private Date endDate;
     private int duration;
+    private String activeTripId;
+    private final List<String> tripIds;
 
     public User() {
         this.id = "";
@@ -19,6 +23,8 @@ public class User implements Serializable {
         this.startDate = new Date();
         this.endDate = new Date();
         this.duration = 0;
+        this.activeTripId = "";
+        this.tripIds = new ArrayList<>();
     }
 
     public String getId() {
@@ -54,10 +60,6 @@ public class User implements Serializable {
         this.startDate = startDate;
     }
 
-    public Date getEndDate() {
-        return endDate;
-    }
-
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
@@ -69,6 +71,19 @@ public class User implements Serializable {
     public void setDuration(int duration) {
         this.duration = duration;
     }
+
+    public String getActiveTripId() {
+        return activeTripId;
+    }
+
+    public void setActiveTripId(String activeTripId) {
+        this.activeTripId = activeTripId;
+    }
+
+    public List<String> getTripIds() {
+        return tripIds;
+    }
+
 
     @Override
     public boolean equals(Object o) {

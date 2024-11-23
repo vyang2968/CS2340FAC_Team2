@@ -26,7 +26,7 @@ public class AccommodationViewModel extends ViewModel implements LogSource {
     private final MutableLiveData<List<Accommodation>> accommodations;
     private final SimpleDateFormat dateFormat;
     // Changeable Behavior
-    private MutableLiveData<SortMethod<Accommodation>> sortMethod;
+    private final MutableLiveData<SortMethod<Accommodation>> sortMethod;
 
     public AccommodationViewModel() {
         this.accommodations = new MutableLiveData<>();

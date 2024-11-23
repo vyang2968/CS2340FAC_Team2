@@ -1,13 +1,18 @@
 package com.example.sprintproject.view;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.GridLayout;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.lifecycle.ViewModelProvider;
@@ -15,6 +20,8 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.sprintproject.BR;
 import com.example.sprintproject.R;
 import com.example.sprintproject.databinding.ActivityLogisticsScreenBinding;
+import com.example.sprintproject.model.Trip;
+import com.example.sprintproject.model.User;
 import com.example.sprintproject.viewmodel.LogisticsViewModel;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Description;
@@ -25,6 +32,7 @@ import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class LogisticsScreen extends NavBarScreen {
@@ -39,6 +47,11 @@ public class LogisticsScreen extends NavBarScreen {
     private EditText inviteInput;
     private AlertDialog.Builder builder;
     private Button logOutButton;
+    private Button addTripButton;
+    private AlertDialog.Builder tripPrompt;
+    private ToggleButton selectableButton;
+    private GridLayout tripsLayout;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +79,10 @@ public class LogisticsScreen extends NavBarScreen {
         inviteInput = findViewById(R.id.inviteInput);
         builder = new AlertDialog.Builder(this);
         logOutButton = findViewById(R.id.logOutButton);
+        addTripButton = findViewById(R.id.add_trip_button);
+        tripPrompt = new AlertDialog.Builder(this);
+        selectableButton = findViewById(R.id.selectable_button);
+        tripsLayout = findViewById(R.id.all_trips);
     }
 
     private void setupViewModel(ActivityLogisticsScreenBinding binding) {
@@ -116,9 +133,30 @@ public class LogisticsScreen extends NavBarScreen {
         logOutButton.setOnClickListener(v -> {
             Log.i(TAG, "logout button clicked");
             logisticsViewModel.logOutUser();
+            finish();
             Intent intent = new Intent(this, WelcomeScreen.class);
             startActivity(intent);
-            finish();
+        });
+
+        addTripButton.setOnClickListener(v -> {
+            Log.i(TAG, "add trip button clicked");
+            EditText tripName = new EditText(this);
+            tripPrompt.setView(tripName);
+            tripPrompt.setTitle("Create New Trip");
+            tripPrompt.setPositiveButton("Create", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    logisticsViewModel.createTrip(tripName.getText().toString());
+                    tripName.setText("");
+                }
+            });
+            tripPrompt.setNegativeButton("Cancel",
+                    (dialogInterface, i) -> dialogInterface.dismiss());
+            tripPrompt.create().show();
+        });
+
+        selectableButton.setOnCheckedChangeListener((compoundButton, b) -> {
+            logisticsViewModel.setTripsAreSelectable(b);
         });
     }
 
@@ -146,11 +184,22 @@ public class LogisticsScreen extends NavBarScreen {
         logisticsViewModel.getHasCurrentUser().observe(this, bool -> {
             if (bool) {
                 logisticsViewModel.queryTotalTrips();
-                logisticsViewModel.updateDaysTraveled();
+                logisticsViewModel.queryForAllTrips();
             }
         });
 
-        logisticsViewModel.getUpdateDestinationSucessful().observe(this, bool -> {
+        logisticsViewModel.getFoundUser().observe(this, user -> {
+            logisticsViewModel.getFoundUser().removeObservers(this);
+            logisticsViewModel.updateCollaborator(user);
+        });
+
+        logisticsViewModel.getUpdateUserSuccessful().observe(this, bool -> {
+            if (bool) {
+                logisticsViewModel.updateTrip(logisticsViewModel.getFoundUser().getValue());
+            }
+        });
+
+        logisticsViewModel.getUpdateTripSuccessful().observe(this, bool -> {
             if (bool) {
                 builder.setMessage("Invite successfully sent!");
             } else {
@@ -160,9 +209,93 @@ public class LogisticsScreen extends NavBarScreen {
             inviteInput.setText("");
         });
 
-        logisticsViewModel.getFoundUser().observe(this, user -> {
-            logisticsViewModel.updateDestinations(user);
+
+        logisticsViewModel.getTripCreationSuccessful().observe(this, bool -> {
+            if (bool) {
+                builder.setMessage("Trip successfully created!");
+                logisticsViewModel.setDoneQueryingForAllTrips(false);
+                logisticsViewModel.queryForAllTrips();
+            } else {
+                builder.setMessage("Trip could not be created.");
+            }
+            builder.create().show();
         });
+
+        logisticsViewModel.getDoneQueryingForAllTrips().observe(this, bool -> {
+            if (bool) {
+                logisticsViewModel.queryForAllUsers();
+                logisticsViewModel.queryForAllDests();
+            }
+        });
+
+        logisticsViewModel.getDoneQueryingForAllUsers().observe(this, bool -> {
+            populateTrips(logisticsViewModel.getTripsAndUsers().getValue());
+        });
+    }
+
+    private void populateTrips(HashMap<Trip, User> map) {
+        for (Trip trip : map.keySet()) {
+            User user = map.get(trip);
+
+            LinearLayout block =
+                    new LinearLayout(new ContextThemeWrapper(this, R.style.tripBlock));
+
+            TextView name = new TextView(this);
+            name.setText(trip.getName());
+            name.setTextSize(20f);
+            TextView creator = new TextView(this);
+
+            creator.setText(user.getUsername());
+            creator.setTextSize(15f);
+
+            block.addView(name);
+            block.addView(creator);
+
+            if (logisticsViewModel.isActiveTrip(trip)) {
+                block.setBackgroundColor(getColor(R.color.purple));
+                name.setTextColor(getColor(R.color.white));
+                creator.setTextColor(getColor(R.color.white));
+            }
+
+            block.setOnClickListener(view -> {
+                if (logisticsViewModel.getTripsAreSelectable().getValue()) {
+                    logisticsViewModel.changeCurrentTrip(trip);
+                    recolor(block);
+                    logisticsViewModel.setTripsAreSelectable(false);
+                    selectableButton.setChecked(false);
+                }
+            });
+
+            tripsLayout.addView(block);
+        }
+    }
+
+    private void recolor(LinearLayout activeBlock) {
+        for (int i = 0; i < tripsLayout.getChildCount(); i++) {
+            LinearLayout layout = (LinearLayout) tripsLayout.getChildAt(i);
+
+            for (int j = 0; j < layout.getChildCount(); j++) {
+                if (!layout.equals(activeBlock)) {
+                    ((TextView) layout.getChildAt(j)).setTextColor(getColor(R.color.black));
+                } else {
+                    ((TextView) layout.getChildAt(j)).setTextColor(getColor(R.color.white));
+                }
+            }
+
+            if (!layout.equals(activeBlock)) {
+                layout.setBackgroundResource(R.drawable.button_border);
+            } else {
+                layout.setBackgroundResource(R.drawable.button_border);
+                layout.setBackgroundColor(getColor(R.color.purple));
+            }
+
+            layout.setPadding(dpToPixel(30), dpToPixel(20), dpToPixel(30), dpToPixel(20));
+        }
+    }
+
+    private int dpToPixel(int pixel) {
+        float scale = getResources().getDisplayMetrics().density;
+        return (int) (pixel * scale + 0.5f);
     }
 
     private void updateChartData() {

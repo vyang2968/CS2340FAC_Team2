@@ -1,8 +1,5 @@
 package com.example.sprintproject.service;
 
-
-
-
 import com.example.sprintproject.model.Destination;
 import com.example.sprintproject.repository.DestinationRepositoryImpl;
 import com.example.sprintproject.utils.DataCallback;

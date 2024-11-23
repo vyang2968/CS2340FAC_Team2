@@ -5,23 +5,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CollaboratorManager implements Serializable {
-    private User creator;
-    private List<User> collaborators;
+    private String creator;
+    private List<String> collaborators;
 
     public CollaboratorManager() {
         this.collaborators = new ArrayList<>();
-        this.creator = new User();
+        this.creator = "";
     }
 
-    public List<User> getCollaborators() {
+    public void setCollaborators(List<String> collaborators) {
+        this.collaborators = collaborators;
+    }
+
+    public List<String> getCollaborators() {
         return collaborators;
     }
 
-    public User getCreator() {
+    public String getCreator() {
         return creator;
     }
 
-    public void setCreator(User creator) {
-        this.creator = creator;
+    public void setCreator(String id) {
+        this.creator = id;
     }
 }

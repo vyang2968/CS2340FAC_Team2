@@ -22,8 +22,6 @@ import com.example.sprintproject.R;
 import com.example.sprintproject.databinding.ActivityLogisticsScreenBinding;
 import com.example.sprintproject.model.Trip;
 import com.example.sprintproject.model.User;
-import com.example.sprintproject.service.TripService;
-import com.example.sprintproject.service.UserService;
 import com.example.sprintproject.viewmodel.LogisticsViewModel;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Description;
@@ -152,7 +150,8 @@ public class LogisticsScreen extends NavBarScreen {
                     tripName.setText("");
                 }
             });
-            tripPrompt.setNegativeButton("Cancel", (dialogInterface, i) -> dialogInterface.dismiss());
+            tripPrompt.setNegativeButton("Cancel",
+                    (dialogInterface, i) -> dialogInterface.dismiss());
             tripPrompt.create().show();
         });
 

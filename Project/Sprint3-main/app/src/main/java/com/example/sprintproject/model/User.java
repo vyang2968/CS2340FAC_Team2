@@ -14,7 +14,7 @@ public class User implements Serializable {
     private Date endDate;
     private int duration;
     private String activeTripId;
-    private List<String> tripIds;
+    private final List<String> tripIds;
 
     public User() {
         this.id = "";

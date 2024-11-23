@@ -15,7 +15,7 @@ public class UserService {
     private final UserRepositoryImpl userRepository;
     private static UserService instance;
     private User user;
-    private MutableLiveData<Boolean> hasCurrentUser;
+    private final MutableLiveData<Boolean> hasCurrentUser;
     private static final String TAG = "UserService";
 
     private UserService() {

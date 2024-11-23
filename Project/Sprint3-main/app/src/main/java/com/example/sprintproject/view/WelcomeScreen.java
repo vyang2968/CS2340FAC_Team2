@@ -10,7 +10,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.sprintproject.R;
-import com.example.sprintproject.service.AuthService;
 import com.example.sprintproject.viewmodel.WelcomeViewModel;
 
 public class WelcomeScreen extends AppCompatActivity {

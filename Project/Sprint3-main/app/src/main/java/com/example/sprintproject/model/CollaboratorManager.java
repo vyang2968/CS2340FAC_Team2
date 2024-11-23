@@ -1,11 +1,8 @@
 package com.example.sprintproject.model;
 
 import java.io.Serializable;
-import java.sql.Array;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class CollaboratorManager implements Serializable {
     private String creator;

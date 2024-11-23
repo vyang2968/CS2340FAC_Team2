@@ -39,13 +39,10 @@ public class DestinationScreen extends NavBarScreen {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-
         ActivityDestinationBinding binding =
                 ActivityDestinationBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
         setupNavBar();
-
         DestinationViewModel destinationViewModel =
                 new ViewModelProvider(this).get(DestinationViewModel.class);
         binding.setVariable(BR.destViewModel, destinationViewModel);
@@ -53,7 +50,6 @@ public class DestinationScreen extends NavBarScreen {
 
         ToggleButton logOpenButton = findViewById(R.id.logOpenButton);
         ToggleButton calculateOpenButton = findViewById(R.id.calculateOpenButton);
-
         LinearLayout logArea = findViewById(R.id.logArea);
         Button cancelButton = findViewById(R.id.cancelButton);
         Button submitButton = findViewById(R.id.submitButton);
@@ -75,7 +71,6 @@ public class DestinationScreen extends NavBarScreen {
         observeAndPopulateDestinations(destArea,
                                         destinationViewModel.getDestinations(),
                                         destinationViewModel.getDoneQueryForDestinations());
-
         observeAndShowDialog(destinationViewModel.getSubmitted());
 
         destinationViewModel.getAddDestSuccess().observe(this, bool -> {
@@ -100,7 +95,6 @@ public class DestinationScreen extends NavBarScreen {
                 calcArea.setVisibility(View.GONE);
                 calculateOpenButton.setChecked(false);
             }
-
             if (logOpenButton.isChecked()) {
                 logArea.setVisibility(View.VISIBLE);
                 cancelButton.setOnClickListener(view1 -> {

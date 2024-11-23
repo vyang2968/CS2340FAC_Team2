@@ -8,7 +8,6 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.sprintproject.model.Destination;
 import com.example.sprintproject.model.Note;
-import com.example.sprintproject.model.User;
 import com.example.sprintproject.service.DestinationService;
 import com.example.sprintproject.service.TripService;
 import com.example.sprintproject.service.UserService;

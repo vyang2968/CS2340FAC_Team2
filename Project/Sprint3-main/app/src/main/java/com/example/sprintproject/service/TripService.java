@@ -1,12 +1,6 @@
 package com.example.sprintproject.service;
 
-import android.util.Log;
-
-import androidx.lifecycle.MutableLiveData;
-
-import com.example.sprintproject.model.DiningReservation;
 import com.example.sprintproject.model.Trip;
-import com.example.sprintproject.repository.DiningReservationRepositoryImpl;
 import com.example.sprintproject.repository.TripRepositoryImpl;
 import com.example.sprintproject.utils.DataCallback;
 import com.google.android.gms.tasks.Task;

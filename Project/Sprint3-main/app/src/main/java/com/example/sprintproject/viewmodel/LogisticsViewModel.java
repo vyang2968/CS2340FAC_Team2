@@ -23,7 +23,6 @@ import com.example.sprintproject.utils.LogSource;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class LogisticsViewModel extends ViewModel implements LogSource {
     private static final String TAG = "LogisticsViewModel";
@@ -141,7 +140,7 @@ public class LogisticsViewModel extends ViewModel implements LogSource {
                             && currTripCreator.equals(currUser.getId())
                             && currUser.getId().equals(result.getId())) {
                         currentTripOwner.setValue("You");
-                    } else if (currTripCreator.equals(result.getId())){
+                    } else if (currTripCreator.equals(result.getId())) {
                         currentTripOwner.setValue(result.getUsername());
                     }
 

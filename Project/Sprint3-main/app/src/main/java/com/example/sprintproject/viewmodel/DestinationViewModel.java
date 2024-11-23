@@ -89,27 +89,28 @@ public class DestinationViewModel extends ViewModel {
         }
 
         for (int i = 0; i < endCondition; i++) {
-            destinationService.getDestination(destinationsIds.get(i), new DataCallback<Destination>() {
-                @Override
-                public void onSuccess(Destination result) {
-                    Log.i(TAG, "getDestinations:success");
-                    List<Destination> results = destinations.getValue();
-                    results.add(result);
+            destinationService
+                .getDestination(destinationsIds.get(i), new DataCallback<Destination>() {
+                    @Override
+                    public void onSuccess(Destination result) {
+                        Log.i(TAG, "getDestinations:success");
+                        List<Destination> results = destinations.getValue();
+                        results.add(result);
 
-                    if (destinationsIds.size() == destinations.getValue().size()) {
-                        doneQueryForDestinations.setValue(true);
-                    } else {
-                        doneQueryForDestinations.setValue(false);
+                        if (destinationsIds.size() == destinations.getValue().size()) {
+                            doneQueryForDestinations.setValue(true);
+                        } else {
+                            doneQueryForDestinations.setValue(false);
+                        }
+                        destinations.setValue(results);
                     }
-                    destinations.setValue(results);
-                }
 
-                @Override
-                public void onError(Exception e) {
-                    Log.d(TAG, "getDestinations:failed");
-                    destinations.setValue(new ArrayList<>());
-                }
-            });
+                    @Override
+                    public void onError(Exception e) {
+                        Log.d(TAG, "getDestinations:failed");
+                        destinations.setValue(new ArrayList<>());
+                    }
+                });
         }
     }
 

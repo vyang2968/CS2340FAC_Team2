@@ -46,7 +46,7 @@ public class SortUnitTests {
         for (Accommodation a : accommodations) {
             a.setLocation("Place");
             a.setNumRooms(1);
-            a.setRoomType("Single");
+            a.setRoomType(Accommodation.RoomType.fromString("Single"));
         }
 
 

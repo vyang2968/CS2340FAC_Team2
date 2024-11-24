@@ -1,10 +1,7 @@
 package com.example.sprintproject.service;
 
 import com.example.sprintproject.model.TravelPost;
-import com.example.sprintproject.model.Trip;
-import com.example.sprintproject.model.User;
 import com.example.sprintproject.repository.TravelPostRepositoryImpl;
-import com.example.sprintproject.repository.TripRepositoryImpl;
 import com.example.sprintproject.utils.DataCallback;
 import com.google.android.gms.tasks.Task;
 

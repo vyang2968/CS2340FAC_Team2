@@ -1,75 +1,251 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="bottom">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginBottom="500dp"
-        android:text="Travel Community"
-        android:textSize="30sp"
-        android:textStyle="bold"/>
-    <!-- Navbar -->
-    <LinearLayout
-        android:id="@+id/navbar"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:background="#000000"
-        android:padding="2dp">
-        <ImageButton
-            android:id="@+id/navbar_destination_button"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:background="#AAAAAA"
-            android:src="@drawable/destination"/>
-        <Space
-            android:layout_width="2dp"
-            android:layout_height="wrap_content"/>
-        <ImageButton
-            android:id="@+id/navbar_dining_button"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:background="#AAAAAA"
-            android:src="@drawable/dining"/>
-        <Space
-            android:layout_width="2dp"
-            android:layout_height="wrap_content"/>
-        <ImageButton
-            android:id="@+id/navbar_logistics_button"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:background="#AAAAAA"
-            android:src="@drawable/logistics"
-            />
-        <Space
-            android:layout_width="2dp"
-            android:layout_height="wrap_content"/>
-        <ImageButton
-            android:id="@+id/navbar_accommodations_button"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:background="#AAAAAA"
-            android:src="@drawable/accommodations"/>
-        <Space
-            android:layout_width="2dp"
-            android:layout_height="wrap_content"/>
-        <ImageButton
-            android:id="@+id/navbar_travel_community_button"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:background="#AAAAAA"
-            android:src="@drawable/community"/>
-    </LinearLayout>
+        android:layout_height="match_parent">
 
+        <!-- Main Screen -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="top">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Travel Community"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                android:layout_marginTop="20dp"/>
+
+            <!-- Post List -->
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <LinearLayout
+                    android:id="@+id/postList"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_margin="5dp">
+                </LinearLayout>
+
+            </ScrollView>
+
+        </LinearLayout>
+
+        <!-- Bottom Section -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="bottom">
+
+            <Button
+                android:id="@+id/createPostButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="+"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+
+                />
+
+            <!-- Navbar -->
+            <LinearLayout
+                android:id="@+id/navbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="#000000"
+                android:padding="2dp">
+                <ImageButton
+                    android:id="@+id/navbar_destination_button"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:background="#AAAAAA"
+                    android:src="@drawable/destination"/>
+                <Space
+                    android:layout_width="2dp"
+                    android:layout_height="wrap_content"/>
+                <ImageButton
+                    android:id="@+id/navbar_dining_button"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:background="#AAAAAA"
+                    android:src="@drawable/dining"/>
+                <Space
+                    android:layout_width="2dp"
+                    android:layout_height="wrap_content"/>
+                <ImageButton
+                    android:id="@+id/navbar_logistics_button"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:background="#AAAAAA"
+                    android:src="@drawable/logistics"
+                    />
+                <Space
+                    android:layout_width="2dp"
+                    android:layout_height="wrap_content"/>
+                <ImageButton
+                    android:id="@+id/navbar_accommodations_button"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:background="#AAAAAA"
+                    android:src="@drawable/accommodations"/>
+                <Space
+                    android:layout_width="2dp"
+                    android:layout_height="wrap_content"/>
+                <ImageButton
+                    android:id="@+id/navbar_travel_community_button"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:background="#AAAAAA"
+                    android:src="@drawable/community"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- Add Reservation (Pop-up) -->
+        <LinearLayout
+            android:id="@+id/createPostWindow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/popup_border"
+            android:layout_margin="10dp"
+            android:padding="10dp"
+            android:layout_gravity="center"
+            android:visibility="gone">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="New Travel Post"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:layout_gravity="center"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"/>
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="210dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_margin="5dp">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="Start: "
+                            android:textStyle="bold"
+                            android:layout_weight="5"/>
+                        <EditText
+                            android:id="@+id/startInput"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/edit_text_background"
+                            android:layout_weight="3"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_margin="5dp">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="End: "
+                            android:textStyle="bold"
+                            android:layout_weight="5"/>
+                        <EditText
+                            android:id="@+id/endInput"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/edit_text_background"
+                            android:layout_weight="3"/>
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Destination:"
+                        android:textStyle="bold"/>
+                    <EditText
+                        android:id="@+id/destinationInput"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/edit_text_background"
+                        android:layout_margin="5dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Accommodations:"
+                        android:textStyle="bold"/>
+                    <EditText
+                        android:id="@+id/accommodationsInput"
+                        android:layout_width="match_parent"
+                        android:layout_height="80dp"
+                        android:background="@drawable/edit_text_background"
+                        android:layout_margin="5dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Dining Reservations:"
+                        android:textStyle="bold"/>
+                    <EditText
+                        android:id="@+id/reservationsInput"
+                        android:layout_width="match_parent"
+                        android:layout_height="80dp"
+                        android:background="@drawable/edit_text_background"
+                        android:layout_margin="5dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Notes about the Trip:"
+                        android:textStyle="bold"/>
+                    <EditText
+                        android:id="@+id/notesInput"
+                        android:layout_width="match_parent"
+                        android:layout_height="80dp"
+                        android:background="@drawable/edit_text_background"
+                        android:layout_margin="5dp"/>
+
+                </LinearLayout>
+
+
+            </ScrollView>
+
+            <Button
+                android:id="@+id/postButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Post"
+                android:layout_gravity="center"/>
+
+        </LinearLayout>
+
+    </FrameLayout>
 
 </LinearLayout>

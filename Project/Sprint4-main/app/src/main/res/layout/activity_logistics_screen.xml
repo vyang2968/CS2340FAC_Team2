@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="logisticsViewModel"
+            type="com.example.sprintproject.viewmodel.LogisticsViewModel"/>
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingStart="20sp"
+                android:paddingEnd="20sp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="20dp"
+                    android:text="Logistics"
+                    android:textSize="40sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/totalDaysText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:textSize="20sp"
+                    android:text="@{logisticsViewModel.getTotalDaysTraveledMessage()}"/>
+                <Button
+                    android:id="@+id/visualizeButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="Visualize Data"
+                    android:padding="12dp"/>
+
+                <ProgressBar
+                    android:id="@+id/loadingIndicator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:visibility="gone"/>
+
+                <com.github.mikephil.charting.charts.PieChart
+                    android:id="@+id/daysChart"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:layout_marginTop="16dp"
+                    android:visibility="gone"/>
+
+                <TextView
+                    android:id="@+id/errorText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:textColor="#FF0000"
+                    android:visibility="gone"
+                    android:text="Error loading data"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="40dp"
+                    android:orientation="vertical">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.2"
+                            android:text="Current Trip: "
+                            android:textAlignment="textEnd"
+                            android:textSize="20sp"/>
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.2"
+                            android:text="@{logisticsViewModel.currentTripName}"
+                            android:textAlignment="textStart"
+                            android:textStyle="bold"
+                            android:textSize="20sp"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.2"
+                            android:text="Created By: "
+                            android:textAlignment="textEnd"
+                            android:textSize="15sp"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.2"
+                            android:text="@{logisticsViewModel.currentTripOwner}"
+                            android:textAlignment="textStart"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <EditText
+                            android:id="@+id/inviteInput"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.3"
+                            android:layout_marginRight="30dp"
+                            android:layout_gravity="bottom"
+                            android:hint="Input email"/>
+                        <Button
+                            android:id="@+id/inviteButton"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.1"
+                            android:text="Invite User"/>
+                    </LinearLayout>
+
+                    <ToggleButton
+                        android:id="@+id/selectable_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="10dp"
+                        android:textOff="Trip Select Disabled"
+                        android:textOn="Trip Select Enabled" />
+
+                    <GridLayout
+                        android:id="@+id/all_trips"
+                        android:layout_width="wrap_content"
+                        android:layout_height="300dp"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="20dp"
+                        android:columnCount="2"
+                        android:rowCount="3" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="10dp"
+                        android:gravity="bottom">
+                        <Button
+                            android:id="@+id/logOutButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Log out"
+                            android:layout_gravity="start" />
+                        <Space
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"/>
+                        <Button
+                            android:id="@+id/add_trip_button"
+                            android:layout_width="70dp"
+                            android:layout_height="wrap_content"
+                            android:text="+"
+                            android:textSize="30dp"
+                            />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+        <!-- Navbar -->
+        <LinearLayout
+            android:id="@+id/navbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="#000000"
+            android:padding="2dp">
+            <ImageButton
+                android:id="@+id/navbar_destination_button"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:background="#AAAAAA"
+                android:src="@drawable/destination"/>
+            <Space
+                android:layout_width="2dp"
+                android:layout_height="wrap_content"/>
+            <ImageButton
+                android:id="@+id/navbar_dining_button"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:background="#AAAAAA"
+                android:src="@drawable/dining"/>
+            <Space
+                android:layout_width="2dp"
+                android:layout_height="wrap_content"/>
+            <ImageButton
+                android:id="@+id/navbar_logistics_button"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:background="#AAAAAA"
+                android:src="@drawable/logistics"
+                />
+            <Space
+                android:layout_width="2dp"
+                android:layout_height="wrap_content"/>
+            <ImageButton
+                android:id="@+id/navbar_accommodations_button"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:background="#AAAAAA"
+                android:src="@drawable/accommodations"/>
+            <Space
+                android:layout_width="2dp"
+                android:layout_height="wrap_content"/>
+            <ImageButton
+                android:id="@+id/navbar_travel_community_button"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:background="#AAAAAA"
+                android:src="@drawable/community"/>
+        </LinearLayout>
+    </LinearLayout>
+</layout>

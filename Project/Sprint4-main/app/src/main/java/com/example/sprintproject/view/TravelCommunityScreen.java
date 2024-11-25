@@ -1,7 +1,6 @@
 package com.example.sprintproject.view;
 
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,18 +16,17 @@ import com.example.sprintproject.BR;
 import com.example.sprintproject.R;
 import com.example.sprintproject.databinding.ActivityTravelCommunityBinding;
 import com.example.sprintproject.model.TravelPost;
+import com.example.sprintproject.utils.TravelPostListener;
 import com.example.sprintproject.viewmodel.TravelCommunityViewModel;
 
-import java.time.Duration;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-public class TravelCommunityScreen extends NavBarScreen {
+public class TravelCommunityScreen extends NavBarScreen implements TravelPostListener {
 
     private TravelCommunityViewModel viewModel;
     private LinearLayout postForm;
-    private LinearLayout accommodationContainer;
+    private LinearLayout postContainer;
     private Button createButton;
     private Button postButton;
     private LayoutInflater inflater;
@@ -54,10 +52,11 @@ public class TravelCommunityScreen extends NavBarScreen {
         postForm = findViewById(R.id.createPostWindow);
         createButton = findViewById(R.id.createPostButton);
         postButton = findViewById(R.id.postButton);
-        accommodationContainer = findViewById(R.id.postList);
+        postContainer = findViewById(R.id.postList);
 
-        viewModel.getTravelPosts().observe(
-                this, this::createPostView);
+        this.postContainer.removeAllViews();
+        subscribe(viewModel);
+        viewModel.getTravelPosts();
 
         createButton.setOnClickListener(view -> toggleFormVisibility());
         postButton.setOnClickListener(view -> postTravel());
@@ -87,7 +86,6 @@ public class TravelCommunityScreen extends NavBarScreen {
         String notes = notesInput.getText().toString();
 
         try {
-            accommodationContainer.removeAllViews();
             viewModel.addTravelPost(start, end, destination, accommodations, reservations, notes);
 
             startInput.setText("");
@@ -104,20 +102,25 @@ public class TravelCommunityScreen extends NavBarScreen {
     }
 
     private void createPostView(List<TravelPost> posts) {
-        this.accommodationContainer.removeAllViews();
+        this.postContainer.removeAllViews();
         for (TravelPost post : posts) {
-            View postView = getLayoutInflater().inflate(R.layout.post_layout,
-                    accommodationContainer, false);
-            TextView usernameTextView = postView.findViewById(R.id.postUsername);
-            TextView destinationTextView = postView.findViewById(R.id.postDestination);
-            TextView durationTextView = postView.findViewById(R.id.postDuration);
-
-            usernameTextView.setText(post.getNotes().getCreator().getUsername());
-            destinationTextView.setText(post.getDestination());
-            long diff = post.getEndDate().getTime() - post.getStartDate().getTime();
-            durationTextView.setText(TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS) + " Days");
-
-            this.accommodationContainer.addView(postView);
+            observePost(post);
         }
+    }
+
+    @Override
+    public void observePost(TravelPost post) {
+        View postView = getLayoutInflater().inflate(R.layout.post_layout,
+                postContainer, false);
+        TextView usernameTextView = postView.findViewById(R.id.postUsername);
+        TextView destinationTextView = postView.findViewById(R.id.postDestination);
+        TextView durationTextView = postView.findViewById(R.id.postDuration);
+
+        usernameTextView.setText(post.getNotes().getCreator().getUsername());
+        destinationTextView.setText(post.getDestination());
+        long diff = post.getEndDate().getTime() - post.getStartDate().getTime();
+        durationTextView.setText(TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS) + " Days");
+
+        this.postContainer.addView(postView);
     }
 }

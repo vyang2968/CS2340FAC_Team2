@@ -20,6 +20,7 @@ public class TravelPostFactory {
     public TravelPost create(Date startDate, Date endDate,
                              String destination, String accommodations,
                              String diningReservations) {
-        return new TravelPost(tripId, startDate, endDate, destination, accommodations, diningReservations);
+        return new TravelPost(tripId, startDate, endDate,
+                destination, accommodations, diningReservations);
     }
 }

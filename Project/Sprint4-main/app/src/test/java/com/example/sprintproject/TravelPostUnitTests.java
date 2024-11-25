@@ -29,13 +29,9 @@ public class TravelPostUnitTests {
 
     @Test
     public void testNotes() {
-        List<Note> notes = new ArrayList<>();
         Note note1 = new Note();
-        Note note2 = new Note();
-        notes.add(note1);
-        notes.add(note2);
 
-        travelPost.setNotes(notes);
-        assertEquals(notes, travelPost.getNotes());
+        travelPost.setNotes(note1);
+        assertEquals(note1, travelPost.getNotes());
     }
 }

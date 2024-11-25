@@ -78,7 +78,8 @@ public class TravelCommunityViewModel extends ViewModel implements LogSource, Tr
             Date startDate = dateFormat.parse(start);
             Date endDate = dateFormat.parse(end);
 
-            TravelPost travelPost = postFactory.create(startDate, endDate, destination, accommodations, reservations);
+            TravelPost travelPost = postFactory.create(startDate, endDate,
+                    destination, accommodations, reservations);
 
             if (notes != null && !notes.trim().isEmpty()) {
                 Note note = new Note();

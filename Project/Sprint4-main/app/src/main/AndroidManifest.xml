@@ -37,7 +37,7 @@
         <activity android:name=".view.DiningEstablishmentScreen" />
         <activity android:name=".view.LogisticsScreen" />
         <activity android:name=".view.TransportationScreen" />
-        <activity android:name=".view.TravelCommunity" />
+        <activity android:name=".view.TravelCommunityScreen" />
     </application>
 
 </manifest>

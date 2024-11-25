@@ -76,7 +76,9 @@ public class LoginScreen extends AppCompatActivity {
         });
 
         if (AuthService.getInstance().isUserLoggedIn()) {
-            Log.i(TAG, "user already logged in, switching view...");
+            Log.i(TAG,
+                    String.format("user %s already logged in, switching view...",
+                        AuthService.getInstance().getUser().getEmail()));
             AuthService.getInstance().setCurrentUser();
             startActivity(new Intent(LoginScreen.this, LogisticsScreen.class));
         }

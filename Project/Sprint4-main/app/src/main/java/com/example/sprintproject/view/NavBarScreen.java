@@ -37,7 +37,7 @@ public class NavBarScreen extends AppCompatActivity {
         });
 
         navTravelCommunity.setOnClickListener(v -> {
-            Intent intent = new Intent(this, TravelCommunity.class);
+            Intent intent = new Intent(this, TravelCommunityScreen.class);
             this.startActivity(intent);
         });
     }

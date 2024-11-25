@@ -105,13 +105,15 @@ public class LogisticsViewModel extends ViewModel implements LogSource {
             tripService.getTrip(tripId, new DataCallback<Trip>() {
                 @Override
                 public void onSuccess(Trip result) {
-                    if (result.getId().equals(currUser.getActiveTripId())) {
+                    if (result != null && result.getId().equals(currUser.getActiveTripId())) {
                         tripService.setCurrentTrip(result);
                         currentTripName.setValue(result.getName());
                     }
 
                     HashMap<Trip, User> map = tripsAndUsers.getValue();
-                    map.putIfAbsent(result, null);
+                    if (result != null) {
+                        map.putIfAbsent(result, null);
+                    }
                     tripsAndUsers.setValue(map);
 
                     if (map.keySet().size() == tripsIds.size()) {

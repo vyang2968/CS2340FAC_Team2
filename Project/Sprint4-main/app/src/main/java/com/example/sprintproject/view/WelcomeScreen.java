@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.sprintproject.R;
+import com.example.sprintproject.service.AuthService;
 import com.example.sprintproject.viewmodel.WelcomeViewModel;
 
 public class WelcomeScreen extends AppCompatActivity {
@@ -19,6 +20,7 @@ public class WelcomeScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome_screen);
+        AuthService.getInstance().logOutUser();
         welcomeViewModel = new ViewModelProvider(this).get(WelcomeViewModel.class);
         TextView welcomeTextSmall = findViewById(R.id.welcome_text_small);
         Button startButton = findViewById(R.id.start_button);

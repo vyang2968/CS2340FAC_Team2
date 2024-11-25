@@ -41,7 +41,12 @@ public class User implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
-        setUsername(email.substring(0, email.indexOf("@")));
+        int index = email.indexOf("@");
+        if (index == -1) {
+            this.setUsername(email);
+        } else {
+            setUsername(email.substring(0, email.indexOf("@")));
+        }
     }
 
     public String getUsername() {

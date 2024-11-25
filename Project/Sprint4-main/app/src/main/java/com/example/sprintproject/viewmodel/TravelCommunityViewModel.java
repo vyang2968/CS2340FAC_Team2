@@ -5,17 +5,14 @@ import android.util.Log;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.sprintproject.model.Accommodation;
-import com.example.sprintproject.model.DiningReservation;
 import com.example.sprintproject.model.Note;
 import com.example.sprintproject.model.TravelPost;
-import com.example.sprintproject.service.DiningReservationService;
 import com.example.sprintproject.service.TravelPostService;
+import com.example.sprintproject.service.TripService;
 import com.example.sprintproject.service.UserService;
 import com.example.sprintproject.utils.DataCallback;
 import com.example.sprintproject.utils.LogSource;
-import com.example.sprintproject.utils.PlannableSortMethod;
-import com.example.sprintproject.utils.SortMethod;
+import com.example.sprintproject.utils.TravelPostFactory;
 import com.example.sprintproject.utils.TravelPostListener;
 import com.example.sprintproject.utils.TravelPostObservable;
 
@@ -32,16 +29,19 @@ public class TravelCommunityViewModel extends ViewModel implements LogSource, Tr
 
     private static final String TAG = "TravelCommunityViewModel";
     private Set<TravelPostListener> listeners;
+    private boolean first = true;
 
     private final MutableLiveData<List<TravelPost>> travelPosts;
     private final SimpleDateFormat dateFormat;
     private final TravelPostService travelPostService;
+    private TravelPostFactory postFactory;
 
     public TravelCommunityViewModel() {
         this.travelPosts = new MutableLiveData<>();
         this.dateFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
         this.listeners = new HashSet<>();
         this.travelPostService = TravelPostService.getInstance();
+        this.postFactory = new TravelPostFactory(TripService.getInstance().getCurrentTrip());
     }
 
     @Override
@@ -55,6 +55,12 @@ public class TravelCommunityViewModel extends ViewModel implements LogSource, Tr
                     @Override
                     public void onSuccess(List<TravelPost> result) {
                         travelPosts.setValue(result);
+                        if (result != null && first) {
+                            first = false;
+                            for (TravelPost post : result) {
+                                updateListeners(post);
+                            }
+                        }
                     }
                     @Override
                     public void onError(Exception e) {
@@ -72,12 +78,8 @@ public class TravelCommunityViewModel extends ViewModel implements LogSource, Tr
             Date startDate = dateFormat.parse(start);
             Date endDate = dateFormat.parse(end);
 
-            TravelPost travelPost = new TravelPost();
-            travelPost.setStartDate(startDate);
-            travelPost.setEndDate(endDate);
-            travelPost.setDestination(destination);
-            travelPost.setAccommodations(accommodations);
-            travelPost.setDiningReservations(reservations);
+            TravelPost travelPost = postFactory.create(startDate, endDate,
+                    destination, accommodations, reservations);
 
             if (notes != null && !notes.trim().isEmpty()) {
                 Note note = new Note();

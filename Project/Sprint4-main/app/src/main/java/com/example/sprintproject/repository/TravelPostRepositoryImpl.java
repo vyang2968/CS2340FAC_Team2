@@ -4,7 +4,6 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.example.sprintproject.model.DiningReservation;
 import com.example.sprintproject.model.TravelPost;
 import com.example.sprintproject.repository.contracts.TravelPostRepository;
 import com.example.sprintproject.utils.DataCallback;

@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
 
 import androidx.activity.EdgeToEdge;
 import androidx.lifecycle.ViewModelProvider;
@@ -76,7 +75,7 @@ public class TravelCommunityScreen extends NavBarScreen {
         String notes = notesInput.getText().toString();
 
         try {
-            //viewModel.addAccommodation(checkInTime, checkOutTime, location, roomCount, roomType);
+            viewModel.addTravelPost(start, end, destination, accommodations, reservations, notes);
 
             startInput.setText("");
             endInput.setText("");

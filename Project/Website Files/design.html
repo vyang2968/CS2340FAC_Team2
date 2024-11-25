@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Design & Architecture</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>WanderSync</h1>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="./">Introduction</a></li>
+                <li><a href="./design" class="active">Design & Architecture</a></li>
+                <li><a href="./ui">User Interface</a></li>
+                <li><a href="./functionality">Functionality</a></li>
+                <li><a href="./conclusions">Conclusions & Learning</a></li>
+                <li><a href="./contributors">Contributors</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main class="under">
+        <section class="intro-section">
+            <div class="text-content">
+                <h2>Architecture</h2>
+                <p>
+                    The architecture we were tasked to use throughout the semester for this project was MVVM.
+                     As you can see below, we had our Model, View, and ViewModel folders set up in Android Studio.
+                </p>
+            </div>
+            <div class="image-content">
+                <img src="images/mvvm.png" alt="Image of MVVM folder layout in Android Studio" />
+            </div>
+        </section>
+    </main>
+    <main class="under">
+        <section class="intro-section">
+            <div class="text-content">
+            <h2>Singleton Usage</h2>
+                <p>
+                    The AuthService class is designed using the singleton pattern to handle user creation and login.
+                    Since authentication (login/registration) occurs only once at the start of the application
+                    and does not involve concurrent requests, only a single instance is needed. Additionally,
+                    the singleton pattern is a good fit because AuthService does not maintain
+                    state, ensuring efficient and consistent authentication throughout the app. 
+                </p>
+            </div>
+            <div class="image-content">
+                <img src="images/singleton.png" alt="Image of AuthService class in code that utilizes Singleton" />
+            </div>
+        </section>
+    </main>
+    <main class="under">
+        <section class="intro-section">
+            <div class="text-content">
+            <h2>SOLID Principles</h2>
+                <p>
+                    In the NavBarScreen class and its subclasses, we implement both the Open-Closed Principle and the Dependency Inversion Principle. 
+                    The NavBarScreen class, which extends AppCompatActivity, contains a single method for binding navigation bar buttons in the 
+                    activity to their corresponding activities. Any screen designed to include the main navigation bar can inherit from this class, 
+                    allowing for easy setup without any need to alter the NavBarScreen class itself. This design makes it open for extension while 
+                    remaining closed to modification. Moreover, the NavBarScreen class does not depend on the specific implementations of the classes 
+                    that derive from it; those subclasses only need to know that the NavBarScreen handles navigation setup. This approach aligns with 
+                    the Dependency Inversion Principle.
+
+                    Furthermore, the DestinationRepositoryImpl class adheres to the Single Responsibility Principle. It is solely tasked with handling 
+                    CRUD operations for the destinations database. Every method within this class is dedicated exclusively to creating, reading, 
+                    updating, or deleting destination records, with no other responsibilities in play.
+                </p>
+            </div>
+            <div class="image-content">
+                <img src="images/nbs.png" alt="Image of Open-Closed and Dependency Inversion principles" />
+            </div>
+            <div class="image-content">
+                <img src="images/dri.png" alt="Image of Single Responsibility principle" />
+            </div>
+        </section>
+    </main>
+    <main class="under">
+        <section class="intro-section">
+            <div class="text-content">
+            <h2>GRASP Principles</h2>
+                <p>
+                    We adhered to the Creator principle when determining how to instantiate Accommodation objects. Our decision was to have 
+                    the AccommodationViewModel take on this role, as it consolidates these objects effectively. The AccommodationViewModel 
+                    achieves this through the addAccommodation method, which accepts the necessary parameters to create an Accommodation. It constructs 
+                    the object, adds it to the AccommodationViewModel's list, and also updates the accommodation database. Following the Creator 
+                    principle, we placed the construction of Accommodation objects in the context where they are utilized most: within the 
+                    AccommodationViewModel.
+
+                    Also, the RegisterViewModel aligns with the Information Expert principle, which advocates for tasks to be managed 
+                    by the entities that possess the requisite information. The RegisterViewModel holds the user's email and password, thus 
+                    it is responsible for validating these credentials and using them to register an account in the database, creating a User 
+                    object in the process. It would be counterproductive to delegate these tasks to other components since the RegisterViewModel 
+                    already contains the necessary data.
+
+                    We also focused on maintaining Low Coupling in our screen classes. Specifically, we ensured that the AccommodationScreen 
+                    class remains unlinked from the Accommodation class. This was accomplished by designing the addAccommodation method in 
+                    AccommodationViewModel to accept parameters needed to create an Accommodation object, rather than passing an Accommodation 
+                    object directly. This approach results in minimal data coupling, avoiding the more problematic stamp coupling scenario.
+                </p>
+            </div>
+            <div class="image-content">
+                <img src="images/creator.png" alt="Image of AuthService class in code that utilizes Singleton" />
+            </div>
+            <div class="image-content">
+                <img src="images/informatonexpert.png" alt="Image of AuthService class in code that utilizes Singleton" />
+            </div>
+            <div class="image-content">
+                <img src="images/lowcoupling.png" alt="Image of AuthService class in code that utilizes Singleton" />
+            </div>
+        </section>
+    </main>
+    <main class="under">
+        <section class="intro-section">
+            <div class="text-content">
+            <h2>Strategy Pattern</h2>
+                <p>
+                    We applied the Strategy pattern by designing a SortMethod interface to sort lists through the compare method from Comparable.
+                     We then developed specific implementations of SortMethod to provide alternative sorting behaviors. Classes that require 
+                     sorting can select from these implementations to modify how the list is organized. SortMethod serves as the strategy 
+                     interface, while implementations like PlannableSortMethod act as concrete strategies. Meanwhile, view models such as 
+                     AccommodationsViewModel represent the concrete elements in this context.
+                </p>
+            </div>
+            <div class="image-content">
+                <img src="images/strat1.png" alt="Image of AuthService class in code that utilizes Singleton" />
+            </div>
+            <div class="image-content">
+                <img src="images/strat2.png" alt="Image of AuthService class in code that utilizes Singleton" />
+            </div>
+        </section>
+    </main>
+    <main class="under">
+        <section class="intro-section">
+            <div class="text-content">
+            <h2>Design Class Diagram</h2>
+                <p>
+                    Below is a Design Class Diagram of the Accomodation and Destination screens in the app.
+                </p>
+            </div>
+            <div class="image-content">
+                <img src="images/dcd.png" alt="Image of AuthService class in code that utilizes Singleton" />
+            </div>
+        </section>
+    </main>
+</body>
+</html>

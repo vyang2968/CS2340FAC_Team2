@@ -12,7 +12,7 @@ public class TravelPost {
     private String destination;
     private String accommodations;
     private String diningReservations;
-    private List<Note> notes;
+    private Note notes;
 
     public TravelPost() {
         this.id = "";
@@ -22,7 +22,7 @@ public class TravelPost {
         this.destination = "";
         this.accommodations = "";
         this.diningReservations = "";
-        this.notes = new ArrayList<>();
+        this.notes = new Note();
     }
 
     public TravelPost(String tripId, Date startDate, Date endDate,
@@ -34,7 +34,7 @@ public class TravelPost {
         this.destination = destination;
         this.accommodations = accommodations;
         this.diningReservations = diningReservations;
-        this.notes = new ArrayList<>();
+        this.notes = new Note();
     }
 
     public String getId() {
@@ -93,15 +93,11 @@ public class TravelPost {
         this.diningReservations = diningReservations;
     }
 
-    public List<Note> getNotes() {
+    public Note getNotes() {
         return notes;
     }
 
-    public void setNotes(List<Note> notes) {
+    public void setNotes(Note notes) {
         this.notes = notes;
-    }
-
-    public void addNote(Note note) {
-        this.notes.add(note);
     }
 }

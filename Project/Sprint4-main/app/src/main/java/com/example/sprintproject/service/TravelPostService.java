@@ -1,9 +1,13 @@
 package com.example.sprintproject.service;
 
+import com.example.sprintproject.model.DiningReservation;
 import com.example.sprintproject.model.TravelPost;
 import com.example.sprintproject.repository.TravelPostRepositoryImpl;
+import com.example.sprintproject.repository.contracts.TravelPostRepository;
 import com.example.sprintproject.utils.DataCallback;
 import com.google.android.gms.tasks.Task;
+
+import java.util.List;
 
 public class TravelPostService {
     private final TravelPostRepositoryImpl travelPostRepositoryImpl;
@@ -37,5 +41,9 @@ public class TravelPostService {
         }
 
         travelPostRepositoryImpl.getTravelPostById(id, callback);
+    }
+
+    public void getAllTravelPosts(DataCallback<List<TravelPost>> callback) {
+        travelPostRepositoryImpl.getAllTravelPosts(callback);
     }
 }

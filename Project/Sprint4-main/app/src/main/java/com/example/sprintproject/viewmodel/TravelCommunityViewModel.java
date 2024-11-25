@@ -6,9 +6,13 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.sprintproject.model.Accommodation;
+import com.example.sprintproject.model.DiningReservation;
 import com.example.sprintproject.model.Note;
 import com.example.sprintproject.model.TravelPost;
+import com.example.sprintproject.service.DiningReservationService;
 import com.example.sprintproject.service.TravelPostService;
+import com.example.sprintproject.service.UserService;
+import com.example.sprintproject.utils.DataCallback;
 import com.example.sprintproject.utils.LogSource;
 import com.example.sprintproject.utils.PlannableSortMethod;
 import com.example.sprintproject.utils.SortMethod;
@@ -46,18 +50,23 @@ public class TravelCommunityViewModel extends ViewModel implements LogSource, Tr
     }
 
     public MutableLiveData<List<TravelPost>> getTravelPosts() {
+        TravelPostService.getInstance().getAllTravelPosts(
+                new DataCallback<List<TravelPost>>() {
+                    @Override
+                    public void onSuccess(List<TravelPost> result) {
+                        travelPosts.setValue(result);
+                    }
+                    @Override
+                    public void onError(Exception e) {
+                        travelPosts.setValue(new ArrayList<>());
+                    }
+                });
         return travelPosts;
     }
 
     public void addTravelPost(String start, String end,
                               String destination, String accommodations,
                               String reservations, String notes) {
-
-        List<TravelPost> list = travelPosts.getValue();
-
-        if (list == null) {
-            list = new ArrayList<>();
-        }
 
         try {
             Date startDate = dateFormat.parse(start);
@@ -72,31 +81,22 @@ public class TravelCommunityViewModel extends ViewModel implements LogSource, Tr
 
             if (notes != null && !notes.trim().isEmpty()) {
                 Note note = new Note();
+                note.setCreator(UserService.getInstance().getCurrentUser());
                 note.setNote(notes);
-                travelPost.addNote(note);
+                travelPost.setNotes(note);
             }
 
             travelPostService.addTravelPost(travelPost)
                     .addOnSuccessListener(aVoid -> {
-
-                        List<TravelPost> currentPosts = travelPosts.getValue();
-                        if (currentPosts == null) {
-                            currentPosts = new ArrayList<>();
-                        }
-                        currentPosts.add(travelPost);
-                        travelPosts.setValue(currentPosts);
-
                         updateListeners(travelPost);
                         Log.i(TAG, "Successfully added travel post");
                     })
                     .addOnFailureListener(e ->
                             Log.e(TAG, "Error adding travel post", e));
-            list.add(travelPost);
         } catch (ParseException error) {
             Log.d(TAG, "date could not be parsed");
             throw new IllegalArgumentException(error);
         }
-
     }
 
     @Override

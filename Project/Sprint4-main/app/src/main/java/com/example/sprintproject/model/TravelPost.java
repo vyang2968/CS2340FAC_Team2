@@ -26,9 +26,20 @@ public class TravelPost {
     public TravelPost(String tripId, Date startDate, Date endDate,
                       String destination, String accommodations,
                       String diningReservations) {
+        if (startDate == null || endDate == null) {
+            throw new IllegalArgumentException("Dates must be filled in.");
+        } else if (destination.equals("")
+                || accommodations.equals("")
+                || diningReservations.equals("")) {
+            throw new IllegalArgumentException("Destination, " +
+                    "Accommodation, and Dining Reservation must be filled in.");
+        }
         this.tripId = tripId;
         this.startDate = startDate;
         this.endDate = endDate;
+        if (!checkDates(startDate, endDate)) {
+            throw new IllegalArgumentException("End date must be after start date.");
+        }
         this.destination = destination;
         this.accommodations = accommodations;
         this.diningReservations = diningReservations;
@@ -91,6 +102,14 @@ public class TravelPost {
         this.diningReservations = diningReservations;
     }
 
+    public static boolean checkDates(Date startDate, Date endDate) {
+        if (endDate.before(startDate)) {
+            return false;
+        }
+        return true;
+
+
+    }
     public Note getNotes() {
         return notes;
     }

@@ -85,6 +85,7 @@ public class TravelCommunityScreen extends NavBarScreen implements TravelPostLis
         String reservations = reservationsInput.getText().toString();
         String notes = notesInput.getText().toString();
 
+
         try {
             viewModel.addTravelPost(start, end, destination, accommodations, reservations, notes);
 
@@ -96,8 +97,26 @@ public class TravelCommunityScreen extends NavBarScreen implements TravelPostLis
             notesInput.setText("");
             postForm.setVisibility(View.GONE);
         } catch (IllegalArgumentException ignored) {
-            startInput.setError("dates must be mm/dd/yyyy format");
-            endInput.setError("dates must be mm/dd/yyyy format");
+            if (destination.isEmpty()
+                    || accommodations.isEmpty()
+                    || reservations.isEmpty()
+                    || notes.isEmpty()) {
+                if (destination.isEmpty()) {
+                    destinationInput.setError("Must be filled in.");
+                }
+                if (accommodations.isEmpty()) {
+                    accommodationsInput.setError("Must be filled in.");
+                }
+                if (reservations.isEmpty()) {
+                    reservationsInput.setError("Must be filled in.");
+                }
+                if (notes.isEmpty()) {
+                    notesInput.setError("Must be filled in.");
+                }
+            } else {
+                startInput.setError("Start date must be mm/dd/yyyy format");
+                endInput.setError("End date must be mm/dd/yyyy format");
+            }
         }
     }
 
